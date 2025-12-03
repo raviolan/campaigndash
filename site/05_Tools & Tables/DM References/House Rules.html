@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>House Rules</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%277%27 fill=%27%238b5cf6%27/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="/assets/style.css?v=1764709842" />
+<script>window.SITE_BASE="/"</script>
+</head>
+<body>
+<div class="layout">
+  <div class="top">
+    <div class="toolbar">
+      <a class="chip" href="/index.html">Home</a>
+      <a class="chip" href="/graph.html">Graph</a>
+      <a class="chip" href="/tags/index.html">Tags</a>
+      <a class="chip" href="/session.html">Session</a>
+    </div>
+    <div class="search"><input id="searchBox" type="search" placeholder="Search titles, headings, #tags (Cmd/Ctrl-K)"/></div>
+    <div id="searchResults" class="hovercard"></div>
+  </div>
+  <aside class="left"><div class="drawer" aria-label="Navigation"><div class="drawer-handle">  <button id="leftDrawerToggle" class="chip" aria-expanded="true" aria-controls="leftDrawer">Nav</button>  <button id="leftDrawerPin" class="chip" aria-pressed="true">Pin</button>  <button id="leftCollapseExpand" class="chip" title="Collapse/Expand All">Collapse all</button></div><div id="leftDrawer" class="drawer-content">  <aside class="sidebar" role="navigation">    <div class="campaign-header"><div class="campaign-title">Devils and Dragons</div></div>    <nav class="nav">      <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg></span><span class="nav-text">Dashboard</span></a>      <div class="nav-breadcrumb"><span id="breadcrumbText" class="meta"></span> <a id="breadcrumbSiblings" href="#" class="chip" title="View siblings">View siblings</a></div>      <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..."/></div>      <details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5h-2v6l5 3 1-1.7-4-2.3V7z"/></svg></span><span>Recents</span></summary><ul id="navRecents" class="nav-list"></ul></details>      <details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.1 6.3 7 .9-5.1 4.9 1.3 6.9L12 17.8 5.7 21l1.3-6.9L2 9.2l7-.9L12 2z"/></svg></span><span>Favorites</span></summary><ul id="navFav" class="nav-list"></ul></details>      <ul class="nav-sections"><li class="nav-group"><details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z"/></svg></span><span>Characters</span><button class="chip nav-only" data-section="Characters" title="Show only this section">Only</button></summary><div class="nav-mini"><input class="nav-mini-input" data-section="Characters" placeholder="Filter section..." /></div><ul class="nav-list"><li><a class="nav-item" href="/03_PCs/Extras and quirks.html"><span class="nav-icon">•</span><span class="nav-text">Extras and quirks</span></a></li><li><a class="nav-item" href="/03_PCs/Nyx.html"><span class="nav-icon">•</span><span class="nav-text">Nyx</span></a></li><li><a class="nav-item" href="/03_PCs/Oceanus.html"><span class="nav-icon">•</span><span class="nav-text">Oceanus</span></a></li><li><a class="nav-item" href="/03_PCs/Odo Kneecapper.html"><span class="nav-icon">•</span><span class="nav-text">Odo Kneecapper</span></a></li><li><a class="nav-item" href="/03_PCs/Tenebris.html"><span class="nav-icon">•</span><span class="nav-text">Tenebris</span></a></li><li><a class="nav-item" href="/03_PCs/Tihildur.html"><span class="nav-icon">•</span><span class="nav-text">Tihildur</span></a></li><li><a class="nav-item" href="/03_PCs/Val'krath.html"><span class="nav-icon">•</span><span class="nav-text">Val'krath</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11a4 4 0 10-8 0 4 4 0 008 0zm-11 9c0-3 4-5 7-5s7 2 7 5v2H5v-2z"/></svg></span><span>NPCs</span><button class="chip nav-only" data-section="NPCs" title="Show only this section">Only</button></summary><div class="nav-mini"><input class="nav-mini-input" data-section="NPCs" placeholder="Filter section..." /></div><ul class="nav-list"><li><a class="nav-item" href="/04_NPCs/Agile Hand.html"><span class="nav-icon">•</span><span class="nav-text">Agile Hand</span></a></li><li><a class="nav-item" href="/04_NPCs/Captain Xendros.html"><span class="nav-icon">•</span><span class="nav-text">Captain Xendros</span></a></li><li><a class="nav-item" href="/04_NPCs/Cyrieth Nerolien.html"><span class="nav-icon">•</span><span class="nav-text">Cyrieth Nerolien</span></a></li><li><a class="nav-item" href="/04_NPCs/Daddy Salabaster.html"><span class="nav-icon">•</span><span class="nav-text">Daddy Salabaster</span></a></li><li><a class="nav-item" href="/04_NPCs/Dusk.html"><span class="nav-icon">•</span><span class="nav-text">Dusk</span></a></li><li><a class="nav-item" href="/04_NPCs/Gellan Primewater.html"><span class="nav-icon">•</span><span class="nav-text">Gellan Primewater</span></a></li><li><a class="nav-item" href="/04_NPCs/Kedjou.html"><span class="nav-icon">•</span><span class="nav-text">Kedjou</span></a></li><li><a class="nav-item" href="/04_NPCs/Lysa _Ledger_ Feld.html"><span class="nav-icon">•</span><span class="nav-text">Lysa _Ledger_ Feld</span></a></li><li><a class="nav-item" href="/04_NPCs/Raven Queen.html"><span class="nav-icon">•</span><span class="nav-text">Raven Queen</span></a></li><li><a class="nav-item" href="/04_NPCs/Salabaster Shipping.html"><span class="nav-icon">•</span><span class="nav-text">Salabaster Shipping</span></a></li><li><a class="nav-item" href="/04_NPCs/Saltmarsh Council.html"><span class="nav-icon">•</span><span class="nav-text">Saltmarsh Council</span></a></li><li><a class="nav-item" href="/04_NPCs/Sanbalet.html"><span class="nav-icon">•</span><span class="nav-text">Sanbalet</span></a></li><li><a class="nav-item" href="/04_NPCs/Scarlet Brotherhood.html"><span class="nav-icon">•</span><span class="nav-text">Scarlet Brotherhood</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c2.9 0 5.4 2.4 6.5 6H5.5C6.6 6.4 9.1 4 12 4zm0 16c-2.9 0-5.4-2.4-6.5-6h13c-1.1 3.6-3.6 6-6.5 6z"/></svg></span><span>World</span><button class="chip nav-only" data-section="World" title="Show only this section">Only</button></summary><div class="nav-mini"><input class="nav-mini-input" data-section="World" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-location" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Locations</span></summary><ul class="nav-list"><li><a class="nav-item" href="/02_World/Locations/Bent Willow Tavern.html"><span class="nav-icon">•</span><span class="nav-text">Bent Willow Tavern</span></a></li><li><a class="nav-item" href="/02_World/Locations/Old King's Road.html"><span class="nav-icon">•</span><span class="nav-text">Old King's Road</span></a></li><li><a class="nav-item" href="/02_World/Locations/Road Through the Feywild Leak.html"><span class="nav-icon">•</span><span class="nav-text">Road Through the Feywild Leak</span></a></li><li><a class="nav-item" href="/02_World/Locations/Saltmarsh.html"><span class="nav-icon">•</span><span class="nav-text">Saltmarsh</span></a></li><li><a class="nav-item" href="/02_World/Locations/Stormwreck Island.html"><span class="nav-icon">•</span><span class="nav-text">Stormwreck Island</span></a></li></ul></details></li></ul></details></li><li class="nav-group"><details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm5 5l-3 8-8 3 3-8 8-3zM10 10l-1 2 2-1 1-2-2 1z"/></svg></span><span>Arcs</span><button class="chip nav-only" data-section="Arcs" title="Show only this section">Only</button></summary><div class="nav-mini"><input class="nav-mini-input" data-section="Arcs" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-arc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>GoSM</span></summary><ul class="nav-list"><li><a class="nav-item" href="/01_Arcs/GoSM/Factions and Politics.html"><span class="nav-icon">•</span><span class="nav-text">Factions and Politics</span></a></li><li><a class="nav-item" href="/01_Arcs/GoSM/Generally, GoSM.html"><span class="nav-icon">•</span><span class="nav-text">Generally, GoSM</span></a></li><li><a class="nav-item" href="/01_Arcs/GoSM/Masterpiece Imbroglio.html"><span class="nav-icon">•</span><span class="nav-text">Masterpiece Imbroglio</span></a></li></ul></details></li><li class="nav-section"><details class="nav-details f-arc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>The Feywild</span></summary><ul class="nav-list"><li class="nav-section"><details class="nav-details f-arc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Rumors</span></summary><ul class="nav-list"><li><a class="nav-item" href="/01_Arcs/The Feywild/Rumors/00_Rumor Organization Guide.html"><span class="nav-icon">•</span><span class="nav-text">Rumor Organization Guide</span></a></li><li><a class="nav-item" href="/01_Arcs/The Feywild/Rumors/01_Pre-Session 01 Rumors.html"><span class="nav-icon">•</span><span class="nav-text">Pre-Session 01 Rumors</span></a></li><li><a class="nav-item" href="/01_Arcs/The Feywild/Rumors/02_Ongoing Rumor Threads.html"><span class="nav-icon">•</span><span class="nav-text">Ongoing Rumor Threads</span></a></li></ul></details></li><li><a class="nav-item" href="/01_Arcs/The Feywild/Feywild Summary.html"><span class="nav-icon">•</span><span class="nav-text">Feywild Summary</span></a></li><li><a class="nav-item" href="/01_Arcs/The Feywild/the trek.html"><span class="nav-icon">•</span><span class="nav-text">the trek</span></a></li></ul></details></li><li><a class="nav-item" href="/01_Arcs/01_Arcs Overview.html"><span class="nav-icon">•</span><span class="nav-text">01_Arcs Overview</span></a></li><li><a class="nav-item" href="/01_Arcs/Arc - Cyrieth's Web.html"><span class="nav-icon">•</span><span class="nav-text">Arc - Cyrieth's Web</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h11l-1 3h6v11H4V4zm2 2v9h12V9h-5l1-3H6z"/></svg></span><span>Campaign</span><button class="chip nav-only" data-section="Campaign" title="Show only this section">Only</button></summary><div class="nav-mini"><input class="nav-mini-input" data-section="Campaign" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z"/></svg></span><span>03_Sessions</span></summary><ul class="nav-list"><li><a class="nav-item" href="/00_Campaign/03_Sessions/01 Finishing up in Saltmarsh.html"><span class="nav-icon">•</span><span class="nav-text">01 Finishing up in Saltmarsh</span></a></li></ul></details></li><li><a class="nav-item" href="/00_Campaign/00_Campaign Dashboard.html"><span class="nav-icon">•</span><span class="nav-text">00_Campaign Dashboard</span></a></li><li><a class="nav-item" href="/00_Campaign/01_Session notes.html"><span class="nav-icon">•</span><span class="nav-text">01_Session notes</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 14l-5-5 2-2 3 3 2-2-3-3 1-1-2-2-3 3-2-2-2 2 2 2-9 9v4h4l9-9 2 2z"/></svg></span><span>Tools</span><button class="chip nav-only" data-section="Tools" title="Show only this section">Only</button></summary><div class="nav-mini"><input class="nav-mini-input" data-section="Tools" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>DM References</span></summary><ul class="nav-list"><li><a class="nav-item" href="/05_Tools & Tables/DM References/02_Campaign Overview and Key points.html"><span class="nav-icon">•</span><span class="nav-text">02_Campaign Overview and Key points</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/DM References/House Rules.html"><span class="nav-icon">•</span><span class="nav-text">House Rules</span></a></li></ul></details></li><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Items & More</span></summary><ul class="nav-list"><li><a class="nav-item" href="/05_Tools & Tables/Items & More/Aurumvorax.html"><span class="nav-icon">•</span><span class="nav-text">Aurumvorax</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Items & More/Bloodwell Vial.html"><span class="nav-icon">•</span><span class="nav-text">Bloodwell Vial</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Items & More/Call Lightning.html"><span class="nav-icon">•</span><span class="nav-text">Call Lightning</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Items & More/Dao.html"><span class="nav-icon">•</span><span class="nav-text">Dao</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Items & More/Dawn Incarnate.html"><span class="nav-icon">•</span><span class="nav-text">Dawn Incarnate</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Items & More/Sahuagin.html"><span class="nav-icon">•</span><span class="nav-text">Sahuagin</span></a></li></ul></details></li><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Shops</span></summary><ul class="nav-list"><li><a class="nav-item" href="/05_Tools & Tables/Shops/Clothes and Accessories.html"><span class="nav-icon">•</span><span class="nav-text">Clothes and Accessories</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Shops/Fireworks and Explosives.html"><span class="nav-icon">•</span><span class="nav-text">Fireworks and Explosives</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Shops/Potions.html"><span class="nav-icon">•</span><span class="nav-text">Potions</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Shops/Shops Index.html"><span class="nav-icon">•</span><span class="nav-text">Shops Index</span></a></li><li><a class="nav-item" href="/05_Tools & Tables/Shops/Weapons and Shields.html"><span class="nav-icon">•</span><span class="nav-text">Weapons and Shields</span></a></li></ul></details></li><li><a class="nav-item" href="/05_Tools & Tables/Random Encounter Generator.html"><span class="nav-icon">•</span><span class="nav-text">Random Encounter Generator</span></a></li></ul></details></li></ul>    </nav>  </aside></div></div></aside>
+  <main class="main"><article><h1>House Rules</h1><p>#planning </p>
+<h3>Long resting in the wild</h3><p>Baseline: what “interrupts a long rest”?</p>
+<p>If you want to stay close to 5e RAW:</p>
+<p>A long rest is 8 hours.</p>
+<p>If it’s interrupted by 1 hour or more of strenuous activity (fighting, walking, casting spells, etc.), they don’t get the benefits and basically need to start over.</p>
+<p>In practice, a single 3-round fight is ~18 seconds – not 1 hour – so you can rule:</p>
+<p>Short, sharp encounter = rest still counts.</p><p>Multiple or drawn-out events = rest is compromised.</p>
+<p>You get to define where the line is.</p>
+<ol><li>A simple “night procedure” for you</li>
+</ol><p>Each time they long rest in the woods:</p>
+<p>They set watch order.</p><p>You know who’s awake when.</p>
+<p>You decide how many encounter checks to roll.</p>
+<p>Common: 2–3 checks per night (early, middle, late).</p>
+<p>Roll on your Fey-leak table or a combat table depending on vibe.</p>
+<p>When something happens, classify it as:</p>
+<p>A. Atmosphere only (weird but non-strenuous)</p>
+<p>B. Brief disturbance (short interaction / tiny scene)</p>
+<p>C. Serious interruption (fight, chase, big social scene)</p>
+<p>Then apply mechanics:</p>
+<ol><li>How each type affects the long rest</li></ol><p>A. Atmosphere only</p>
+<p>Examples: odd lights, animals watching, singing wind, shared dream flashes.</p>
+<p>No mechanical effect on the rest at all.</p>
+<p>Whoever is on watch can wake others if they want, but it doesn’t break the long rest.</p>
+<p>Use these a lot. They build tension without punishment.</p>
+<p>B. Brief disturbance</p>
+<p>Examples: quick social interaction, a 1–2 round scare, small Fey prank.</p>
+<p>Rule of thumb:</p>
+<p>If the whole thing is over in 10 in-game minutes or less,</p>
+<p>And doesn’t require marching away from camp,</p>
+<p>→ Long rest still succeeds, but:</p>
+<p>People who got dragged in might:</p>
+<p>Make a Con save vs. fatigue if they never got back to proper sleep, or</p>
+<p>Get no benefit from hit dice/HP recovery, but still get spell slots, OR</p>
+<p>Suffer disadvantage on the first check they make next morning.</p>
+<p>Pick one simple consequence and keep it consistent.</p>
+<p>C. Serious interruption</p>
+<p>Examples: full combat, chase, big hag negotiation, moving camp.</p>
+<p>If it takes an hour or more in-game or obviously counts as strenuous:</p>
+<p>You’ve got two main options:</p>
+<p>Option 1 – RAW strict</p>
+<p>The long rest fails.</p>
+<p>They got a short rest instead.</p>
+<p>Next day they:</p>
+<p>Don’t regain spell slots/HP as normal,</p>
+<p>Might gain 1 level of exhaustion if you want to be harsh.</p>
+<p>This is punishing; I’d use it sparingly unless you want a very gritty feel.</p>
+<p>Option 2 – Gentler “delayed rest”</p>
+<p>They still get their long rest,</p>
+<p>but it takes longer: 8 hours + the interruption.</p>
+<p>That means they might:</p>
+<p>Wake up later than planned,</p>
+<p>Lose some daylight,</p>
+<p>Arrive at places at more awkward times.</p>
+<p>This keeps pressure without constant exhaustion spam.</p>
+<ol><li>Easy homebrew rule you can tell the players (if you want)</li>
+</ol><p>To keep it clean at the table, you can codify:</p>
+<p>“If you get one quick encounter at night, your long rest is fine.</p><p>If you get two or more serious interruptions, the best you get is a short rest, and you’re tired in the morning.”</p>
+<p>You don’t have to say “two or more” out loud, but you can run it as:</p>
+<p>First big event: fine, but you note it.</p>
+<p>Second big event that same night: now we’re in “no long rest” territory or “everyone makes a Con save vs exhaustion.”</p>
+<ol><li>How this plays with your Fey-leak theme</li>
+</ol><p>Most of your weird Fey events should be A or B: creepy, unsettling, maybe mechanically tiny, but not stopping the long rest.</p>
+<p>Save C events (actual danger / big NPC scenes) for nights when you want them to feel worn down or off-schedule.</p>
+<p>This way:</p>
+<p>The woods feel alive and odd,</p>
+<p>The party doesn’t dread ever trying to sleep,</p>
+<p>Interrupted rests become story beats, not constant punishment.</p>
+<h3>Underwater combat:</h3><p>- Movement: Creatures without a swim speed move at half speed (swimming counts like difficult terrain). Dash works as normal. </p><p>- Combat: Keep the standard underwater rules: </p><p>- Melee: Disadvantage unless it’s dagger, javelin, shortsword, spear, or trident. </p><ul><li>Ranged: Auto-miss beyond normal range; within normal range it’s disadvantage unless crossbow, net, or thrown javelin/spear/trident/dart.</li>
+</ul><p>- Ranged spell attacks aren’t penalized by the underwater combat section (though fire damage is still resisted when fully submerged). </p><p>- Breathing: PCs need water breathing (spell, potion, item) or some other solution. Holding breath is possible but gives no verbal spellcasting and is risky for longer fights. </p><p>- Verbal components: If a creature can breathe (via magic or an air source), let them speak and cast normally. If they’re holding breath, speaking ends that breath and they risk suffocation. </p><ul><li>Let non-swimmers spend an object interaction to kick off a wall/door and move an extra 5 ft once per round—keeps scenes dynamic</li>
+</ul>
+<h3>Name Colors</h3>
+<p><font color="#245bdb">Tihildur</font></p><p><font color="#e64a02">Valkrath</font></p><p><font color="#6a00ff">Tenebris</font></p><p><font color="#d642cc">Nyx</font></p><p><font color="#d6b64f">Odo</font></p><p><font color="#4f91ff">Oceanus</font></p>
+</article><h2>Local Graph</h2>
+<div class="graph-panel" id="localGraph" data-rel="05_Tools & Tables/DM References/House Rules.md"></div>
+<h3>Backlinks</h3>
+<div class="backlinks"><div class="meta">No backlinks</div></div></main>
+  <aside class="right">
+    <div class="drawer" aria-label="Tools">
+      <div class="drawer-handle">
+        <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Tools</button>
+        <button id="drawerPin" class="chip" aria-pressed="true">Pin</button>
+        <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
+      </div>
+      <div id="drawerContent" class="drawer-content">
+        <div id="drawerTop"></div>
+        <h3>To-Do</h3>
+        <div id="todoBox" class="card" aria-label="Session To-Do">
+          <form id="todoForm" class="todo-form" autocomplete="off">
+            <label class="sr-only" for="todoInput">Add a task</label>
+            <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter"/>
+            <button type="submit" class="todo-add">Add</button>
+          </form>
+          <div class="todo-actions">
+            <button id="todoClearDone" class="chip" title="Clear completed">Clear Completed</button>
+          </div>
+          <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+<button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
+<script src="/assets/site.js?v=1764755524934"></script>
+<script src="/assets/site-note.js"></script>
+</body>
+</html>
