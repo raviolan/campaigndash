@@ -213,10 +213,11 @@ function buildOnce(){
   });
   const sectionsHtml = sections.map(sec => {
     const label = friendlyName(sec);
+    const secCls = folderClass(sec);
     return '<li class="nav-group">'
-      + '<details class="nav-details" open>'
-      +   '<summary class="nav-label"><span class="nav-icon">'+iconForSection(sec)+'</span><span>'+label+'</span><button class="chip nav-only" data-section="'+label+'" title="Show only this section">Only</button></summary>'
-      +   '<div class="nav-mini"><input class="nav-mini-input" data-section="'+label+'" placeholder="Filter section..." /></div>'
+      + '<details class="nav-details '+secCls+'" open>'
+      +   '<summary class="nav-label"><span class="nav-icon">'+iconForSection(sec)+'</span><span>'+label+'</span></summary>'
+      +   '<div class="nav-mini"><button class="chip nav-only" data-section="'+label+'" title="Show only this section">Only</button><input class="nav-mini-input" data-section="'+label+'" placeholder="Filter section..." /></div>'
       +   '<ul class="nav-list">'+renderNavTree(treeRoot._dirs[sec], sec)+'</ul>'
       + '</details>'
     + '</li>';
@@ -301,7 +302,7 @@ function buildOnce(){
   const baseTemplate = (title, content, sidebarHtml, rightTopHtml = '', extraScripts='') => (
     '<!doctype html>\n'
     + '<html lang="en">\n<head>\n<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n'
-    + '<title>' + title + '</title>\n<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%277%27 fill=%27%238b5cf6%27/%3E%3C/svg%3E" />\n<link rel="stylesheet" href="/assets/style.css?v=1764709842" />\n<script>window.SITE_BASE="/"</script>\n'
+    + '<title>' + title + '</title>\n<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%277%27 fill=%27%238b5cf6%27/%3E%3C/svg%3E" />\n<link rel="stylesheet" href="/assets/style.css?v='+VERSION+'" />\n<script>window.SITE_BASE="/"</script>\n'
     + '</head>\n<body>\n'
     + '<div class="layout">\n'
     + '  <div class="top">\n'
@@ -346,6 +347,40 @@ function buildOnce(){
     + '</body>\n</html>'
   );
 
+  function findAvatarFor(note){
+    const exts = ['.png','.jpg','.jpeg','.webp','.gif','.svg'];
+    const title = (note.title || '').trim();
+    const lower = title.toLowerCase();
+    const slugify = (s) => s
+      .toLowerCase()
+      .replace(/[’']/g,'')               // drop apostrophes
+      .replace(/[^a-z0-9]+/g,'-')         // non-alnum -> '-'
+      .replace(/^-+|-+$/g,'');            // trim '-'
+    const slug = slugify(title);
+    const firstWord = slugify(title.split(/\s+/)[0]||'');
+    const nameVariants = Array.from(new Set([
+      lower,
+      slug,
+      firstWord,
+      // For names with hyphens or punctuation, also try without dashes
+      slug.replace(/-/g,''),
+    ].filter(Boolean)));
+
+    const candidates = [];
+    for (const base of nameVariants){
+      for (const ext of exts){
+        // Check attachments
+        const attFile = `${base}-avatar${ext}`;
+        candidates.push({ abs: path.join(VAULT_ROOT, ATTACHMENTS_DIR_NAME, attFile), url: `/${ATTACHMENTS_DIR_NAME}/${attFile}` });
+        // Check web assets (copied to /assets)
+        const webFile = `${base}-avatar${ext}`;
+        candidates.push({ abs: path.join(ASSET_SRC, webFile), url: `/assets/${webFile}` });
+      }
+    }
+    for (const c of candidates){ if (fs.existsSync(c.abs)) return c.url; }
+    return null;
+  }
+
   for (const note of notes.values()) {
     const isPC = note.tags.includes('pc') || note.rel.startsWith('03_PCs/');
     const isNPC = note.tags.includes('npc') || note.rel.startsWith('04_NPCs/');
@@ -363,16 +398,16 @@ function buildOnce(){
       if (!subtitle) subtitle = isPC ? 'Player Character' : isNPC ? 'Non-Player Character' : '';
     }
 
-    // Placeholder images for now
+    // Images: prefer per-entity avatar if present, else placeholders
     const headerImg = '/assets/ph-header.svg';
-    const avatarImg = '/assets/ph-avatar.svg';
+    let avatarImg = findAvatarFor(note) || '/assets/ph-avatar.svg';
 
     // Badges from tags excluding generic
     const exclude = new Set(['pc','npc','planning','arc']);
     const badgeTags = note.tags.filter(t=>!exclude.has(t));
 
-    // Log missing assets for PC/NPC
-    if (isPC || isNPC) {
+    // Log missing assets for PC/NPC only if using placeholders
+    if ((isPC || isNPC) && avatarImg === '/assets/ph-avatar.svg' && headerImg === '/assets/ph-header.svg') {
       try {
         const sessPath = path.join(VAULT_ROOT, '00_Campaign', '01_Session notes.md');
         ensureDir(path.dirname(sessPath));
@@ -394,14 +429,22 @@ function buildOnce(){
           return null; })(note.rel, norm); return r; })()})).filter(x=>x.to);
       const connsHtml = '<section id="connections"><h2>Connections</h2>'
         + '<div class="conn"><h3>Links</h3><ul>'
-        + (outgoing.map(o=>'<li><a href="/'+mdToHtmlPath(o.to)+'">'+(notes.get(o.to)?.title||o.raw)+'</a></li>').join('') || '<li class="meta">None</li>')
+        + (outgoing.map(o=>'<li><a href="'+urlFor(o.to)+'">'+(notes.get(o.to)?.title||o.raw)+'</a></li>').join('') || '<li class="meta">None</li>')
         + '</ul><h3>Backlinks</h3><ul>'
-        + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<li><a href="/'+mdToHtmlPath(rel)+'">'+(notes.get(rel)?.title||rel)+'</a></li>').join('') || '<li class="meta">None</li>')
+        + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<li><a href="'+urlFor(rel)+'">'+(notes.get(rel)?.title||rel)+'</a></li>').join('') || '<li class="meta">None</li>')
         + '</ul></div></section>';
       const abilitiesHtml = '<section id="abilities"><h2>Abilities</h2><div class="meta">Add an "Abilities" section in the note to populate.</div></section>';
       const inventoryHtml = '<section id="inventory"><h2>Inventory</h2><div class="meta">Add an "Inventory" section in the note to populate.</div></section>';
 
-      const entityHeader = `
+      // Optional external character sheet link: look for "Sheet: <url>" or "D&D Beyond: <url>" in note body
+      let sheetLink = '';
+      try {
+        const rx = /^(?:\s*(?:Sheet|D\s*&\s*D\s*Beyond|DNDBeyond))\s*:\s*(https?:\S+)/gim;
+        const m = rx.exec(note.md);
+        if (m) sheetLink = m[1];
+      } catch {}
+
+      const headerHtml = `
         <section class="entity">
           <div class="entity-header" style="--header:url('${headerImg}')">
             <div class="entity-id">
@@ -412,30 +455,32 @@ function buildOnce(){
                 <div class="entity-badges">${badgeTags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
               </div>
             </div>
-            <nav class="entity-tabs">
-              <a href="#overview">Overview</a>
-              <a href="#connections">Connections</a>
-              <a href="#abilities">Abilities</a>
-              <a href="#inventory">Inventory</a>
-            </nav>
           </div>
         </section>`;
+      const tabsHtml = `
+        <nav class="entity-tabs">
+          <a href="#overview">Overview</a>
+          <a href="#connections">Connections</a>
+          <a href="#abilities">Abilities</a>
+          <a href="#inventory">Inventory</a>
+          ${sheetLink ? `<a class="chip" href="${sheetLink}" target="_blank" rel="noopener">Sheet</a>` : ''}
+        </nav>`;
 
-      content = '<article class="entity-page">' + entityHeader + '<div class="entity-body">'
+      content = '<article class="entity-page">' + headerHtml + tabsHtml + '<div class="entity-body">'
         + overviewHtml + connsHtml + abilitiesHtml + inventoryHtml + '</div></article>'
         + '<h2>Local Graph</h2><div class="graph-panel" id="localGraph" data-rel="' + note.rel + '"></div>'
-        + '<h3>Backlinks</h3><div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="/' + mdToHtmlPath(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div>';
+        + '<h3>Backlinks</h3><div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="' + urlFor(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div>';
     } else {
       const appendix = [
         '<h2>Local Graph</h2>',
         '<div class="graph-panel" id="localGraph" data-rel="' + note.rel + '"></div>',
         '<h3>Backlinks</h3>',
-        '<div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="/' + mdToHtmlPath(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div>'
+        '<div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="' + urlFor(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div>'
       ].join('\n');
       content = '<article><h1>' + note.title + '</h1>' + mdToHtml(note.md, note.rel) + '</article>' + appendix;
     }
 
-    writeFile(htmlOutPath(note.rel), baseTemplate(note.title, content, sidebarHtml, '', '<script src="/assets/site-note.js"></script>'));
+    writeFile(htmlOutPath(note.rel), baseTemplate(note.title, content, sidebarHtml, '', '<script src="/assets/site-note.js?v='+VERSION+'"></script>'));
   }
 
   const warnings = [];
@@ -484,18 +529,18 @@ function buildOnce(){
         + '<div class="card-body">'
         + '<div class="card-title">'+n.title+'</div>'
         + '<div class="card-text">'+(blurb||'<span class="meta">No summary</span>')+'</div>'
-        + '<a class="chip" href="/'+mdToHtmlPath(n.rel)+'">Open</a>'
+        + '<a class="chip" href="'+urlFor(n.rel)+'">Open</a>'
         + '</div></div>';
     });
   };
   const cardsHtml = pickFeatured().join('');
-  const recentList = [...notes.values()].slice(0,12).map(n=>'<li><a href="/' + mdToHtmlPath(n.rel) + '">' + n.title + '</a></li>').join('');
+  const recentList = [...notes.values()].slice(0,12).map(n=>'<li><a href="' + urlFor(n.rel) + '">' + n.title + '</a></li>').join('');
   const homeHtml = [
     '<section class="home-hero card">',
     ' <div class="home-hero-inner">',
     '  <h1 class="home-title">Campaign Vault</h1>',
     '  <p class="home-tag">A storm-cracked world beyond Saltmarsh</p>',
-    '  <p><a class="chip" href="/'+mdToHtmlPath(homeTarget)+'">Open Dashboard</a></p>',
+    '  <p><a class="chip" href="'+urlFor(homeTarget)+'">Open Dashboard</a></p>',
     ' </div>',
     '</section>',
     '<section class="home-arc card">',
@@ -534,9 +579,9 @@ function buildOnce(){
     +   '<textarea id="sessionEditor" placeholder="Type your quick notes here..." style="width:100%;min-height:40vh;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:6px;padding:10px"></textarea>'
     + '</div>'
     + '<div class="toolbar">'
-    + '<a class="chip" href="/' + mdToHtmlPath('00_Campaign/00_Campaign Dashboard.md') + '">Campaign Dashboard</a>'
-    + '<a class="chip" href="/' + mdToHtmlPath('05_Tools & Tables/Random Encounter Generator.md') + '">Encounters</a>'
-    + '<a class="chip" href="/' + mdToHtmlPath('05_Tools & Tables/DM References/02_Campaign Overview and Key points.md') + '">Overview</a>'
+    + '<a class="chip" href="' + urlFor('00_Campaign/00_Campaign Dashboard.md') + '">Campaign Dashboard</a>'
+    + '<a class="chip" href="' + urlFor('05_Tools & Tables/Random Encounter Generator.md') + '">Encounters</a>'
+    + '<a class="chip" href="' + urlFor('05_Tools & Tables/DM References/02_Campaign Overview and Key points.md') + '">Overview</a>'
     + '</div>'
     + '<div class="session-grid" id="pinned"></div>'
     + '<h3>Quick Picks</h3><div class="session-grid" id="quick"></div>'

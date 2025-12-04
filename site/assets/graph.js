@@ -58,7 +58,7 @@
     toggle?.addEventListener('click', ()=>{ right.classList.toggle('collapsed'); });
     pin?.addEventListener('click', ()=>{ const now = !JSON.parse(localStorage.getItem(KEY)||'true'); localStorage.setItem(KEY, JSON.stringify(now)); pin.textContent = now? 'Unpin' : 'Pin'; });
   })();
-  function hrefFor(id){ return '/' + id.replace(/\.md$/i, '.html'); }
+  function hrefFor(id){ return '/' + id.replace(/\\/g,'/').replace(/\.md$/i, '.html').split('/').map(encodeURIComponent).join('/'); }
   function tagChip(t){ const m = (t==='pc'?'tag-pc': t==='npc'?'tag-npc': t==='location'?'tag-location': (t==='arc'||t==='planning')?'tag-arc':''); return '<span class="tag '+m+'">#'+t+'</span>'; }
   function setPreview(n){
     const tags = (n.tags||[]).map(tagChip).join(' ');

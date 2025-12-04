@@ -12,6 +12,7 @@ function svgIcon(name, size=16){
 }
 window.svgIcon = svgIcon;
 const searchBox=byId('searchBox'); const results=byId('searchResults');
+const urlFor=(id)=>'/' + id.replace(/\\/g,'/').replace(/\.md$/i,'.html').split('/').map(encodeURIComponent).join('/');
 let INDEX=[]; let NOTES=[];
 fetch('/search-index.json').then(r=>r.json()).then(d=>INDEX=d);
 fetch('/notes.json').then(r=>r.json()).then(d=>NOTES=d);
@@ -24,7 +25,7 @@ function doSearch(q){
     if(hit) out.push(it); if(out.length>20) break;
   }
   if(!out.length){results.style.display='none';return}
-  results.innerHTML=out.map(function(it){ return '<div><a href="/' + it.id.replace(/\\/g,'/').replace(/\.md$/i,'.html') + '\">' + it.title + '</a> <span class="meta">' + ((it.tags||[]).map(function(t){return '#'+t}).join(' ')) + '</span></div>'; }).join('');
+  results.innerHTML=out.map(function(it){ return '<div><a href="' + ('/' + it.id.replace(/\\/g,'/').replace(/\.md$/i,'.html').split('/').map(encodeURIComponent).join('/')) + '\">' + it.title + '</a> <span class="meta">' + ((it.tags||[]).map(function(t){return '#'+t}).join(' ')) + '</span></div>'; }).join('');
   results.style.display='block';
 }
 if (searchBox) searchBox.addEventListener('input', ()=>doSearch(searchBox.value));
@@ -32,7 +33,7 @@ document.addEventListener('keydown', (e)=>{ if((e.ctrlKey||e.metaKey)&&e.key.toL
 
 const hover=document.createElement('div'); hover.className='hovercard'; document.body.appendChild(hover);
 document.body.addEventListener('mousemove',(e)=>{hover.style.left=(e.pageX+12)+'px'; hover.style.top=(e.pageY+12)+'px';});
-document.body.addEventListener('mouseover',(e)=>{ const a=e.target.closest('a'); if(!a||!a.href||!a.pathname.endsWith('.html')){hover.style.display='none';return} const id=a.pathname.replace(/^\//,'').replace(/\.html$/i,'.md'); const n=NOTES.find(n=>n.id===id); if(n){ hover.innerHTML='<strong>'+n.title+'</strong><div class="meta">'+((n.tags||[]).map(t=>'#'+t).join(' '))+'</div>'; hover.style.display='block'; } });
+document.body.addEventListener('mouseover',(e)=>{ const a=e.target.closest('a'); if(!a||!a.href||!a.pathname.endsWith('.html')){hover.style.display='none';return} const id=decodeURIComponent(a.pathname.replace(/^\//,'')).replace(/\.html$/i,'.md'); const n=NOTES.find(n=>n.id===id); if(n){ hover.innerHTML='<strong>'+n.title+'</strong><div class="meta">'+((n.tags||[]).map(t=>'#'+t).join(' '))+'</div>'; hover.style.display='block'; } });
 document.body.addEventListener('mouseout',()=>{hover.style.display='none'});
 
 window.togglePin=function(rel){ const pins=JSON.parse(localStorage.getItem('pins')||'[]'); const i=pins.indexOf(rel); if(i>=0) pins.splice(i,1); else pins.push(rel); localStorage.setItem('pins', JSON.stringify(pins)); const el=document.querySelector('[data-pin]'); if(el) el.innerHTML = pins.includes(rel)? svgIcon('star-fill'):svgIcon('star'); }
@@ -145,8 +146,8 @@ window.saveSessionSnapshot = async function(){
       const lg=document.getElementById('localGraph');
       if(!lg) return null;
       const rel=lg.dataset.rel; if(!rel) return null;
-      const href='/' + rel.replace(/\\/g,'/').replace(/\\.md$/i,'.html');
-      return document.querySelector('.left a[href="'+href+'"]');
+      const href='/' + rel.replace(/\\/g,'/').replace(/\\.md$/i,'.html').split('/').map(encodeURIComponent).join('/');
+      return [...document.querySelectorAll('.left a')].find(a=>{ try{ return new URL(a.href, location.origin).pathname===href; }catch{ return false; } });
     })();
     if(currentLink){
       let el=currentLink.parentElement;
@@ -169,9 +170,9 @@ window.saveSessionSnapshot = async function(){
   });
   if(btnCollapse) btnCollapse.textContent = 'Collapse all';
   applyState();
-  // Mark active nav item
+  // Mark active nav item (pathname-based)
   const path = location.pathname;
-  const a = document.querySelector('.left a.nav-item[href="'+path+'"]') || document.querySelector('.left a.nav-item[href="'+path.replace(/index\.html$/,'')+'index.html" ]');
+  const a = [...document.querySelectorAll('.left a.nav-item')].find(el=>{ try{ return new URL(el.href, location.origin).pathname===path; }catch{ return false; } });
   if(a){ a.classList.add('active'); let el=a.parentElement; while(el && !el.classList.contains('left')){ if(el.tagName==='DETAILS') el.open=true; el=el.parentElement; } a.scrollIntoView({block:'center'}); }
   // Auto-collapse sections except current
   if(a){ const keep = new Set(); let el=a.parentElement; while(el && !el.classList.contains('left')){ if(el.tagName==='DETAILS') keep.add(el); el=el.parentElement; }
@@ -208,8 +209,8 @@ window.saveSessionSnapshot = async function(){
   })();
   // Recents: store and render
   (function recents(){ const KEY='recents'; function load(){ try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []} } function save(v){ localStorage.setItem(KEY, JSON.stringify(v)); }
-    const id = location.pathname.replace(/^\//,'').replace(/\.html$/i,'.md'); let list=load().filter(x=>x.id!==id); const title=document.title||id; list.unshift({id,title}); list=list.slice(0,12); save(list);
-    const ul=document.getElementById('navRecents'); if(ul){ ul.innerHTML = list.map(r=>'<li><a class="nav-item" href="/'+r.id.replace(/\\/g,'/').replace(/\.md$/i,'.html')+'"><span class="nav-icon">'+svgIcon('clock')+'</span><span class="nav-text">'+r.title+'</span></a></li>').join('') || '<li class="meta">No recents</li>'; }
+    const id = decodeURIComponent(location.pathname.replace(/^\//,'')).replace(/\.html$/i,'.md'); let list=load().filter(x=>x.id!==id); const title=document.title||id; list.unshift({id,title}); list=list.slice(0,12); save(list);
+    const ul=document.getElementById('navRecents'); if(ul){ ul.innerHTML = list.map(r=>'<li><a class="nav-item" href="'+urlFor(r.id)+'"><span class="nav-icon">'+svgIcon('clock')+'</span><span class="nav-text">'+r.title+'</span></a></li>').join('') || '<li class="meta">No recents</li>'; }
   })();
   // Quick Nav filter
   (function quick(){ const q=document.getElementById('navQuick'); if(!q) return; q.addEventListener('input', ()=>{ const term=q.value.trim().toLowerCase(); const items=[...document.querySelectorAll('.left .nav-list a.nav-item')]; items.forEach(a=>{ const t=a.textContent.toLowerCase(); const show = !term || t.includes(term); a.parentElement.style.display = show? '':'none'; }); // Hide empty groups
@@ -270,14 +271,14 @@ window.saveSessionSnapshot = async function(){
   if(!favList) return;
   function loadFav(){ try{ return JSON.parse(localStorage.getItem('favorites')||'[]'); }catch{return []} }
   function saveFav(list){ localStorage.setItem('favorites', JSON.stringify(list)); }
-  function hrefFor(id){ return '/' + id.replace(/\\/g,'/').replace(/\.md$/i,'.html'); }
+  function hrefFor(id){ return '/' + id.replace(/\\/g,'/').replace(/\.md$/i,'.html').split('/').map(encodeURIComponent).join('/'); }
   function render(){
     const list=loadFav();
     favList.innerHTML = list.length? list.map((f,i)=> '<li><a class="nav-item" href="'+hrefFor(f.id)+'"><span class="nav-icon">'+svgIcon('star')+'</span><span class="nav-text">'+(f.title||f.id)+'</span></a> <button class="todo-btn" data-remove="'+i+'" title="Remove">✕</button></li>').join('') : '<li class="meta">No favorites</li>';
     favList.querySelectorAll('button[data-remove]').forEach(b=> b.addEventListener('click',()=>{ const i=parseInt(b.getAttribute('data-remove')); const arr=loadFav(); arr.splice(i,1); saveFav(arr); render(); }));
   }
   window.addFavorite = function(){
-    const id = location.pathname.replace(/^\//,'').replace(/\.html$/i,'.md');
+    const id = decodeURIComponent(location.pathname.replace(/^\//,'')).replace(/\.html$/i,'.md');
     const list=loadFav(); if(list.find(x=>x.id===id)) return;
     // Find title from NOTES if present
     let title=document.title||id;
@@ -370,4 +371,50 @@ window.saveSessionSnapshot = async function(){
   }
   await saveFile(`session-snapshot-${stamp}.json`, json, 'application/json');
   await saveFile(`session-summary-${stamp}.txt`, summary, 'text/plain');
-}
+};
+
+// Image Lightbox for avatars and headers
+(function(){
+  function extractUrl(val){
+    if(!val) return null; const m = String(val).match(/url\((['"]?)(.*?)\1\)/); return m? m[2] : null;
+  }
+  function openLightbox(src){
+    if(!src) return;
+    const preload = new Image();
+    function show(){
+      const backdrop=document.createElement('div'); backdrop.className='lightbox-backdrop';
+      const wrap=document.createElement('div'); wrap.className='lightbox-img';
+      const img=document.createElement('img'); img.alt=''; img.src=src; wrap.appendChild(img);
+      document.body.appendChild(backdrop);
+      document.body.appendChild(wrap);
+      document.body.classList.add('lightbox-open');
+      function cleanup(){ try{document.body.removeChild(wrap);}catch{} try{document.body.removeChild(backdrop);}catch{} document.body.classList.remove('lightbox-open'); document.removeEventListener('keydown', onEsc); }
+      function onEsc(e){ if(e.key==='Escape') cleanup(); }
+      backdrop.addEventListener('click', cleanup);
+      document.addEventListener('keydown', onEsc);
+    }
+    preload.onload = show;
+    preload.onerror = show;
+    preload.src = src;
+  }
+  // Avatar clicks (PC/NPC entity pages)
+  document.querySelectorAll('.entity-avatar img').forEach(img=>{
+    img.addEventListener('click', ()=> openLightbox(img.currentSrc || img.src));
+  });
+  // Entity header background
+  document.querySelectorAll('.entity-header').forEach(h=>{
+    h.addEventListener('click', ()=>{
+      const v = getComputedStyle(h).getPropertyValue('--header');
+      const url = extractUrl(v);
+      if(url) openLightbox(url.replace(/^"|"$/g,''));
+    });
+  });
+  // Generic page header background
+  document.querySelectorAll('.page-header').forEach(h=>{
+    h.addEventListener('click', ()=>{
+      const v = getComputedStyle(h).getPropertyValue('--page-header');
+      const url = extractUrl(v) || extractUrl(getComputedStyle(h, '::before').backgroundImage);
+      if(url) openLightbox(url.replace(/^"|"$/g,''));
+    });
+  });
+})();

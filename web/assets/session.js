@@ -1,4 +1,14 @@
-(async function(){ const notes=await fetch('/notes.json').then(r=>r.json()); const quick=document.getElementById('quick'); const pinned=document.getElementById('pinned'); function card(n){ return '<div class="card"><a href="/' + n.id.replace(/\\/g,'/').replace(/\.md$/i,'.html') + '">' + n.title + '</a><div class="meta">' + ((n.tags||[]).map(function(t){return '#'+t}).join(' ')) + '</div></div>'; } const picks=notes.filter(function(n){ return /^(00_Campaign|01_Arcs|02_World|03_PCs)\//.test(n.id); }).slice(0,24); quick.innerHTML=picks.map(card).join(''); function renderPins(){ const pins=JSON.parse(localStorage.getItem('pins')||'[]'); const items=pins.map(function(id){ return notes.find(function(n){ return n.id===id; }); }).filter(Boolean); pinned.innerHTML = items.length? items.map(card).join('') : '<div class="meta">Pin notes from their pages (star next to title).</div>'; } renderPins(); const I=document.getElementById('diceInput'); const O=document.getElementById('diceOut'); document.getElementById('rollBtn').onclick=function(){ O.textContent=rollDice(I.value||'1d20'); }; })();
+(async function(){
+  const notes=await fetch('/notes.json').then(r=>r.json());
+  const quick=document.getElementById('quick'); const pinned=document.getElementById('pinned');
+  const urlFor=(id)=>'/' + id.replace(/\\/g,'/').replace(/\.md$/i,'.html').split('/').map(encodeURIComponent).join('/');
+  function card(n){ return '<div class="card"><a href="' + urlFor(n.id) + '">' + n.title + '</a><div class="meta">' + ((n.tags||[]).map(function(t){return '#'+t}).join(' ')) + '</div></div>'; }
+  const picks=notes.filter(function(n){ return /^(00_Campaign|01_Arcs|02_World|03_PCs)\//.test(n.id); }).slice(0,24);
+  quick.innerHTML=picks.map(card).join('');
+  function renderPins(){ const pins=JSON.parse(localStorage.getItem('pins')||'[]'); const items=pins.map(function(id){ return notes.find(function(n){ return n.id===id; }); }).filter(Boolean); pinned.innerHTML = items.length? items.map(card).join('') : '<div class="meta">Pin notes from their pages (star next to title).</div>'; }
+  renderPins();
+  const I=document.getElementById('diceInput'); const O=document.getElementById('diceOut'); document.getElementById('rollBtn').onclick=function(){ O.textContent=rollDice(I.value||'1d20'); };
+})();
 
 // Session editor local storage + Cmd/Ctrl+S save hook
 (function(){
