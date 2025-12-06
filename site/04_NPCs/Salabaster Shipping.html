@@ -1,31 +1,356 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Salabaster Shipping</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%277%27 fill=%27%238b5cf6%27/%3E%3C/svg%3E" />
-<link rel="stylesheet" href="/assets/style.css?v=1764848963976" />
-<script>window.SITE_BASE="/"</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Salabaster Shipping</title>
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Ccircle cx=%278%27 cy=%278%27 r=%277%27 fill=%27%238b5cf6%27/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/style.css?v=1764861269285" />
+  <script>window.SITE_BASE = "/"</script>
 </head>
+
 <body>
-<div class="layout">
-  <div class="top">
-    <div class="toolbar">
-      <a class="chip" href="/index.html">Home</a>
-      <a class="chip" href="/graph.html">Graph</a>
-      <a class="chip" href="/tags/index.html">Tags</a>
-      <a class="chip" href="/session.html">Session</a>
+  <div class="layout">
+    <div class="top">
+      <div class="toolbar">
+        <a class="chip" href="/index.html">Hembränt</a>
+        <a class="chip" href="/graph.html">Graph</a>
+        <a class="chip" href="/tags/index.html">Tags</a>
+        <a class="chip" href="/session.html">Session</a>
+      </div>
+      <div class="search"><input id="searchBox" type="search"
+          placeholder="Search titles, headings, #tags (Cmd/Ctrl-K)" /></div>
+      <div id="searchResults" class="hovercard"></div>
     </div>
-    <div class="search"><input id="searchBox" type="search" placeholder="Search titles, headings, #tags (Cmd/Ctrl-K)"/></div>
-    <div id="searchResults" class="hovercard"></div>
-  </div>
-  <aside class="left"><div class="drawer" aria-label="Navigation"><div class="drawer-handle">  <button id="leftDrawerToggle" class="chip" aria-expanded="true" aria-controls="leftDrawer">Nav</button>  <button id="leftDrawerPin" class="chip" aria-pressed="true">Pin</button>  <button id="leftCollapseExpand" class="chip" title="Collapse/Expand All">Collapse all</button></div><div id="leftDrawer" class="drawer-content">  <aside class="sidebar" role="navigation">    <div class="campaign-header"><div class="campaign-title">Devils and Dragons</div></div>    <nav class="nav">      <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg></span><span class="nav-text">Dashboard</span></a>      <div class="nav-breadcrumb"><span id="breadcrumbText" class="meta"></span> <a id="breadcrumbSiblings" href="#" class="chip" title="View siblings">View siblings</a></div>      <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..."/></div>      <details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5h-2v6l5 3 1-1.7-4-2.3V7z"/></svg></span><span>Recents</span></summary><ul id="navRecents" class="nav-list"></ul></details>      <details class="nav-details" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.1 6.3 7 .9-5.1 4.9 1.3 6.9L12 17.8 5.7 21l1.3-6.9L2 9.2l7-.9L12 2z"/></svg></span><span>Favorites</span></summary><ul id="navFav" class="nav-list"></ul></details>      <ul class="nav-sections"><li class="nav-group"><details class="nav-details f-pc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z"/></svg></span><span>Characters</span></summary><div class="nav-mini"><button class="chip nav-only" data-section="Characters" title="Show only this section">Only</button><input class="nav-mini-input" data-section="Characters" placeholder="Filter section..." /></div><ul class="nav-list"><li><a class="nav-item" href="/03_PCs/Extras%20and%20quirks.html"><span class="nav-icon">•</span><span class="nav-text">Extras and quirks</span></a></li><li><a class="nav-item" href="/03_PCs/Nyx.html"><span class="nav-icon">•</span><span class="nav-text">Nyx</span></a></li><li><a class="nav-item" href="/03_PCs/Oceanus.html"><span class="nav-icon">•</span><span class="nav-text">Oceanus</span></a></li><li><a class="nav-item" href="/03_PCs/Odo%20Kneecapper.html"><span class="nav-icon">•</span><span class="nav-text">Odo Kneecapper</span></a></li><li><a class="nav-item" href="/03_PCs/Tenebris.html"><span class="nav-icon">•</span><span class="nav-text">Tenebris</span></a></li><li><a class="nav-item" href="/03_PCs/Tihildur.html"><span class="nav-icon">•</span><span class="nav-text">Tihildur</span></a></li><li><a class="nav-item" href="/03_PCs/Val'krath.html"><span class="nav-icon">•</span><span class="nav-text">Val'krath</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details f-npc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11a4 4 0 10-8 0 4 4 0 008 0zm-11 9c0-3 4-5 7-5s7 2 7 5v2H5v-2z"/></svg></span><span>NPCs</span></summary><div class="nav-mini"><button class="chip nav-only" data-section="NPCs" title="Show only this section">Only</button><input class="nav-mini-input" data-section="NPCs" placeholder="Filter section..." /></div><ul class="nav-list"><li><a class="nav-item" href="/04_NPCs/Agile%20Hand.html"><span class="nav-icon">•</span><span class="nav-text">Agile Hand</span></a></li><li><a class="nav-item" href="/04_NPCs/Captain%20Xendros.html"><span class="nav-icon">•</span><span class="nav-text">Captain Xendros</span></a></li><li><a class="nav-item" href="/04_NPCs/Cyrieth%20Nerolien.html"><span class="nav-icon">•</span><span class="nav-text">Cyrieth Nerolien</span></a></li><li><a class="nav-item" href="/04_NPCs/Daddy%20Salabaster.html"><span class="nav-icon">•</span><span class="nav-text">Daddy Salabaster</span></a></li><li><a class="nav-item" href="/04_NPCs/Dusk.html"><span class="nav-icon">•</span><span class="nav-text">Dusk</span></a></li><li><a class="nav-item" href="/04_NPCs/Gellan%20Primewater.html"><span class="nav-icon">•</span><span class="nav-text">Gellan Primewater</span></a></li><li><a class="nav-item" href="/04_NPCs/Kedjou.html"><span class="nav-icon">•</span><span class="nav-text">Kedjou</span></a></li><li><a class="nav-item" href="/04_NPCs/Lysa%20_Ledger_%20Feld.html"><span class="nav-icon">•</span><span class="nav-text">Lysa _Ledger_ Feld</span></a></li><li><a class="nav-item" href="/04_NPCs/Raven%20Queen.html"><span class="nav-icon">•</span><span class="nav-text">Raven Queen</span></a></li><li><a class="nav-item" href="/04_NPCs/Salabaster%20Shipping.html"><span class="nav-icon">•</span><span class="nav-text">Salabaster Shipping</span></a></li><li><a class="nav-item" href="/04_NPCs/Saltmarsh%20Council.html"><span class="nav-icon">•</span><span class="nav-text">Saltmarsh Council</span></a></li><li><a class="nav-item" href="/04_NPCs/Sanbalet.html"><span class="nav-icon">•</span><span class="nav-text">Sanbalet</span></a></li><li><a class="nav-item" href="/04_NPCs/Scarlet%20Brotherhood.html"><span class="nav-icon">•</span><span class="nav-text">Scarlet Brotherhood</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details f-location" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c2.9 0 5.4 2.4 6.5 6H5.5C6.6 6.4 9.1 4 12 4zm0 16c-2.9 0-5.4-2.4-6.5-6h13c-1.1 3.6-3.6 6-6.5 6z"/></svg></span><span>World</span></summary><div class="nav-mini"><button class="chip nav-only" data-section="World" title="Show only this section">Only</button><input class="nav-mini-input" data-section="World" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-location" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Locations</span></summary><ul class="nav-list"><li><a class="nav-item" href="/02_World/Locations/Bent%20Willow%20Tavern.html"><span class="nav-icon">•</span><span class="nav-text">Bent Willow Tavern</span></a></li><li><a class="nav-item" href="/02_World/Locations/Old%20King's%20Road.html"><span class="nav-icon">•</span><span class="nav-text">Old King's Road</span></a></li><li><a class="nav-item" href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html"><span class="nav-icon">•</span><span class="nav-text">Road Through the Feywild Leak</span></a></li><li><a class="nav-item" href="/02_World/Locations/Saltmarsh.html"><span class="nav-icon">•</span><span class="nav-text">Saltmarsh</span></a></li><li><a class="nav-item" href="/02_World/Locations/Stormwreck%20Island.html"><span class="nav-icon">•</span><span class="nav-text">Stormwreck Island</span></a></li></ul></details></li></ul></details></li><li class="nav-group"><details class="nav-details f-arc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm5 5l-3 8-8 3 3-8 8-3zM10 10l-1 2 2-1 1-2-2 1z"/></svg></span><span>Arcs</span></summary><div class="nav-mini"><button class="chip nav-only" data-section="Arcs" title="Show only this section">Only</button><input class="nav-mini-input" data-section="Arcs" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-arc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>GoSM</span></summary><ul class="nav-list"><li><a class="nav-item" href="/01_Arcs/GoSM/Factions%20and%20Politics.html"><span class="nav-icon">•</span><span class="nav-text">Factions and Politics</span></a></li><li><a class="nav-item" href="/01_Arcs/GoSM/Generally%2C%20GoSM.html"><span class="nav-icon">•</span><span class="nav-text">Generally, GoSM</span></a></li><li><a class="nav-item" href="/01_Arcs/GoSM/Masterpiece%20Imbroglio.html"><span class="nav-icon">•</span><span class="nav-text">Masterpiece Imbroglio</span></a></li></ul></details></li><li class="nav-section"><details class="nav-details f-arc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>The Feywild</span></summary><ul class="nav-list"><li class="nav-section"><details class="nav-details f-arc" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Rumors</span></summary><ul class="nav-list"><li><a class="nav-item" href="/01_Arcs/The%20Feywild/Rumors/00_Rumor%20Organization%20Guide.html"><span class="nav-icon">•</span><span class="nav-text">Rumor Organization Guide</span></a></li><li><a class="nav-item" href="/01_Arcs/The%20Feywild/Rumors/01_Pre-Session%2001%20Rumors.html"><span class="nav-icon">•</span><span class="nav-text">Pre-Session 01 Rumors</span></a></li><li><a class="nav-item" href="/01_Arcs/The%20Feywild/Rumors/02_Ongoing%20Rumor%20Threads.html"><span class="nav-icon">•</span><span class="nav-text">Ongoing Rumor Threads</span></a></li></ul></details></li><li><a class="nav-item" href="/01_Arcs/The%20Feywild/Feywild%20Summary.html"><span class="nav-icon">•</span><span class="nav-text">Feywild Summary</span></a></li><li><a class="nav-item" href="/01_Arcs/The%20Feywild/the%20trek.html"><span class="nav-icon">•</span><span class="nav-text">the trek</span></a></li></ul></details></li><li><a class="nav-item" href="/01_Arcs/01_Arcs%20Overview.html"><span class="nav-icon">•</span><span class="nav-text">01_Arcs Overview</span></a></li><li><a class="nav-item" href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html"><span class="nav-icon">•</span><span class="nav-text">Arc - Cyrieth's Web</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h11l-1 3h6v11H4V4zm2 2v9h12V9h-5l1-3H6z"/></svg></span><span>Campaign</span></summary><div class="nav-mini"><button class="chip nav-only" data-section="Campaign" title="Show only this section">Only</button><input class="nav-mini-input" data-section="Campaign" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z"/></svg></span><span>03_Sessions</span></summary><ul class="nav-list"><li><a class="nav-item" href="/00_Campaign/03_Sessions/01%20Finishing%20up%20in%20Saltmarsh.html"><span class="nav-icon">•</span><span class="nav-text">01 Finishing up in Saltmarsh</span></a></li></ul></details></li><li><a class="nav-item" href="/00_Campaign/00_Campaign%20Dashboard.html"><span class="nav-icon">•</span><span class="nav-text">00_Campaign Dashboard</span></a></li><li><a class="nav-item" href="/00_Campaign/01_Session%20notes.html"><span class="nav-icon">•</span><span class="nav-text">01_Session notes</span></a></li></ul></details></li><li class="nav-group"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 14l-5-5 2-2 3 3 2-2-3-3 1-1-2-2-3 3-2-2-2 2 2 2-9 9v4h4l9-9 2 2z"/></svg></span><span>Tools</span></summary><div class="nav-mini"><button class="chip nav-only" data-section="Tools" title="Show only this section">Only</button><input class="nav-mini-input" data-section="Tools" placeholder="Filter section..." /></div><ul class="nav-list"><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>DM References</span></summary><ul class="nav-list"><li><a class="nav-item" href="/05_Tools%20%26%20Tables/DM%20References/02_Campaign%20Overview%20and%20Key%20points.html"><span class="nav-icon">•</span><span class="nav-text">02_Campaign Overview and Key points</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/DM%20References/House%20Rules.html"><span class="nav-icon">•</span><span class="nav-text">House Rules</span></a></li></ul></details></li><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Items & More</span></summary><ul class="nav-list"><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Items%20%26%20More/Aurumvorax.html"><span class="nav-icon">•</span><span class="nav-text">Aurumvorax</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html"><span class="nav-icon">•</span><span class="nav-text">Bloodwell Vial</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Items%20%26%20More/Call%20Lightning.html"><span class="nav-icon">•</span><span class="nav-text">Call Lightning</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html"><span class="nav-icon">•</span><span class="nav-text">Dao</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dawn%20Incarnate.html"><span class="nav-icon">•</span><span class="nav-text">Dawn Incarnate</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html"><span class="nav-icon">•</span><span class="nav-text">Sahuagin</span></a></li></ul></details></li><li class="nav-section"><details class="nav-details f-other" open><summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Shops</span></summary><ul class="nav-list"><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Shops/Clothes%20and%20Accessories.html"><span class="nav-icon">•</span><span class="nav-text">Clothes and Accessories</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Shops/Fireworks%20and%20Explosives.html"><span class="nav-icon">•</span><span class="nav-text">Fireworks and Explosives</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Shops/Potions.html"><span class="nav-icon">•</span><span class="nav-text">Potions</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html"><span class="nav-icon">•</span><span class="nav-text">Shops Index</span></a></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Shops/Weapons%20and%20Shields.html"><span class="nav-icon">•</span><span class="nav-text">Weapons and Shields</span></a></li></ul></details></li><li><a class="nav-item" href="/05_Tools%20%26%20Tables/Random%20Encounter%20Generator.html"><span class="nav-icon">•</span><span class="nav-text">Random Encounter Generator</span></a></li></ul></details></li></ul>    </nav>  </aside></div></div></aside>
-  <main class="main"><article class="entity-page">
+    <aside class="left">
+      <div class="drawer" aria-label="Navigation">
+        <div class="drawer-handle"> <button id="leftDrawerToggle" class="chip" aria-expanded="true"
+            aria-controls="leftDrawer">Nav</button> <button id="leftDrawerPin" class="chip"
+            aria-pressed="true">Pin</button> <button id="leftCollapseExpand" class="chip"
+            title="Collapse/Expand All">Collapse all</button></div>
+        <div id="leftDrawer" class="drawer-content">
+          <aside class="sidebar" role="navigation">
+            <div class="campaign-header">
+              <div class="campaign-title">Feywild Adventures</div>
+            </div>
+            <nav class="nav"> <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                    aria-hidden="true">
+                    <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z" />
+                  </svg></span><span class="nav-text">Dashboard</span></a>
+              <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..." /></div>
+              <details class="nav-details" open>
+                <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                      height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2l3.1 6.3 7 .9-5.1 4.9 1.3 6.9L12 17.8 5.7 21l1.3-6.9L2 9.2l7-.9L12 2z" />
+                    </svg></span><span>Favorites</span></summary>
+                <ul id="navFav" class="nav-list"></ul>
+              </details>
+              <ul class="nav-sections">
+                <li class="nav-group">
+                  <details class="nav-details f-pc" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                          height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z" />
+                        </svg></span><span>Characters</span></summary>
+                    <div class="nav-mini"><button class="chip nav-only" data-section="Characters"
+                        title="Show only this section">Only</button><input class="nav-mini-input"
+                        data-section="Characters" placeholder="Filter section..." /></div>
+                    <ul class="nav-list">
+                      <li><a class="nav-item" href="/03_PCs/Extras%20and%20quirks.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Extras and quirks</span></a></li>
+                      <li><a class="nav-item" href="/03_PCs/Nyx.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Nyx</span></a></li>
+                      <li><a class="nav-item" href="/03_PCs/Oceanus.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Oceanus</span></a></li>
+                      <li><a class="nav-item" href="/03_PCs/Odo%20Kneecapper.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Odo Kneecapper</span></a></li>
+                      <li><a class="nav-item" href="/03_PCs/Tenebris.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Tenebris</span></a></li>
+                      <li><a class="nav-item" href="/03_PCs/Tihildur.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Tihildur</span></a></li>
+                      <li><a class="nav-item" href="/03_PCs/Val'krath.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Val'krath</span></a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li class="nav-group">
+                  <details class="nav-details f-npc" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                          height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M16 11a4 4 0 10-8 0 4 4 0 008 0zm-11 9c0-3 4-5 7-5s7 2 7 5v2H5v-2z" />
+                        </svg></span><span>NPCs</span></summary>
+                    <div class="nav-mini"><button class="chip nav-only" data-section="NPCs"
+                        title="Show only this section">Only</button><input class="nav-mini-input" data-section="NPCs"
+                        placeholder="Filter section..." /></div>
+                    <ul class="nav-list">
+                      <li><a class="nav-item" href="/04_NPCs/Agile%20Hand.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Agile Hand</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Captain%20Xendros.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Captain Xendros</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Cyrieth%20Nerolien.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Cyrieth Nerolien</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Daddy%20Salabaster.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Daddy Salabaster</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Dusk.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Dusk</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Gellan%20Primewater.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Gellan Primewater</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Kedjou.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Kedjou</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Lysa%20_Ledger_%20Feld.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Lysa _Ledger_ Feld</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Raven%20Queen.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Raven Queen</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Salabaster%20Shipping.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Salabaster Shipping</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Saltmarsh%20Council.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Saltmarsh Council</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Sanbalet.html"><span class="nav-icon">•</span><span
+                            class="nav-text">Sanbalet</span></a></li>
+                      <li><a class="nav-item" href="/04_NPCs/Scarlet%20Brotherhood.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Scarlet Brotherhood</span></a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li class="nav-group">
+                  <details class="nav-details f-location" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                          height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path
+                            d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c2.9 0 5.4 2.4 6.5 6H5.5C6.6 6.4 9.1 4 12 4zm0 16c-2.9 0-5.4-2.4-6.5-6h13c-1.1 3.6-3.6 6-6.5 6z" />
+                        </svg></span><span>World</span></summary>
+                    <div class="nav-mini"><button class="chip nav-only" data-section="World"
+                        title="Show only this section">Only</button><input class="nav-mini-input" data-section="World"
+                        placeholder="Filter section..." /></div>
+                    <ul class="nav-list">
+                      <li class="nav-section">
+                        <details class="nav-details f-location" open>
+                          <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
+                              </svg></span><span>Locations</span></summary>
+                          <ul class="nav-list">
+                            <li><a class="nav-item" href="/02_World/Locations/Bent%20Willow%20Tavern.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Bent Willow Tavern</span></a></li>
+                            <li><a class="nav-item" href="/02_World/Locations/Old%20King's%20Road.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Old King's Road</span></a></li>
+                            <li><a class="nav-item"
+                                href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Road Through the Feywild
+                                  Leak</span></a></li>
+                            <li><a class="nav-item" href="/02_World/Locations/Saltmarsh.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Saltmarsh</span></a></li>
+                            <li><a class="nav-item" href="/02_World/Locations/Stormwreck%20Island.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Stormwreck Island</span></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li class="nav-group">
+                  <details class="nav-details f-arc" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                          height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path
+                            d="M12 2a10 10 0 100 20 10 10 0 000-20zm5 5l-3 8-8 3 3-8 8-3zM10 10l-1 2 2-1 1-2-2 1z" />
+                        </svg></span><span>Arcs</span></summary>
+                    <div class="nav-mini"><button class="chip nav-only" data-section="Arcs"
+                        title="Show only this section">Only</button><input class="nav-mini-input" data-section="Arcs"
+                        placeholder="Filter section..." /></div>
+                    <ul class="nav-list">
+                      <li class="nav-section">
+                        <details class="nav-details f-arc" open>
+                          <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
+                              </svg></span><span>GoSM</span></summary>
+                          <ul class="nav-list">
+                            <li><a class="nav-item" href="/01_Arcs/GoSM/Factions%20and%20Politics.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Factions and Politics</span></a></li>
+                            <li><a class="nav-item" href="/01_Arcs/GoSM/Generally%2C%20GoSM.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Generally, GoSM</span></a></li>
+                            <li><a class="nav-item" href="/01_Arcs/GoSM/Masterpiece%20Imbroglio.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Masterpiece Imbroglio</span></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li class="nav-section">
+                        <details class="nav-details f-arc" open>
+                          <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
+                              </svg></span><span>The Feywild</span></summary>
+                          <ul class="nav-list">
+                            <li class="nav-section">
+                              <details class="nav-details f-arc" open>
+                                <summary class="nav-label"><span class="nav-icon"><svg
+                                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                      fill="currentColor" aria-hidden="true">
+                                      <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
+                                    </svg></span><span>Rumors</span></summary>
+                                <ul class="nav-list">
+                                  <li><a class="nav-item"
+                                      href="/01_Arcs/The%20Feywild/Rumors/00_Rumor%20Organization%20Guide.html"><span
+                                        class="nav-icon">•</span><span class="nav-text">Rumor Organization
+                                        Guide</span></a></li>
+                                  <li><a class="nav-item"
+                                      href="/01_Arcs/The%20Feywild/Rumors/01_Pre-Session%2001%20Rumors.html"><span
+                                        class="nav-icon">•</span><span class="nav-text">Pre-Session 01 Rumors</span></a>
+                                  </li>
+                                  <li><a class="nav-item"
+                                      href="/01_Arcs/The%20Feywild/Rumors/02_Ongoing%20Rumor%20Threads.html"><span
+                                        class="nav-icon">•</span><span class="nav-text">Ongoing Rumor Threads</span></a>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                            <li><a class="nav-item" href="/01_Arcs/The%20Feywild/Feywild%20Summary.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Feywild Summary</span></a></li>
+                            <li><a class="nav-item" href="/01_Arcs/The%20Feywild/the%20trek.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">the trek</span></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li><a class="nav-item" href="/01_Arcs/01_Arcs%20Overview.html"><span
+                            class="nav-icon">•</span><span class="nav-text">01_Arcs Overview</span></a></li>
+                      <li><a class="nav-item" href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Arc - Cyrieth's Web</span></a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li class="nav-group">
+                  <details class="nav-details f-other" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                          height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M4 4h11l-1 3h6v11H4V4zm2 2v9h12V9h-5l1-3H6z" />
+                        </svg></span><span>Campaign</span></summary>
+                    <div class="nav-mini"><button class="chip nav-only" data-section="Campaign"
+                        title="Show only this section">Only</button><input class="nav-mini-input"
+                        data-section="Campaign" placeholder="Filter section..." /></div>
+                    <ul class="nav-list">
+                      <li class="nav-section">
+                        <details class="nav-details f-other" open>
+                          <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z" />
+                              </svg></span><span>03_Sessions</span></summary>
+                          <ul class="nav-list">
+                            <li><a class="nav-item"
+                                href="/00_Campaign/03_Sessions/01%20Finishing%20up%20in%20Saltmarsh.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">01 Finishing up in
+                                  Saltmarsh</span></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li><a class="nav-item" href="/00_Campaign/00_Campaign%20Dashboard.html"><span
+                            class="nav-icon">•</span><span class="nav-text">00_Campaign Dashboard</span></a></li>
+                      <li><a class="nav-item" href="/00_Campaign/01_Session%20notes.html"><span
+                            class="nav-icon">•</span><span class="nav-text">01_Session notes</span></a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li class="nav-group">
+                  <details class="nav-details f-other" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                          height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M21 14l-5-5 2-2 3 3 2-2-3-3 1-1-2-2-3 3-2-2-2 2 2 2-9 9v4h4l9-9 2 2z" />
+                        </svg></span><span>Tools</span></summary>
+                    <div class="nav-mini"><button class="chip nav-only" data-section="Tools"
+                        title="Show only this section">Only</button><input class="nav-mini-input" data-section="Tools"
+                        placeholder="Filter section..." /></div>
+                    <ul class="nav-list">
+                      <li class="nav-section">
+                        <details class="nav-details f-other" open>
+                          <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
+                              </svg></span><span>DM References</span></summary>
+                          <ul class="nav-list">
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/DM%20References/02_Campaign%20Overview%20and%20Key%20points.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">02_Campaign Overview and Key
+                                  points</span></a></li>
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/DM%20References/House%20Rules.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">House Rules</span></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li class="nav-section">
+                        <details class="nav-details f-other" open>
+                          <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
+                              </svg></span><span>Items & More</span></summary>
+                          <ul class="nav-list">
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Items%20%26%20More/Aurumvorax.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Aurumvorax</span></a></li>
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Bloodwell Vial</span></a></li>
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Items%20%26%20More/Call%20Lightning.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Call Lightning</span></a></li>
+                            <li><a class="nav-item" href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Dao</span></a></li>
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dawn%20Incarnate.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Dawn Incarnate</span></a></li>
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Sahuagin</span></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li class="nav-section">
+                        <details class="nav-details f-other" open>
+                          <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
+                              </svg></span><span>Shops</span></summary>
+                          <ul class="nav-list">
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Shops/Clothes%20and%20Accessories.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Clothes and Accessories</span></a>
+                            </li>
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Shops/Fireworks%20and%20Explosives.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Fireworks and Explosives</span></a>
+                            </li>
+                            <li><a class="nav-item" href="/05_Tools%20%26%20Tables/Shops/Potions.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Potions</span></a></li>
+                            <li><a class="nav-item" href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Shops Index</span></a></li>
+                            <li><a class="nav-item"
+                                href="/05_Tools%20%26%20Tables/Shops/Weapons%20and%20Shields.html"><span
+                                  class="nav-icon">•</span><span class="nav-text">Weapons and Shields</span></a></li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li><a class="nav-item" href="/05_Tools%20%26%20Tables/Random%20Encounter%20Generator.html"><span
+                            class="nav-icon">•</span><span class="nav-text">Random Encounter Generator</span></a></li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </nav>
+          </aside>
+        </div>
+      </div>
+    </aside>
+    <main class="main">
+      <div id="breadcrumbText" class="main-breadcrumb meta"></div>
+      <article class="entity-page">
         <section class="entity">
-          <div class="entity-header" style="--header:url('/assets/ph-header.svg')">
+          <div class="entity-header" style="--header:url('/assets/tihildur-header.png')">
+            <button class="bookmark-btn" data-rel="04_NPCs/Salabaster Shipping.md" title="Toggle favorite"></button>
             <div class="entity-id">
-              <div class="entity-avatar"><img src="/assets/ph-avatar.svg" alt="Salabaster Shipping"></div>
+              <div class="entity-avatar"><img src="/assets/salabaster.png" alt="Salabaster Shipping"></div>
               <div class="entity-meta">
                 <div class="entity-name">Salabaster Shipping</div>
                 <div class="entity-sub">Business Structure</div>
@@ -39,46 +364,192 @@
           <a href="#connections">Connections</a>
           <a href="#abilities">Abilities</a>
           <a href="#inventory">Inventory</a>
-          
-        </nav><div class="entity-body"><section id="overview"><h2>Overview</h2><p>#organization <a class="tag" href="/tags/index.html#faction">#faction</a></p><p>Related NPCs: <a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink" data-target="Daddy Salabaster">Daddy Salabaster</a>, <a href="/03_PCs/Tihildur.html" class="wikilink" data-target="Tihildur">Tihildur</a>, <a href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a>, <a href="/04_NPCs/Gellan%20Primewater.html" class="wikilink" data-target="Gellan Primewater">Gellan Primewater</a></p><p>Locations: <a href="/02_World/Locations/Saltmarsh.html" class="wikilink" data-target="Saltmarsh">Saltmarsh</a></p>
-<p>Major shipping company with both legitimate operations and extensive smuggling network.</p>
 
-<h2>Business Structure</h2><ul><li><strong>Owner</strong>: <a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink" data-target="Daddy Salabaster">Daddy Salabaster</a> - cold, calculating businessman</li><li><strong>Heir</strong>: <a href="/03_PCs/Tihildur.html" class="wikilink" data-target="Tihildur">Tihildur</a> - largely unaware of smuggling operations</li><li><strong>Estranged Partner</strong>: <a href="/04_NPCs/Cyrieth%20Nerolien.html" class="wikilink" data-target="Cyrieth Nerolien">Cyrieth Nerolien</a> - former ally, now distanced due to overt criminality</li>
-</ul>
-<h2>Operations</h2><ul><li><strong>Legitimate</strong>: Major shipping empire covering coastal trade routes</li><li><strong>Illegitimate</strong>: Smuggling network using intermediaries like <a href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a></li><li><strong>Goods</strong>: Range from mundane contraband to black-market alchemical supplies and magical artifacts</li>
-</ul>
-<h2>Key Relationships</h2><ul><li><strong><a href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a></strong>: Mid-level smuggling operator with plausible deniability</li><li><strong><a href="/04_NPCs/Gellan%20Primewater.html" class="wikilink" data-target="Gellan Primewater">Gellan Primewater</a></strong>: High-value client for both legal and illegal services</li><li><strong><a href="/04_NPCs/Scarlet%20Brotherhood.html" class="wikilink" data-target="Scarlet Brotherhood">Scarlet Brotherhood</a></strong>: Potential target due to business practices undermining Suloise nobility</li>
-</ul>
-<h2>Political Position</h2><ul><li>Essential to <a href="/02_World/Locations/Saltmarsh.html" class="wikilink" data-target="Saltmarsh">Saltmarsh</a>'s economy</li><li>Marriage and business alliances undermine traditional Suloise noble houses</li><li>Creates tension with <a href="/04_NPCs/Scarlet%20Brotherhood.html" class="wikilink" data-target="Scarlet Brotherhood">Scarlet Brotherhood</a> agenda</li>
-</ul>
-<h2>Family Dynamics</h2><ul><li><a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink" data-target="Daddy Salabaster">Daddy Salabaster</a> wants to bring <a href="/03_PCs/Tihildur.html" class="wikilink" data-target="Tihildur">Tihildur</a> into full knowledge of operations</li><li><a href="/03_PCs/Tihildur.html" class="wikilink" data-target="Tihildur">Tihildur</a>'s recent interference in <a href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a> operations created complications</li><li>Risk of exposure could damage relationships with clients like <a href="/04_NPCs/Gellan%20Primewater.html" class="wikilink" data-target="Gellan Primewater">Gellan Primewater</a></li><li>Considering ultimatum for <a href="/03_PCs/Tihildur.html" class="wikilink" data-target="Tihildur">Tihildur</a>: join fully or be cut off from family resources</li></ul></section><section id="connections"><h2>Connections</h2><div class="conn"><h3>Links</h3><ul><li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li><li><a href="/03_PCs/Tihildur.html">Tihildur</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li><li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li><li><a href="/03_PCs/Tihildur.html">Tihildur</a></li><li><a href="/04_NPCs/Cyrieth%20Nerolien.html">Cyrieth Nerolien</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li><li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li><li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li><li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li><li><a href="/03_PCs/Tihildur.html">Tihildur</a></li><li><a href="/03_PCs/Tihildur.html">Tihildur</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li><li><a href="/03_PCs/Tihildur.html">Tihildur</a></li></ul><h3>Backlinks</h3><ul><li><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a></li><li><a href="/04_NPCs/Agile%20Hand.html">Agile Hand</a></li><li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li><li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li><li><a href="/03_PCs/Tihildur.html">Tihildur</a></li><li><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a></li><li><a href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a></li><li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li></ul></div></section><section id="abilities"><h2>Abilities</h2><div class="meta">Add an "Abilities" section in the note to populate.</div></section><section id="inventory"><h2>Inventory</h2><div class="meta">Add an "Inventory" section in the note to populate.</div></section></div></article><h2>Local Graph</h2><div class="graph-panel" id="localGraph" data-rel="04_NPCs/Salabaster Shipping.md"></div><h3>Backlinks</h3><div class="backlinks"><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a><a href="/04_NPCs/Agile%20Hand.html">Agile Hand</a><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a><a href="/04_NPCs/Sanbalet.html">Sanbalet</a><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a><a href="/03_PCs/Tihildur.html">Tihildur</a><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a><a href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div></main>
-  <aside class="right">
-    <div class="drawer" aria-label="Tools">
-      <div class="drawer-handle">
-        <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Tools</button>
-        <button id="drawerPin" class="chip" aria-pressed="true">Pin</button>
-        <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
-      </div>
-      <div id="drawerContent" class="drawer-content">
-        <div id="drawerTop"></div>
-        <h3>To-Do</h3>
-        <div id="todoBox" class="card" aria-label="Session To-Do">
-          <form id="todoForm" class="todo-form" autocomplete="off">
-            <label class="sr-only" for="todoInput">Add a task</label>
-            <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter"/>
-            <button type="submit" class="todo-add">Add</button>
-          </form>
-          <div class="todo-actions">
-            <button id="todoClearDone" class="chip" title="Clear completed">Clear Completed</button>
+        </nav>
+        <div class="entity-body">
+          <section id="overview">
+            <h2>Overview</h2>
+            <p>#organization <a class="tag" href="/tags/index.html#faction">#faction</a></p>
+            <p>Related NPCs: <a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink"
+                data-target="Daddy Salabaster">Daddy Salabaster</a>, <a href="/03_PCs/Tihildur.html" class="wikilink"
+                data-target="Tihildur">Tihildur</a>, <a href="/04_NPCs/Sanbalet.html" class="wikilink"
+                data-target="Sanbalet">Sanbalet</a>, <a href="/04_NPCs/Gellan%20Primewater.html" class="wikilink"
+                data-target="Gellan Primewater">Gellan Primewater</a></p>
+            <p>Locations: <a href="/02_World/Locations/Saltmarsh.html" class="wikilink"
+                data-target="Saltmarsh">Saltmarsh</a></p>
+            <p>Major shipping company with both legitimate operations and extensive smuggling network.</p>
+
+            <h2>Business Structure</h2>
+            <ul>
+              <li><strong>Owner</strong>: <a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink"
+                  data-target="Daddy Salabaster">Daddy Salabaster</a> - cold, calculating businessman</li>
+              <li><strong>Heir</strong>: <a href="/03_PCs/Tihildur.html" class="wikilink"
+                  data-target="Tihildur">Tihildur</a> - largely unaware of smuggling operations</li>
+              <li><strong>Estranged Partner</strong>: <a href="/04_NPCs/Cyrieth%20Nerolien.html" class="wikilink"
+                  data-target="Cyrieth Nerolien">Cyrieth Nerolien</a> - former ally, now distanced due to overt
+                criminality</li>
+            </ul>
+            <h2>Operations</h2>
+            <ul>
+              <li><strong>Legitimate</strong>: Major shipping empire covering coastal trade routes</li>
+              <li><strong>Illegitimate</strong>: Smuggling network using intermediaries like <a
+                  href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a></li>
+              <li><strong>Goods</strong>: Range from mundane contraband to black-market alchemical supplies and magical
+                artifacts</li>
+            </ul>
+            <h2>Key Relationships</h2>
+            <ul>
+              <li><strong><a href="/04_NPCs/Sanbalet.html" class="wikilink"
+                    data-target="Sanbalet">Sanbalet</a></strong>: Mid-level smuggling operator with plausible
+                deniability</li>
+              <li><strong><a href="/04_NPCs/Gellan%20Primewater.html" class="wikilink"
+                    data-target="Gellan Primewater">Gellan Primewater</a></strong>: High-value client for both legal and
+                illegal services</li>
+              <li><strong><a href="/04_NPCs/Scarlet%20Brotherhood.html" class="wikilink"
+                    data-target="Scarlet Brotherhood">Scarlet Brotherhood</a></strong>: Potential target due to business
+                practices undermining Suloise nobility</li>
+            </ul>
+            <h2>Political Position</h2>
+            <ul>
+              <li>Essential to <a href="/02_World/Locations/Saltmarsh.html" class="wikilink"
+                  data-target="Saltmarsh">Saltmarsh</a>'s economy</li>
+              <li>Marriage and business alliances undermine traditional Suloise noble houses</li>
+              <li>Creates tension with <a href="/04_NPCs/Scarlet%20Brotherhood.html" class="wikilink"
+                  data-target="Scarlet Brotherhood">Scarlet Brotherhood</a> agenda</li>
+            </ul>
+            <h2>Family Dynamics</h2>
+            <ul>
+              <li><a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink" data-target="Daddy Salabaster">Daddy
+                  Salabaster</a> wants to bring <a href="/03_PCs/Tihildur.html" class="wikilink"
+                  data-target="Tihildur">Tihildur</a> into full knowledge of operations</li>
+              <li><a href="/03_PCs/Tihildur.html" class="wikilink" data-target="Tihildur">Tihildur</a>'s recent
+                interference in <a href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a>
+                operations created complications</li>
+              <li>Risk of exposure could damage relationships with clients like <a
+                  href="/04_NPCs/Gellan%20Primewater.html" class="wikilink" data-target="Gellan Primewater">Gellan
+                  Primewater</a></li>
+              <li>Considering ultimatum for <a href="/03_PCs/Tihildur.html" class="wikilink"
+                  data-target="Tihildur">Tihildur</a>: join fully or be cut off from family resources</li>
+            </ul>
+          </section>
+          <section id="connections">
+            <h2>Connections</h2>
+            <div class="conn">
+              <h3>Links</h3>
+              <ul>
+                <li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li>
+                <li><a href="/03_PCs/Tihildur.html">Tihildur</a></li>
+                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                <li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li>
+                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                <li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li>
+                <li><a href="/03_PCs/Tihildur.html">Tihildur</a></li>
+                <li><a href="/04_NPCs/Cyrieth%20Nerolien.html">Cyrieth Nerolien</a></li>
+                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                <li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li>
+                <li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li>
+                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                <li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li>
+                <li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li>
+                <li><a href="/03_PCs/Tihildur.html">Tihildur</a></li>
+                <li><a href="/03_PCs/Tihildur.html">Tihildur</a></li>
+                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                <li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li>
+                <li><a href="/03_PCs/Tihildur.html">Tihildur</a></li>
+              </ul>
+              <h3>Backlinks</h3>
+              <ul>
+                <li><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a></li>
+                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a></li>
+                <li><a href="/04_NPCs/Agile%20Hand.html">Agile Hand</a></li>
+                <li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li>
+                <li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li>
+                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                <li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li>
+                <li><a href="/03_PCs/Tihildur.html">Tihildur</a></li>
+                <li><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a></li>
+                <li><a href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a></li>
+                <li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li>
+              </ul>
+            </div>
+          </section>
+          <section id="abilities">
+            <h2>Abilities</h2>
+            <div class="meta">Add an "Abilities" section in the note to populate.</div>
+          </section>
+          <section id="inventory">
+            <h2>Inventory</h2>
+            <div class="meta">Add an "Inventory" section in the note to populate.</div>
+          </section>
+        </div>
+      </article>
+      <details class="appendix" id="sec-local">
+        <summary>Local Graph</summary>
+        <div class="graph-panel" id="localGraph" data-rel="04_NPCs/Salabaster Shipping.md"></div>
+      </details>
+      <details class="appendix" id="sec-backlinks">
+        <summary>Backlinks</summary>
+        <div class="backlinks"><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a><a
+            href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a><a
+            href="/04_NPCs/Agile%20Hand.html">Agile Hand</a><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy
+            Salabaster</a><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a><a
+            href="/04_NPCs/Sanbalet.html">Sanbalet</a><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet
+            Brotherhood</a><a href="/03_PCs/Tihildur.html">Tihildur</a><a
+            href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a><a
+            href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a><a
+            href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div>
+      </details>
+    </main>
+    <aside class="right">
+      <div class="drawer" aria-label="Tools">
+        <div class="drawer-handle">
+          <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Close</button>
+          <button id="drawerPin" class="chip" aria-pressed="true" title="Pin panel"></button>
+          <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
+        </div>
+        <div id="drawerContent" class="drawer-content">
+          <div id="drawerTop"></div>
+          <div class="right-split">
+            <div id="paneTop" class="pane">
+              <div class="pane-body" data-pane="top">
+                <div class="card">
+                  <h3 style="margin:0">Notepad</h3>
+                </div>
+                <div class="card"><textarea id="toolNotepad" placeholder="Quick notes..."
+                    style="width:100%;min-height:26vh;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:6px;padding:10px"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="pane-resizer-h" aria-hidden="true"></div>
+            <div id="paneBottom" class="pane">
+              <div class="pane-body" data-pane="bottom">
+                <div class="card">
+                  <h3 style="margin:0">To-Do</h3>
+                </div>
+                <div id="todoBox" class="card" aria-label="Session To-Do">
+                  <form id="todoForm" class="todo-form" autocomplete="off">
+                    <label class="sr-only" for="todoInput">Add a task</label>
+                    <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter" />
+                    <button type="submit" class="todo-add">Add</button>
+                  </form>
+                  <div class="todo-actions">
+                    <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>
+                  </div>
+                  <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
         </div>
       </div>
-    </div>
-  </aside>
-</div>
-<button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
-<script src="/assets/site.js?v=1764848963976"></script>
-<script src="/assets/site-note.js?v=1764848963976"></script>
+    </aside>
+    <div class="resizer resizer-left" aria-hidden="true"></div>
+    <div class="resizer resizer-right" aria-hidden="true"></div>
+  </div>
+  <button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
+  <script src="/assets/site.js?v=1764861269285"></script>
+  <script src="/assets/site-note.js?v=1764861269285"></script>
 </body>
+
 </html>

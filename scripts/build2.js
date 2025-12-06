@@ -12,6 +12,17 @@ const ATTACHMENTS_DIR_NAME = '99_Attachments';
 const SUPPORTED_IMG_EXT = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg']);
 const ODD_EXT = new Set(['.canvas', '.textClipping']);
 
+// Optional: hardcoded stat sheet links for PCs (single-user setup)
+const SHEET_LINKS = new Map(Object.entries({
+  // slug -> URL
+  'nyx': 'https://www.dndbeyond.com/characters/134359738',
+  'oceanus': 'https://www.dndbeyond.com/characters/141409762',
+  'odo-kneecapper': 'https://www.dndbeyond.com/characters/134548919',
+  'tenebris': 'https://www.dndbeyond.com/characters/140801696',
+  'tihildur': 'https://www.dndbeyond.com/characters/134555684',
+  'valkrath': 'https://www.dndbeyond.com/characters/134996350',
+}));
+
 const ensureDir = (p) => fs.mkdirSync(p, { recursive: true });
 const writeFile = (p, c) => { ensureDir(path.dirname(p)); fs.writeFileSync(p, c); };
 const copyFile = (src, dest) => { ensureDir(path.dirname(dest)); fs.copyFileSync(src, dest); };
@@ -241,12 +252,12 @@ function buildOnce(){
     + '</div>'
     + '<div id="leftDrawer" class="drawer-content">'
     + '  <aside class="sidebar" role="navigation">'
-    + '    <div class="campaign-header"><div class="campaign-title">Devils and Dragons</div></div>'
+    + '    <div class="campaign-header"><div class="campaign-title">Feywild Adventures</div></div>'
     + '    <nav class="nav">'
     + '      <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon">' + svgIcon('home') + '</span><span class="nav-text">Dashboard</span></a>'
-    + '      <div class="nav-breadcrumb"><span id="breadcrumbText" class="meta"></span> <a id="breadcrumbSiblings" href="#" class="chip" title="View siblings">View siblings</a></div>'
+    + ''
     + '      <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..."/></div>'
-    + '      <details class="nav-details" open><summary class="nav-label"><span class="nav-icon">' + svgIcon('clock') + '</span><span>Recents</span></summary><ul id="navRecents" class="nav-list"></ul></details>'
+    + ''
     + '      <details class="nav-details" open><summary class="nav-label"><span class="nav-icon">' + svgIcon('star') + '</span><span>Favorites</span></summary><ul id="navFav" class="nav-list"></ul></details>'
     + '      <ul class="nav-sections">'+sectionsHtml+'</ul>'
     + '    </nav>'
@@ -307,7 +318,7 @@ function buildOnce(){
     + '<div class="layout">\n'
     + '  <div class="top">\n'
     + '    <div class="toolbar">\n'
-    + '      <a class="chip" href="/index.html">Home</a>\n'
+    + '      <a class="chip" href="/index.html">Hembränt</a>\n'
     + '      <a class="chip" href="/graph.html">Graph</a>\n'
     + '      <a class="chip" href="/tags/index.html">Tags</a>\n'
     + '      <a class="chip" href="/session.html">Session</a>\n'
@@ -316,31 +327,46 @@ function buildOnce(){
     + '    <div id="searchResults" class="hovercard"></div>\n'
     + '  </div>\n'
     + '  <aside class="left">' + sidebarHtml + '</aside>\n'
-    + '  <main class="main">' + content + '</main>\n'
+    + '  <main class="main">' + '<div id="breadcrumbText" class="main-breadcrumb meta"></div>' + content + '</main>\n'
     + '  <aside class="right">\n'
     + '    <div class="drawer" aria-label="Tools">\n'
     + '      <div class="drawer-handle">\n'
-    + '        <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Tools</button>\n'
-    + '        <button id="drawerPin" class="chip" aria-pressed="true">Pin</button>\n'
+    + '        <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Close</button>\n'
+    + '        <button id="drawerPin" class="chip" aria-pressed="true" title="Pin panel"></button>\n'
     + '        <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>\n'
     + '      </div>\n'
     + '      <div id="drawerContent" class="drawer-content">\n'
     + '        <div id="drawerTop">' + rightTopHtml + '</div>\n'
-    + '        <h3>To-Do</h3>\n'
-    + '        <div id="todoBox" class="card" aria-label="Session To-Do">\n'
-    + '          <form id="todoForm" class="todo-form" autocomplete="off">\n'
-    + '            <label class="sr-only" for="todoInput">Add a task</label>\n'
-    + '            <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter"/>\n'
-    + '            <button type="submit" class="todo-add">Add</button>\n'
-    + '          </form>\n'
-    + '          <div class="todo-actions">\n'
-    + '            <button id="todoClearDone" class="chip" title="Clear completed">Clear Completed</button>\n'
+    + '        <div class="right-split">\n'
+    + '        <div id="paneTop" class="pane">\n'
+    + '          <div class="pane-body" data-pane="top">\n'
+    + '            <div class="card"><h3 style="margin:0">Notepad</h3></div>\n'
+    + '            <div class="card"><textarea id="toolNotepad" placeholder="Quick notes..." style="width:100%;min-height:26vh;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:6px;padding:10px"></textarea></div>\n'
     + '          </div>\n'
-    + '          <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>\n'
+    + '        </div>\n'
+    + '        <div class="pane-resizer-h" aria-hidden="true"></div>\n'
+    + '        <div id="paneBottom" class="pane">\n'
+    + '          <div class="pane-body" data-pane="bottom">\n'
+    + '            <div class="card"><h3 style="margin:0">To-Do</h3></div>\n'
+    + '            <div id="todoBox" class="card" aria-label="Session To-Do">\n'
+    + '              <form id="todoForm" class="todo-form" autocomplete="off">\n'
+    + '                <label class="sr-only" for="todoInput">Add a task</label>\n'
+    + '                <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter"/>\n'
+    + '                <button type="submit" class="todo-add">Add</button>\n'
+    + '              </form>\n'
+    + '              <div class="todo-actions">\n'
+    + '                <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>\n'
+    + '              </div>\n'
+    + '              <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>\n'
+    + '            </div>\n'
+    + '          </div>\n'
+    + '        </div>\n'
     + '        </div>\n'
     + '      </div>\n'
     + '    </div>\n'
     + '  </aside>\n'
+    + '  <div class="resizer resizer-left" aria-hidden="true"></div>\n'
+    + '  <div class="resizer resizer-right" aria-hidden="true"></div>\n'
     + '</div>\n'
     + '<button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>\n'
     + '<script src="/assets/site.js?v='+VERSION+'"></script>\n' + extraScripts + '\n'
@@ -381,6 +407,47 @@ function buildOnce(){
     return null;
   }
 
+  function findHeaderFor(note){
+    const exts = ['.png','.jpg','.jpeg','.webp','.gif','.svg'];
+    const title = (note.title || '').trim();
+    const slugify = (s) => s
+      .toLowerCase()
+      .replace(/[’']/g,'')
+      .replace(/[^a-z0-9]+/g,'-')
+      .replace(/^-+|-+$/g,'');
+    const slug = slugify(title);
+    const firstWord = slugify(title.split(/\s+/)[0]||'');
+    const nameVariants = Array.from(new Set([slug, firstWord, slug.replace(/-/g,''), title.toLowerCase()].filter(Boolean)));
+    const candidates = [];
+    for (const base of nameVariants){
+      for (const ext of exts){
+        const attFile = `${base}-header${ext}`;
+        candidates.push({ abs: path.join(VAULT_ROOT, ATTACHMENTS_DIR_NAME, attFile), url: `/${ATTACHMENTS_DIR_NAME}/${attFile}` });
+        const webFile = `${base}-header${ext}`;
+        candidates.push({ abs: path.join(ASSET_SRC, webFile), url: `/assets/${webFile}` });
+      }
+    }
+    for (const c of candidates){ if (fs.existsSync(c.abs)) return c.url; }
+    return null;
+  }
+
+  const slugify = (s) => s
+    .toLowerCase()
+    .replace(/[’']/g,'')
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-+|-+$/g,'');
+
+  function getStatSheetLink(note){
+    const slug = slugify(note.title||'');
+    if (SHEET_LINKS.has(slug)) return SHEET_LINKS.get(slug);
+    try {
+      const rx = /^(?:\s*(?:Sheet|Stat\s*Sheet|D\s*&\s*D\s*Beyond|DNDBeyond))\s*:\s*(https?:\S+)/gim;
+      const m = rx.exec(note.md);
+      if (m) return m[1];
+    } catch {}
+    return '';
+  }
+
   for (const note of notes.values()) {
     const isPC = note.tags.includes('pc') || note.rel.startsWith('03_PCs/');
     const isNPC = note.tags.includes('npc') || note.rel.startsWith('04_NPCs/');
@@ -398,8 +465,8 @@ function buildOnce(){
       if (!subtitle) subtitle = isPC ? 'Player Character' : isNPC ? 'Non-Player Character' : '';
     }
 
-    // Images: prefer per-entity avatar if present, else placeholders
-    const headerImg = '/assets/ph-header.svg';
+    // Images: prefer per-entity avatar/header if present, else placeholders
+    const headerImg = findHeaderFor(note) || '/assets/ph-header.svg';
     let avatarImg = findAvatarFor(note) || '/assets/ph-avatar.svg';
 
     // Badges from tags excluding generic
@@ -436,17 +503,13 @@ function buildOnce(){
       const abilitiesHtml = '<section id="abilities"><h2>Abilities</h2><div class="meta">Add an "Abilities" section in the note to populate.</div></section>';
       const inventoryHtml = '<section id="inventory"><h2>Inventory</h2><div class="meta">Add an "Inventory" section in the note to populate.</div></section>';
 
-      // Optional external character sheet link: look for "Sheet: <url>" or "D&D Beyond: <url>" in note body
-      let sheetLink = '';
-      try {
-        const rx = /^(?:\s*(?:Sheet|D\s*&\s*D\s*Beyond|DNDBeyond))\s*:\s*(https?:\S+)/gim;
-        const m = rx.exec(note.md);
-        if (m) sheetLink = m[1];
-      } catch {}
+      // External character sheet link from mapping or note body
+      const sheetLink = getStatSheetLink(note);
 
       const headerHtml = `
         <section class="entity">
           <div class="entity-header" style="--header:url('${headerImg}')">
+            <button class="bookmark-btn" data-rel="${note.rel}" title="Toggle favorite"></button>
             <div class="entity-id">
               <div class="entity-avatar"><img src="${avatarImg}" alt="${note.title}"></div>
               <div class="entity-meta">
@@ -463,21 +526,20 @@ function buildOnce(){
           <a href="#connections">Connections</a>
           <a href="#abilities">Abilities</a>
           <a href="#inventory">Inventory</a>
-          ${sheetLink ? `<a class="chip" href="${sheetLink}" target="_blank" rel="noopener">Sheet</a>` : ''}
+          ${sheetLink ? `<a class="chip" href="${sheetLink}" target="_blank" rel="noopener">Stat Sheet</a>` : ''}
         </nav>`;
 
       content = '<article class="entity-page">' + headerHtml + tabsHtml + '<div class="entity-body">'
         + overviewHtml + connsHtml + abilitiesHtml + inventoryHtml + '</div></article>'
-        + '<h2>Local Graph</h2><div class="graph-panel" id="localGraph" data-rel="' + note.rel + '"></div>'
-        + '<h3>Backlinks</h3><div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="' + urlFor(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div>';
+        + '<details class="appendix" id="sec-local"><summary>Local Graph</summary><div class="graph-panel" id="localGraph" data-rel="' + note.rel + '"></div></details>'
+        + '<details class="appendix" id="sec-backlinks"><summary>Backlinks</summary><div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="' + urlFor(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div></details>';
     } else {
       const appendix = [
-        '<h2>Local Graph</h2>',
-        '<div class="graph-panel" id="localGraph" data-rel="' + note.rel + '"></div>',
-        '<h3>Backlinks</h3>',
-        '<div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="' + urlFor(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div>'
+        '<details class="appendix" id="sec-local"><summary>Local Graph</summary><div class="graph-panel" id="localGraph" data-rel="' + note.rel + '"></div></details>',
+        '<details class="appendix" id="sec-backlinks"><summary>Backlinks</summary><div class="backlinks">' + ([...(backlinks.get(note.rel)||new Set())].map(rel=>'<a href="' + urlFor(rel) + '">' + (notes.get(rel)?.title||rel) + '</a>').join('') || '<div class="meta">No backlinks</div>') + '</div></details>'
       ].join('\n');
-      content = '<article><h1>' + note.title + '</h1>' + mdToHtml(note.md, note.rel) + '</article>' + appendix;
+      const pageHeader = '<div class="page-header"><button class="bookmark-btn" data-rel="' + note.rel + '" title="Toggle favorite"></button></div>';
+      content = pageHeader + '<article><h1>' + note.title + '</h1>' + mdToHtml(note.md, note.rel) + '</article>' + appendix;
     }
 
     writeFile(htmlOutPath(note.rel), baseTemplate(note.title, content, sidebarHtml, '', '<script src="/assets/site-note.js?v='+VERSION+'"></script>'));

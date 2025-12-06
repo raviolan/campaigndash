@@ -186,6 +186,7 @@ Sky-spear chose you, boy. And when sky-spear falls on broken stone… the world 
 <font color="#e36c09">*“My strings don’t hum for every drunk with a sword. They hum for people like you. People who’ve already stepped on cracks in the world, whether they meant to or not.”</font>*
 ###### Diana Cloppington. 
 Diana made a bargain with Skabatha Nightshade to be reunited with her warhorse; the hag fused her with the horse.
+
 She cannot speak or write about:
 Hourglass Coven
 Zybilna

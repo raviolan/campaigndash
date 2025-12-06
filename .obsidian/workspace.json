@@ -1,0 +1,246 @@
+{
+  "main": {
+    "id": "b9cdbb032440539c",
+    "type": "split",
+    "children": [
+      {
+        "id": "064377e0fdfe9214",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a90674ca73cc78db",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "000_today's tools/Madryck.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Madryck"
+            }
+          },
+          {
+            "id": "fbf0569b97f34c27",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "000_today's tools/Lost items.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Lost items"
+            }
+          },
+          {
+            "id": "02657dd8402e15e6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "000_today's tools/Hither.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Hither"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "57516095cdf86a04",
+    "type": "split",
+    "children": [
+      {
+        "id": "beb9cce60c2eac70",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2e5e23840a5ec9e0",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "df99387c560450e8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "5cedc2a46f2fd1cb",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "94afdd060587c88a",
+    "type": "split",
+    "children": [
+      {
+        "id": "89fd73ba6a0347d7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8b186359ecbf9f6f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "000_today's tools/Lost items.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Lost items"
+            }
+          },
+          {
+            "id": "710e6d523652def4",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "000_today's tools/Lost items.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Lost items"
+            }
+          },
+          {
+            "id": "60a764fdcbe6ca4b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "4153aa56751c084c",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "8e02b6a31e3305a8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "000_today's tools/Lost items.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Lost items"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "fbf0569b97f34c27",
+  "lastOpenFiles": [
+    "site/assets/lysaledger-avatar.jpeg",
+    "site/assets/lysaledger-header.jpeg",
+    "site/assets/primewater-header.jpeg",
+    "site/assets/sanbalet-header.jpeg",
+    "site/assets/ravenqueen-avatar.webp",
+    "site/assets/cyrieth-header.jpeg",
+    "site/assets/ravenqueen-header.jpeg",
+    "site/assets/xendros-header.jpeg",
+    "site/assets/salabaster.png",
+    "site/assets/cyrieth.png",
+    "site/assets/Kedjou.webp",
+    "000_today's tools/Quick links.md",
+    "000_today's tools/Madryck.md",
+    "000_today's tools/Hither.md",
+    "000_today's tools/Lost items.md",
+    "00_Campaign/01_Session notes.md",
+    "000_today's tools/The Wild Beyond the Witchlight.md",
+    "000_today's tools/Structure.md",
+    "2025-12-04.md",
+    "Untitled 2.canvas",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "05_Tools & Tables/Random Encounter Generator.md",
+    "00_Campaign/03_Sessions/01 Finishing up in Saltmarsh.md",
+    "01_Arcs/The Feywild/the trek.md",
+    "stolen.md",
+    "000_today's tools",
+    "00_Campaign/00_Campaign Dashboard.md"
+  ]
+}

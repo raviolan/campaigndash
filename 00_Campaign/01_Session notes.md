@@ -694,3 +694,288 @@ Plus kanske läs på om regler kring att skaffa home base osv? finns tydligen ny
 - 2025-12-04T11:49:24.071Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
 - 2025-12-04T11:49:24.072Z: Using placeholders for Extras and quirks (PC) avatar/header.
 - 2025-12-04T11:49:24.089Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:19:24.251Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:19:24.257Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:19:24.258Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:19:24.260Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:19:24.261Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:19:24.263Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:19:24.264Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:19:24.266Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:19:24.267Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:19:24.268Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:19:24.269Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:19:24.270Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:19:24.271Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:19:24.272Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:19:24.285Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:21:48.419Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:21:48.423Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:21:48.424Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:21:48.425Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:21:48.426Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:21:48.426Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:21:48.427Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:21:48.428Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:21:48.429Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:21:48.430Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:21:48.431Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:21:48.431Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:21:48.432Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:21:48.433Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:21:48.446Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:22:19.338Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:22:19.344Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:22:19.345Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:22:19.347Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:22:19.348Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:22:19.349Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:22:19.350Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:22:19.352Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:22:19.353Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:22:19.354Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:22:19.356Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:22:19.358Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:22:19.359Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:22:19.360Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:22:19.381Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:27:03.634Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:27:03.637Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:27:03.639Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:27:03.640Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:27:03.642Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:27:03.643Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:27:03.645Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:27:03.646Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:27:03.649Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:27:03.650Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:27:03.651Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:27:03.652Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:27:03.653Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:27:03.654Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:27:03.670Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:32:51.221Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:32:51.227Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:32:51.229Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:32:51.233Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:32:51.234Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:32:51.235Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:32:51.236Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:32:51.237Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:32:51.238Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:32:51.240Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:32:51.241Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:32:51.243Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:32:51.244Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:32:51.245Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:32:51.266Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:34:11.904Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:34:11.907Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:34:11.908Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:34:11.910Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:34:11.911Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:34:11.912Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:34:11.915Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:34:11.916Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:34:11.916Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:34:11.917Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:34:11.918Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:34:11.919Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:34:11.920Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:34:11.921Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:34:11.936Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:35:37.669Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:35:37.673Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:35:37.674Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:35:37.675Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:35:37.676Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:35:37.677Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:35:37.679Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:35:37.680Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:35:37.681Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:35:37.682Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:35:37.683Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:35:37.684Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:35:37.685Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:35:37.687Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:35:37.703Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:37:42.844Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:37:42.848Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:37:42.849Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:37:42.850Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:37:42.851Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:37:42.852Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:37:42.853Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:37:42.854Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:37:42.855Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:37:42.856Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:37:42.857Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:37:42.858Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:37:42.859Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:37:42.861Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:37:42.874Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:38:58.736Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:38:58.739Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:38:58.740Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:38:58.741Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:38:58.742Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:38:58.743Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:38:58.744Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:38:58.744Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:38:58.745Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:38:58.746Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:38:58.747Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:38:58.747Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:38:58.748Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:38:58.749Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:38:58.762Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:41:51.585Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:41:51.590Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:41:51.591Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:41:51.592Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:41:51.594Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:41:51.595Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:41:51.596Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:41:51.597Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:41:51.598Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:41:51.598Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:41:51.600Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:41:51.601Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:41:51.601Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:41:51.602Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:41:51.614Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:46:45.960Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:46:45.963Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:46:45.965Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:46:45.966Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:46:45.967Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:46:45.968Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:46:45.969Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:46:45.970Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:46:45.971Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:46:45.972Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:46:45.973Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:46:45.974Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:46:45.975Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:46:45.976Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:46:45.991Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T13:48:27.691Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T13:48:27.696Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T13:48:27.698Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T13:48:27.699Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T13:48:27.700Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T13:48:27.701Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T13:48:27.702Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T13:48:27.703Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T13:48:27.704Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T13:48:27.705Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T13:48:27.706Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T13:48:27.706Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T13:48:27.707Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T13:48:27.708Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T13:48:27.721Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T14:17:29.662Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T14:17:29.667Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T14:17:29.668Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T14:17:29.669Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T14:17:29.670Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T14:17:29.672Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T14:17:29.672Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T14:17:29.673Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T14:17:29.674Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T14:17:29.675Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T14:17:29.676Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T14:17:29.677Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T14:17:29.678Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T14:17:29.679Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T14:17:29.692Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T14:19:33.003Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T14:19:33.011Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T14:19:33.015Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T14:19:33.017Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T14:19:33.028Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T14:19:33.030Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T14:19:33.030Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T14:19:33.031Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T14:19:33.032Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T14:19:33.033Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T14:19:33.034Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T14:19:33.035Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T14:19:33.036Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T14:19:33.037Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T14:19:33.054Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T14:22:39.660Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T14:22:39.665Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T14:22:39.668Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T14:22:39.672Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T14:22:39.673Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T14:22:39.675Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T14:22:39.676Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T14:22:39.678Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T14:22:39.679Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T14:22:39.680Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T14:22:39.682Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T14:22:39.684Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T14:22:39.686Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T14:22:39.687Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T14:22:39.704Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T14:25:38.731Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T14:25:38.734Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T14:25:38.735Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T14:25:38.737Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T14:25:38.738Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T14:25:38.743Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T14:25:38.749Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T14:25:38.754Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T14:25:38.759Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T14:25:38.762Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T14:25:38.768Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T14:25:38.768Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T14:25:38.770Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T14:25:38.771Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T14:25:38.785Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T15:08:51.501Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T15:08:51.510Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T15:08:51.512Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T15:08:51.514Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T15:08:51.518Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T15:08:51.520Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T15:08:51.521Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T15:08:51.523Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T15:08:51.524Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T15:08:51.524Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T15:08:51.526Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T15:08:51.527Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T15:08:51.528Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T15:08:51.529Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T15:08:51.546Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T15:10:48.706Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T15:10:48.712Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T15:10:48.714Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T15:10:48.716Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T15:10:48.717Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T15:10:48.719Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T15:10:48.720Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T15:10:48.728Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T15:10:48.729Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T15:10:48.730Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T15:10:48.732Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T15:10:48.733Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T15:10:48.734Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T15:10:48.735Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T15:10:48.751Z: Using placeholders for Factions and Politics (NPC) avatar/header.
+- 2025-12-04T15:14:29.583Z: Using placeholders for Agile Hand (NPC) avatar/header.
+- 2025-12-04T15:14:29.589Z: Using placeholders for Captain Xendros (NPC) avatar/header.
+- 2025-12-04T15:14:29.597Z: Using placeholders for Cyrieth Nerolien (NPC) avatar/header.
+- 2025-12-04T15:14:29.598Z: Using placeholders for Daddy Salabaster (NPC) avatar/header.
+- 2025-12-04T15:14:29.599Z: Using placeholders for Dusk (NPC) avatar/header.
+- 2025-12-04T15:14:29.600Z: Using placeholders for Gellan Primewater (NPC) avatar/header.
+- 2025-12-04T15:14:29.600Z: Using placeholders for Kedjou (NPC) avatar/header.
+- 2025-12-04T15:14:29.601Z: Using placeholders for Lysa _Ledger_ Feld (NPC) avatar/header.
+- 2025-12-04T15:14:29.602Z: Using placeholders for Raven Queen (NPC) avatar/header.
+- 2025-12-04T15:14:29.603Z: Using placeholders for Salabaster Shipping (NPC) avatar/header.
+- 2025-12-04T15:14:29.604Z: Using placeholders for Saltmarsh Council (NPC) avatar/header.
+- 2025-12-04T15:14:29.605Z: Using placeholders for Sanbalet (NPC) avatar/header.
+- 2025-12-04T15:14:29.606Z: Using placeholders for Scarlet Brotherhood (NPC) avatar/header.
+- 2025-12-04T15:14:29.607Z: Using placeholders for Extras and quirks (PC) avatar/header.
+- 2025-12-04T15:14:29.627Z: Using placeholders for Factions and Politics (NPC) avatar/header.

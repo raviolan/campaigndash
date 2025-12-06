@@ -27,4 +27,22 @@
   });
 })();
 
-function rollDice(expr){ try{ const m=expr.replace(/\s+/g,'').match(/(\d*)d(\d+)(kh\d+|kl\d+)?([+-]\d+)?/i); if(!m) return 'Invalid'; const cnt=parseInt(m[1]||'1',10), sides=parseInt(m[2],10); const mod=m[4]? parseInt(m[4],10):0; const keep=m[3]; const rolls=Array.from({length:cnt},function(){ return 1+Math.floor(Math.random()*sides); }); let used=rolls.slice(); if(keep){ const k=parseInt(keep.slice(2),10); used=rolls.slice().sort(function(a,b){ return keep.startsWith('kh')? (b-a):(a-b); }).slice(0,k);} const total=used.reduce(function(a,b){return a+b;},0)+mod; return expr + ' => [' + rolls.join(', ') + '] ' + (keep?('=> keep ['+used.join(', ')+'] '):'') + (mod? ((mod>0?'+':'')+mod) : '') + '= ' + total; }catch(e){ return 'Error'; }
+function rollDice(expr){
+  try {
+    const m = expr.replace(/\s+/g,'').match(/(\d*)d(\d+)(kh\d+|kl\d+)?([+-]\d+)?/i);
+    if(!m) return 'Invalid';
+    const cnt = parseInt(m[1]||'1',10), sides = parseInt(m[2],10);
+    const mod = m[4] ? parseInt(m[4],10) : 0;
+    const keep = m[3];
+    const rolls = Array.from({length:cnt}, () => 1+Math.floor(Math.random()*sides));
+    let used = rolls.slice();
+    if(keep){
+      const k = parseInt(keep.slice(2),10);
+      used = rolls.slice().sort((a,b)=> keep.startsWith('kh')? (b-a):(a-b)).slice(0,k);
+    }
+    const total = used.reduce((a,b)=>a+b,0) + mod;
+    return expr + ' => [' + rolls.join(', ') + '] ' + (keep?('=> keep ['+used.join(', ')+'] '):'') + (mod? ((mod>0?'+':'')+mod) : '') + '= ' + total;
+  } catch(e) {
+    return 'Error';
+  }
+}

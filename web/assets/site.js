@@ -7,6 +7,11 @@ function svgIcon(name, size=16){
     case 'clock': return p('M12 2a10 10 0 100 20 10 10 0 000-20zm1 5h-2v6l5 3 1-1.7-4-2.3V7z');
     case 'star': return p('M12 2l3.1 6.3 7 .9-5.1 4.9 1.3 6.9L12 17.8 5.7 21l1.3-6.9L2 9.2l7-.9L12 2z');
     case 'star-fill': return p('M12 2l3.1 6.3 7 .9-5.1 4.9 1.3 6.9L12 17.8 5.7 21l1.3-6.9L2 9.2l7-.9L12 2z');
+    case 'pin': return p('M12 2a6 6 0 016 6c0 4-6 12-6 12S6 12 6 8a6 6 0 016-6zm0 8a2 2 0 110-4 2 2 0 010 4z');
+    case 'checklist': return p('M4 6h9v2H4V6zm0 6h9v2H4v-2zm11-7l3 3-1.5 1.5L14.5 7.5 13 9l-1.5-1.5L14.5 4z');
+    case 'note': return p('M6 3h9a2 2 0 012 2v14l-4-3-4 3V5a2 2 0 00-2-2z');
+    case 'bookmark': return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 4h12v18l-6-4-6 4V4z"/></svg>`;
+    case 'bookmark-fill': return p('M6 4h12v18l-6-4-6 4V4z');
     default: return p('');
   }
 }
@@ -33,7 +38,7 @@ document.addEventListener('keydown', (e)=>{ if((e.ctrlKey||e.metaKey)&&e.key.toL
 
 const hover=document.createElement('div'); hover.className='hovercard'; document.body.appendChild(hover);
 document.body.addEventListener('mousemove',(e)=>{hover.style.left=(e.pageX+12)+'px'; hover.style.top=(e.pageY+12)+'px';});
-document.body.addEventListener('mouseover',(e)=>{ const a=e.target.closest('a'); if(!a||!a.href||!a.pathname.endsWith('.html')){hover.style.display='none';return} const id=decodeURIComponent(a.pathname.replace(/^\//,'')).replace(/\.html$/i,'.md'); const n=NOTES.find(n=>n.id===id); if(n){ hover.innerHTML='<strong>'+n.title+'</strong><div class="meta">'+((n.tags||[]).map(t=>'#'+t).join(' '))+'</div>'; hover.style.display='block'; } });
+document.body.addEventListener('mouseover',(e)=>{ const a=e.target.closest('a'); if(!a||!a.href||!a.pathname.endsWith('.html')){hover.style.display='none';return} if(a.closest('.left')){ hover.style.display='none'; return; } const id=decodeURIComponent(a.pathname.replace(/^\//,'')).replace(/\.html$/i,'.md'); const n=NOTES.find(n=>n.id===id); if(n){ hover.innerHTML='<strong>'+n.title+'</strong><div class="meta">'+((n.tags||[]).map(t=>'#'+t).join(' '))+'</div>'; hover.style.display='block'; } });
 document.body.addEventListener('mouseout',()=>{hover.style.display='none'});
 
 window.togglePin=function(rel){ const pins=JSON.parse(localStorage.getItem('pins')||'[]'); const i=pins.indexOf(rel); if(i>=0) pins.splice(i,1); else pins.push(rel); localStorage.setItem('pins', JSON.stringify(pins)); const el=document.querySelector('[data-pin]'); if(el) el.innerHTML = pins.includes(rel)? svgIcon('star-fill'):svgIcon('star'); }
@@ -78,6 +83,25 @@ window.saveSessionSnapshot = async function(){
   });
 })();
 
+// Resizable side panels (drag to adjust --left-w and --right-w)
+(function(){
+  const left=document.querySelector('.resizer-left');
+  const right=document.querySelector('.resizer-right');
+  if(!left||!right) return;
+  const root=document.documentElement;
+  const KEY_L='panelLeftW'; const KEY_R='panelRightW';
+  // Restore saved widths
+  try{ const lw=parseInt(localStorage.getItem(KEY_L)||'0',10); if(lw) root.style.setProperty('--left-w', lw+'px'); }catch{}
+  try{ const rw=parseInt(localStorage.getItem(KEY_R)||'0',10); if(rw) root.style.setProperty('--right-w', rw+'px'); }catch{}
+  function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+  function onDrag(which, ev){ ev.preventDefault(); function move(e){ if(which==='left'){ const x=e.clientX; const min=180; const max=window.innerWidth - (parseInt(getComputedStyle(root).getPropertyValue('--right-w'))||340) - 300; const w=clamp(x, min, max); root.style.setProperty('--left-w', w+'px'); try{localStorage.setItem(KEY_L,String(w));}catch{} } else { const x=e.clientX; const min=220; const max=window.innerWidth - (parseInt(getComputedStyle(root).getPropertyValue('--left-w'))||300) - 300; const w=clamp(window.innerWidth - x, min, max); root.style.setProperty('--right-w', w+'px'); try{localStorage.setItem(KEY_R,String(w));}catch{} } }
+    function up(){ document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); }
+    document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
+  }
+  left.addEventListener('mousedown', onDrag.bind(null,'left'));
+  right.addEventListener('mousedown', onDrag.bind(null,'right'));
+})();
+
 // Inject Save Session button at the end of the top bar (to the right of search)
 (function(){
   const topBar = document.querySelector('.top');
@@ -107,7 +131,7 @@ window.saveSessionSnapshot = async function(){
   function applyState(){
     const pinned = JSON.parse(localStorage.getItem(KEY_PIN)||'false');
     const open = JSON.parse(localStorage.getItem(KEY_OPEN)||'true');
-    pin && (pin.textContent = pinned? 'Unpin':'Pin', pin.setAttribute('aria-pressed', String(pinned)));
+    if(pin){ pin.innerHTML = window.svgIcon && window.svgIcon('pin', 16) || 'Pin'; pin.setAttribute('aria-pressed', String(pinned)); pin.classList.toggle('active', pinned); }
     const shouldOpen = pinned ? true : open;
     document.body.classList.toggle('drawer-collapsed', !shouldOpen);
   }
@@ -115,6 +139,96 @@ window.saveSessionSnapshot = async function(){
   pin?.addEventListener('click', ()=>{ const cur = JSON.parse(localStorage.getItem(KEY_PIN)||'false'); const next = !cur; localStorage.setItem(KEY_PIN, JSON.stringify(next)); if(next){ localStorage.setItem(KEY_OPEN, 'true'); } applyState(); });
   reveal?.addEventListener('click', ()=>{ localStorage.setItem(KEY_OPEN,'true'); applyState(); });
   applyState();
+})();
+
+// Right panel tools: tabs, pinning, notepad autosave, default home
+(function(){
+  const tabs = document.querySelectorAll('.tool-tab');
+  const views = {
+    home: document.getElementById('toolHome'),
+    todo: document.getElementById('toolTodo'),
+    note: document.getElementById('toolNote')
+  };
+  const KEY_TOOL='rightActiveTool';
+  const SPLIT=true; // split mode: two panes visible
+  const KEY_PINS='rightPinnedTools';
+  const KEY_TOP='rightPaneTop';
+  const KEY_BOTTOM='rightPaneBottom';
+  const KEY_SPLIT='rightPaneSplit';
+  function getPins(){ try{ return JSON.parse(localStorage.getItem(KEY_PINS)||'[]'); }catch{return []} }
+  function setPins(list){ localStorage.setItem(KEY_PINS, JSON.stringify(list)); }
+  function isPinned(id){ return getPins().includes(id); }
+  function togglePin(id){ const arr=getPins(); const i=arr.indexOf(id); if(i>=0) arr.splice(i,1); else arr.push(id); setPins(arr); renderPins(); renderHome(); renderPinButtons(); }
+  function setActive(name){ localStorage.setItem(KEY_TOOL, name); for(const b of tabs){ b.classList.toggle('active', b.getAttribute('data-tool')===name); if(window.svgIcon){ const t=b.getAttribute('data-tool'); b.innerHTML = t==='home'? svgIcon('home') : t==='todo'? svgIcon('checklist') : svgIcon('note'); } }
+    if(SPLIT){ // always show todo + note in split mode
+      views.home && views.home.classList.remove('active');
+      views.todo && views.todo.classList.add('active');
+      views.note && views.note.classList.add('active');
+      renderHome();
+    } else {
+      for(const k in views){ if(views[k]) views[k].classList.toggle('active', k===name); }
+      if(name==='home') renderHome();
+    }
+  }
+  function renderPins(){ document.querySelectorAll('.tool-pin').forEach(btn=>{ const id=btn.getAttribute('data-tool'); btn.classList.toggle('active', isPinned(id)); if(window.svgIcon) btn.innerHTML = svgIcon('pin',14); }); }
+  function renderHome(){ const home=document.getElementById('toolHomePins'); if(!home) return; const pins=getPins(); const map={ todo:{icon:'checklist',label:'To-Do'}, note:{icon:'note',label:'Notepad'} };
+    home.innerHTML = pins.length? pins.map(id=> `<button class="chip" data-open="${id}">${window.svgIcon?svgIcon(map[id]?.icon||'dot',16):''} ${map[id]?.label||id}</button>`).join('') : '<div class="meta">No tools pinned. Open a tool and click its pin.</div>';
+    home.querySelectorAll('button[data-open]').forEach(b=> b.addEventListener('click', ()=> setActive(b.getAttribute('data-open')||'home')));
+  }
+  // Initialize icons and clicks
+  tabs.forEach(b=>{ const t=b.getAttribute('data-tool'); if(window.svgIcon){ b.innerHTML = t==='home'? svgIcon('home') : t==='todo'? svgIcon('checklist') : svgIcon('note'); }
+    b.addEventListener('click', ()=> setActive(b.getAttribute('data-tool')||'home'));
+  });
+  // Pin buttons
+  document.querySelectorAll('.tool-pin').forEach(btn=> btn.addEventListener('click', ()=> togglePin(btn.getAttribute('data-tool')||'')));
+  renderPins();
+  // Notepad autosave
+  (function(){ const ta=document.getElementById('toolNotepad'); if(!ta) return; const KEY='sessionNotes'; try{ ta.value = localStorage.getItem(KEY)||''; }catch{} ta.addEventListener('input', ()=>{ try{ localStorage.setItem(KEY, ta.value); }catch{} }); })();
+  setActive(localStorage.getItem(KEY_TOOL)||'home');
+
+  // Per-pane selection and adjustable split (split mode)
+  if(SPLIT){
+    const topBody = document.querySelector('.pane-body[data-pane="top"]');
+    const bottomBody = document.querySelector('.pane-body[data-pane="bottom"]');
+    function iconFor(tool){ return tool==='home'? (window.svgIcon?svgIcon('home',14):'H') : tool==='todo'? (window.svgIcon?svgIcon('checklist',14):'T') : (window.svgIcon?svgIcon('note',14):'N'); }
+    function activatePane(pane, tool){ const body = pane==='top'? topBody : bottomBody; if(!body) return; const el = views[tool]; if(!el) return; body.innerHTML=''; body.appendChild(el); document.querySelectorAll('.pane-tab[data-pane="'+pane+'"]').forEach(b=>{ const t=b.getAttribute('data-tool'); b.classList.toggle('active', t===tool); if(window.svgIcon){ b.innerHTML = iconFor(t); }}); localStorage.setItem(pane==='top'? KEY_TOP : KEY_BOTTOM, tool); if(tool==='home') renderHome(); }
+    // Init pane tab icons and clicks
+    document.querySelectorAll('.pane-tab').forEach(b=>{ const t=b.getAttribute('data-tool'); if(window.svgIcon) b.innerHTML = iconFor(t); b.addEventListener('click', ()=> activatePane(b.getAttribute('data-pane')||'top', t)); });
+    const topSel = localStorage.getItem(KEY_TOP)||'todo';
+    const botSel = localStorage.getItem(KEY_BOTTOM)||'note';
+    activatePane('top', topSel);
+    activatePane('bottom', botSel);
+    // Adjustable split resizer
+    (function(){
+      const container=document.querySelector('.right-split');
+      const res=document.querySelector('.pane-resizer-h'); if(!container||!res) return;
+      const saved=localStorage.getItem(KEY_SPLIT);
+      // Initialize and clamp
+      (function initSplit(){
+        const rect=container.getBoundingClientRect();
+        const minPx=120; const maxPx=Math.max(minPx, rect.height-120);
+        let val='50%';
+        if(saved && /^(\d+)(px|%)$/.test(saved)){
+          if(saved.endsWith('%')){
+            const pct=parseFloat(saved); let px=rect.height*((isNaN(pct)?50:pct)/100);
+            if(px<minPx) px=Math.min(rect.height/2, minPx); if(px>maxPx) px=Math.max(rect.height/2, maxPx);
+            val = px+'px';
+          } else {
+            let px=parseFloat(saved); if(isNaN(px)) px=rect.height/2;
+            if(px<minPx) px=Math.min(rect.height/2, minPx); if(px>maxPx) px=Math.max(rect.height/2, maxPx);
+            val = px+'px';
+          }
+        }
+        container.style.setProperty('--pane-top-h', val);
+      })();
+      function onDown(e){ e.preventDefault(); const rect=container.getBoundingClientRect(); const startY=e.clientY; const cur=getComputedStyle(container).getPropertyValue('--pane-top-h').trim(); const startPx = cur.endsWith('%')? rect.height*parseFloat(cur)/100 : parseFloat(cur)|| (rect.height/2);
+        function onMove(ev){ const dy=ev.clientY-startY; let h=startPx+dy; const min=120; const max=rect.height-120; if(h<min) h=min; if(h>max) h=max; const val=h+'px'; container.style.setProperty('--pane-top-h', val); try{ localStorage.setItem(KEY_SPLIT, val);}catch{} }
+        function onUp(){ document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+        document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+      }
+      res.addEventListener('mousedown', onDown);
+    })();
+  }
 })();
 
 // Left Drawer (toggle + pin + collapse/expand all)
@@ -183,8 +297,6 @@ window.saveSessionSnapshot = async function(){
     const sec = a.closest('.nav-group')?.querySelector('.nav-label span:last-child')?.textContent || '';
     const title = document.title || a.textContent;
     bc.textContent = `You Are Here: ${sec} > ${title}`;
-    const sib = document.getElementById('breadcrumbSiblings');
-    sib?.addEventListener('click', (e)=>{ e.preventDefault(); const grp=a.closest('.nav-group')?.querySelector('.nav-details'); if(grp){ grp.open=true; grp.scrollIntoView({block:'start'}); } });
   }
   // Persist section open/closed
   const KEY_SEC='navOpenSections';
@@ -275,7 +387,7 @@ window.saveSessionSnapshot = async function(){
   function render(){
     const list=loadFav();
     favList.innerHTML = list.length? list.map((f,i)=> '<li><a class="nav-item" href="'+hrefFor(f.id)+'"><span class="nav-icon">'+svgIcon('star')+'</span><span class="nav-text">'+(f.title||f.id)+'</span></a> <button class="todo-btn" data-remove="'+i+'" title="Remove">✕</button></li>').join('') : '<li class="meta">No favorites</li>';
-    favList.querySelectorAll('button[data-remove]').forEach(b=> b.addEventListener('click',()=>{ const i=parseInt(b.getAttribute('data-remove')); const arr=loadFav(); arr.splice(i,1); saveFav(arr); render(); }));
+    favList.querySelectorAll('button[data-remove]').forEach(b=> b.addEventListener('click',()=>{ const i=parseInt(b.getAttribute('data-remove')); const arr=loadFav(); arr.splice(i,1); saveFav(arr); render(); document.dispatchEvent(new CustomEvent('favorites-changed')); }));
   }
   window.addFavorite = function(){
     const id = decodeURIComponent(location.pathname.replace(/^\//,'')).replace(/\.html$/i,'.md');
@@ -285,8 +397,14 @@ window.saveSessionSnapshot = async function(){
     try{
       const meta = window.NOTES && window.NOTES.find(n=>n.id===id); if(meta) title=meta.title;
     }catch{}
-    list.unshift({id, title}); saveFav(list); render();
+    list.unshift({id, title}); saveFav(list); render(); document.dispatchEvent(new CustomEvent('favorites-changed'));
   };
+  window.toggleFavorite = function(id, title){
+    const list=loadFav(); const i=list.findIndex(x=>x.id===id);
+    if(i>=0){ list.splice(i,1); } else { list.unshift({id, title: title||id}); }
+    saveFav(list); render(); document.dispatchEvent(new CustomEvent('favorites-changed'));
+  };
+  document.addEventListener('favorites-changed', ()=>{ try{ render(); }catch{} });
   render();
 })();
 
@@ -295,26 +413,171 @@ window.saveSessionSnapshot = async function(){
   const FORM = document.getElementById('todoForm');
   const INPUT = document.getElementById('todoInput');
   const LIST = document.getElementById('todoList');
-  const CLEAR = document.getElementById('todoClearDone');
+  const TOGGLE = document.getElementById('todoClearDone'); // repurposed as Hide/Show Completed
   if(!FORM||!INPUT||!LIST) return; // not present on this page
   const KEY='graphTodos';
-  function load(){ return JSON.parse(localStorage.getItem(KEY)||'[]'); }
+  const KEY_HIDE='todoHideCompleted';
+  const KEY_ID='todoIdSeq';
+  let nextFocusPath = '';
+  let nextFocusId = '';
+
+  function genId(){
+    try{ const cur=Number(localStorage.getItem(KEY_ID)||'0')+1; localStorage.setItem(KEY_ID,String(cur)); return 't'+Date.now().toString(36)+cur.toString(36); }catch{ return 't'+Math.random().toString(36).slice(2); }
+  }
+
+  function load(){
+    let arr=[]; try{ arr=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch{}
+    let changed=false;
+    function norm(items){ return (items||[]).map(it=>{ const node={ id: it.id||genId(), text:it.text||'', done:!!it.done, collapsed: !!it.collapsed, children: it.children? norm(it.children) : [] }; if(!it.id) changed=true; return node; }); }
+    const normed = norm(arr);
+    if(changed) save(normed);
+    return normed;
+  }
   function save(items){ localStorage.setItem(KEY, JSON.stringify(items)); }
+  function hideCompleted(){ try{ return localStorage.getItem(KEY_HIDE)==='1'; }catch{return false} }
+  function setHideCompleted(v){ try{ localStorage.setItem(KEY_HIDE, v?'1':'0'); }catch{} }
   function escapeHtml(s){ return s.replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;","</script":"&lt;/script>","</":"&lt;/"}[c]||c)); }
-  function itemTemplate(it,i){ const id='todo_'+i; const cls='todo-text'+(it.done?' done':''); return '<li class="todo-item" role="listitem">'+
-    '<input id="'+id+'" class="todo-check" type="checkbox" data-i="'+i+'" '+(it.done?'checked':'')+' aria-label="Mark task as done">'+
-    '<label class="'+cls+'" for="'+id+'" data-i="'+i+'">'+escapeHtml(it.text)+'</label>'+
-    '<div class="todo-actions-row">'+
-    '<button class="todo-btn" data-edit="'+i+'" title="Edit">Edit</button>'+
-    '<button class="todo-btn" data-del="'+i+'" title="Delete">Delete</button>'+
-    '</div></li>'; }
-  function render(){ const items=load(); if(!items.length){ LIST.innerHTML='<li class="meta">No tasks yet</li>'; return;} LIST.innerHTML = items.map(itemTemplate).join('');
-    LIST.querySelectorAll('input.todo-check').forEach(cb=>cb.addEventListener('change',()=>{ const items=load(); const i=parseInt(cb.getAttribute('data-i')); items[i].done=cb.checked; save(items); render(); }));
-    LIST.querySelectorAll('button[data-del]').forEach(b=>b.addEventListener('click',()=>{ const items=load(); const i=parseInt(b.getAttribute('data-del')); items.splice(i,1); save(items); render(); }));
-    LIST.querySelectorAll('button[data-edit]').forEach(b=>b.addEventListener('click',()=>{ startEdit(parseInt(b.getAttribute('data-edit'))); })); }
-  function startEdit(i){ const items=load(); const it=items[i]; const li=LIST.children[i]; if(!li) return; const current=it.text; const lbl=li.querySelector('label.todo-text'); lbl.outerHTML='<input class="todo-edit" data-i="'+i+'" value="'+escapeHtml(current)+'" aria-label="Edit task">'; const ed=li.querySelector('input.todo-edit'); ed.focus(); ed.select(); function commit(saveIt){ const items=load(); if(saveIt){ const v=ed.value.trim(); items[i].text=v||current; } save(items); render(); } ed.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); commit(true);} if(e.key==='Escape'){ e.preventDefault(); commit(false);} }); ed.addEventListener('blur',()=>commit(true)); }
-  CLEAR?.addEventListener('click',()=>{ const items=load().filter(it=>!it.done); save(items); render(); });
-  FORM.addEventListener('submit',(e)=>{ e.preventDefault(); const t=(INPUT.value||'').trim(); if(!t) return; const items=load(); items.unshift({text:t,done:false}); save(items); INPUT.value=''; render(); });
+
+  function render(){
+    const items=load();
+    const hide = hideCompleted();
+    if(TOGGLE) TOGGLE.textContent = hide? 'Show Completed' : 'Hide Completed';
+    if(!items.length){ LIST.innerHTML='<li class="meta">No tasks yet</li>'; return; }
+    LIST.innerHTML = renderList(items, '', true, hide);
+    bindEvents();
+    if(nextFocusId){
+      const ed = LIST.querySelector('.todo-text[data-id="'+nextFocusId+'"]');
+      if(ed){ ed.focus(); document.getSelection()?.selectAllChildren(ed); document.getSelection()?.collapseToEnd(); }
+      nextFocusId='';
+    } else if(nextFocusPath){
+      const ed = LIST.querySelector('.todo-text[data-path="'+nextFocusPath+'"]');
+      if(ed){ ed.focus(); document.getSelection()?.selectAllChildren(ed); document.getSelection()?.collapseToEnd(); }
+      nextFocusPath='';
+    }
+  }
+
+  function renderList(items, path, topLevel, hide){
+    const parts=[];
+    const filtered = hide? items.filter(it=>!it.done) : items;
+    filtered.forEach((it, i)=>{
+      const p = path===''? String(i) : path + '.' + i;
+      const domId='todo_'+p.replace(/\./g,'_');
+      const nid = it.id;
+      const clsText = 'todo-text editable' + (it.done?' done':'') + (topLevel?' top-level':'');
+      const hasChildren = (it.children||[]).length>0;
+      const disclose = hasChildren? '<button class="todo-disclose" data-path="'+p+'" aria-label="Toggle">'+(it.collapsed?'▸':'▾')+'</button>' : '<span class="todo-disclose hidden"></span>';
+      parts.push('<li class="todo-item'+(topLevel?' top-level':'')+'" role="listitem" data-path="'+p+'" data-id="'+nid+'">'
+        + '<span class="todo-grip" draggable="true" data-id="'+nid+'" aria-label="Drag"></span>'
+        + disclose
+        + '<input id="'+domId+'" class="todo-check" type="checkbox" data-path="'+p+'" '+(it.done?'checked':'')+' aria-label="Mark task as done">'
+        + '<div class="'+clsText+'" contenteditable="true" data-path="'+p+'" data-id="'+nid+'" spellcheck="false">'+escapeHtml(it.text)+'</div>'
+        + '<div class="todo-actions"><button class="todo-more" data-path="'+p+'" title="More">⋯</button></div>'
+      );
+      if (hasChildren){
+        parts.push('<ul class="todo-sublist" '+(it.collapsed?'style="display:none"':'')+'>'+renderList(it.children, p, false, hide)+'</ul>');
+      }
+      parts.push('</li>');
+    });
+    return parts.join('');
+  }
+
+  function getByPath(items, path){ if(!path) return null; const idx = path.split('.').map(n=>parseInt(n,10)); let cur={items}; for(let i=0;i<idx.length;i++){ const k=idx[i]; const arr=(i===0?cur.items:cur.children); if(!arr || k<0 || k>=arr.length) return null; cur = arr[k]; } return cur; }
+  function getParentAndIndex(items, path){ const parts=path.split('.'); const last=parseInt(parts.pop(),10); const parentPath=parts.join('.'); let parentList = (parentPath==='')? items : getByPath(items, parentPath)?.children; return { parentList, index: last, parentPath } }
+
+  function findById(items, id){
+    let found=null, parent=null, index=-1;
+    function walk(arr, p){
+      for(let i=0;i<arr.length;i++){
+        const n=arr[i]; if(n.id===id){ found=n; parent=p; index=i; return true; }
+        if(n.children && walk(n.children, n)) return true;
+      }
+      return false;
+    }
+    walk(items, null);
+    return { node:found, parent, index };
+  }
+
+  function containsId(root, id){
+    if(!root) return false; if(root.id===id) return true; return (root.children||[]).some(c=>containsId(c,id));
+  }
+
+  function moveNodeById(id, targetId, mode){
+    const items=load();
+    const src = findById(items, id);
+    const dst = findById(items, targetId);
+    if(!src.node || !dst.node) return;
+    // Prevent moving into itself/descendant
+    if(mode==='into' && containsId(src.node, targetId)) return;
+    // Remove from source
+    let fromArr = src.parent? (src.parent.children||[]) : items;
+    const moved = fromArr.splice(src.index,1)[0];
+    if(mode==='into'){
+      dst.node.children = dst.node.children || [];
+      dst.node.children.push(moved);
+    } else {
+      // before/after in destination's parent list
+      const toArr = dst.parent? (dst.parent.children||[]) : items;
+      let di = dst.index + (mode==='after'? 1 : 0);
+      // If moving within same array and original index < insertion index, adjust
+      if(toArr===fromArr && src.index < di) di -= 1;
+      toArr.splice(di,0,moved);
+    }
+    save(items);
+    nextFocusId = id;
+    render();
+  }
+
+  function newSiblingAfter(path){ const items=load(); const {parentList,index}=getParentAndIndex(items,path); if(!parentList) return; const insertAt=index+1; parentList.splice(insertAt,0,{text:'',done:false,collapsed:false,children:[]}); save(items); nextFocusPath = (path.split('.').slice(0,-1).concat(insertAt)).join('.'); render(); }
+  function deleteItem(path){ const items=load(); const {parentList,index,parentPath}=getParentAndIndex(items,path); if(!parentList) return; const focusIdx = Math.max(0,index-1); parentList.splice(index,1); save(items); nextFocusPath = parentList.length? (parentPath? parentPath+'.'+focusIdx : String(focusIdx)) : parentPath; render(); }
+  function indentItem(path){ const items=load(); const {parentList,index}=getParentAndIndex(items,path); if(!parentList || index<=0) return; const prev = parentList[index-1]; prev.children = prev.children||[]; const moved = parentList.splice(index,1)[0]; prev.children.push(moved); save(items); nextFocusPath = path.replace(/\.\d+$/,'') + '.' + (index-1) + '.' + (prev.children.length-1); render(); }
+  function outdentItem(path){ const items=load(); const {parentList,index,parentPath}=getParentAndIndex(items,path); if(parentPath==='') return; const gp = getParentAndIndex(items,parentPath); if(!gp.parentList) return; const moved = parentList.splice(index,1)[0]; const parentIndex = parseInt(parentPath.split('.').pop()||'0',10); gp.parentList.splice(parentIndex+1,0,moved); save(items); nextFocusPath = gp.parentPath? gp.parentPath + '.' + (parentIndex+1) : String(parentIndex+1); render(); }
+
+  function bindEvents(){
+    LIST.querySelectorAll('input.todo-check').forEach(cb=>cb.addEventListener('change',()=>{ const items=load(); const p=cb.getAttribute('data-path')||''; const node=getByPath(items,p); if(node){ node.done=cb.checked; save(items); render(); } }));
+    LIST.querySelectorAll('button.todo-more').forEach(b=>b.addEventListener('click',()=>{ const p=b.getAttribute('data-path')||''; // simple delete for now
+      if(confirm('Delete this task?')) deleteItem(p);
+    }));
+    LIST.querySelectorAll('button.todo-disclose').forEach(d=>d.addEventListener('click',()=>{ const items=load(); const p=d.getAttribute('data-path')||''; const node=getByPath(items,p); if(node){ node.collapsed = !node.collapsed; save(items); render(); } }));
+    LIST.querySelectorAll('.todo-text[contenteditable]')
+      .forEach(ed=>{
+        ed.addEventListener('input',()=>{ const items=load(); const p=ed.getAttribute('data-path')||''; const node=getByPath(items,p); if(node){ node.text = ed.textContent||''; save(items);} });
+        ed.addEventListener('keydown',(e)=>{
+          const p=ed.getAttribute('data-path')||''; const text=ed.textContent||'';
+          if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); newSiblingAfter(p); return; }
+          if(e.key==='Tab' && !e.shiftKey){ e.preventDefault(); indentItem(p); return; }
+          if(e.key==='Tab' && e.shiftKey){ e.preventDefault(); outdentItem(p); return; }
+          if(e.key==='Backspace' && text.trim()===''){
+            e.preventDefault(); deleteItem(p); return;
+          }
+        });
+      });
+    // Drag & drop
+    let dragId='';
+    LIST.querySelectorAll('.todo-grip').forEach(grip=>{
+      grip.addEventListener('dragstart', (e)=>{ dragId = grip.getAttribute('data-id')||''; e.dataTransfer?.setData('text/plain', dragId); e.dataTransfer?.setDragImage(document.createElement('img'),0,0); });
+    });
+    LIST.querySelectorAll('.todo-item').forEach(row=>{
+      row.addEventListener('dragover', (e)=>{
+        if(!dragId) return; e.preventDefault();
+        const rect=row.getBoundingClientRect(); const y=e.clientY-rect.top; const zone = y/rect.height;
+        row.classList.remove('drop-before','drop-after','drop-into');
+        if(zone<0.33) row.classList.add('drop-before'); else if(zone>0.66) row.classList.add('drop-after'); else row.classList.add('drop-into');
+      });
+      row.addEventListener('dragleave', ()=>{ row.classList.remove('drop-before','drop-after','drop-into'); });
+      row.addEventListener('drop', (e)=>{
+        if(!dragId) return; e.preventDefault();
+        const targetId = row.getAttribute('data-id')||'';
+        if(!targetId || targetId===dragId) { dragId=''; row.classList.remove('drop-before','drop-after','drop-into'); return; }
+        const rect=row.getBoundingClientRect(); const y=e.clientY-rect.top; const zone=y/rect.height; let mode = 'into'; if(zone<0.33) mode='before'; else if(zone>0.66) mode='after';
+        row.classList.remove('drop-before','drop-after','drop-into');
+        moveNodeById(dragId, targetId, mode);
+        dragId='';
+      });
+    });
+  }
+
+  TOGGLE?.addEventListener('click',()=>{ const next = !hideCompleted(); setHideCompleted(next); render(); });
+  FORM.addEventListener('submit',(e)=>{ e.preventDefault(); const t=(INPUT.value||'').trim(); if(!t) return; const items=load(); items.unshift({id:genId(),text:t,done:false,collapsed:false,children:[]}); save(items); INPUT.value=''; render(); });
   render();
 })();
 
