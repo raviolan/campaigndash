@@ -1,3 +1,116 @@
+// --- In-place HTML Editing (WYSIWYG) ---
+(function () {
+  const btnEdit = document.getElementById('btnEditPage');
+  const main = document.querySelector('main.main');
+  if (!btnEdit || !main) return;
+  let originalHtml = '';
+  let editor = null;
+  let toolbar = null;
+  let saveBtn = null;
+  let cancelBtn = null;
+  let status = null;
+
+  function createToolbar(ed) {
+    const bar = document.createElement('div');
+    bar.className = 'wysiwyg-toolbar';
+    bar.style.marginBottom = '0.5em';
+    function btn(label, cmd, arg) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.innerHTML = label;
+      b.className = 'wysiwyg-btn';
+      b.onclick = (e) => {
+        e.preventDefault();
+        ed.focus();
+        document.execCommand(cmd, false, arg);
+      };
+      return b;
+    }
+    bar.appendChild(btn('<b>B</b>', 'bold'));
+    bar.appendChild(btn('<i>I</i>', 'italic'));
+    bar.appendChild(btn('H1', 'formatBlock', 'H1'));
+    bar.appendChild(btn('H2', 'formatBlock', 'H2'));
+    bar.appendChild(btn('• List', 'insertUnorderedList'));
+    bar.appendChild(btn('1. List', 'insertOrderedList'));
+    bar.appendChild(btn('⎘', 'insertHTML', '<hr>'));
+    return bar;
+  }
+
+  function startEdit() {
+    originalHtml = main.innerHTML;
+    // Create contenteditable div for WYSIWYG editing
+    editor = document.createElement('div');
+    editor.className = 'inplace-wysiwyg-editor';
+    editor.contentEditable = 'true';
+    editor.style.width = '100%';
+    editor.style.minHeight = '350px';
+    editor.style.border = '1px solid #ccc';
+    editor.style.background = '#fff';
+    editor.style.padding = '1em';
+    editor.style.fontSize = '1.1em';
+    editor.innerHTML = originalHtml.trim();
+
+    // Toolbar
+    toolbar = createToolbar(editor);
+
+    // Save/Cancel buttons
+    saveBtn = document.createElement('button');
+    saveBtn.textContent = 'Save';
+    saveBtn.className = 'btn-primary';
+    cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'Cancel';
+    cancelBtn.className = 'btn-secondary';
+    status = document.createElement('div');
+    status.style.marginTop = '0.5em';
+    status.style.display = 'none';
+    const btnWrap = document.createElement('div');
+    btnWrap.style.marginTop = '1em';
+    btnWrap.appendChild(saveBtn);
+    btnWrap.appendChild(cancelBtn);
+    btnWrap.appendChild(status);
+
+    main.innerHTML = '';
+    main.appendChild(toolbar);
+    main.appendChild(editor);
+    main.appendChild(btnWrap);
+
+    saveBtn.onclick = async function () {
+      saveBtn.disabled = true;
+      status.textContent = 'Saving...';
+      status.style.display = 'block';
+      const html = editor.innerHTML;
+      try {
+        const resp = await fetch('/api/edit-page', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: window.location.pathname, html })
+        });
+        if (!resp.ok) {
+          status.textContent = 'Save failed: ' + resp.status + ' ' + resp.statusText;
+          saveBtn.disabled = false;
+          return;
+        }
+        const data = await resp.json();
+        if (data && data.ok) {
+          status.textContent = 'Saved! Reloading...';
+          setTimeout(() => { window.location.reload(); }, 800);
+        } else {
+          status.textContent = (data && data.error) || 'Save failed';
+          saveBtn.disabled = false;
+        }
+      } catch (err) {
+        status.textContent = 'Network error: ' + err.message;
+        saveBtn.disabled = false;
+      }
+    };
+    cancelBtn.onclick = function () {
+      main.innerHTML = originalHtml;
+    };
+  }
+
+  btnEdit.addEventListener('click', startEdit);
+})();
+// --- End In-place HTML Editing ---
 const byId = (id) => document.getElementById(id);
 // Inline SVG icons for client-side rendering
 function svgIcon(name, size = 16) {
@@ -429,11 +542,11 @@ window.saveSessionSnapshot = async function () {
     const list = loadFav();
     favList.innerHTML = list.length
       ? list.map((f, i) =>
-          `<div class="fav-item">
+        `<div class="fav-item">
              <a class="fav-link" href="${hrefFor(f.id)}">${f.title || f.id}</a>
              <button class="fav-remove" data-remove="${i}" title="Remove">✕</button>
            </div>`
-        ).join('')
+      ).join('')
       : '<div class="meta">No favorites</div>';
 
     favList.querySelectorAll('button[data-remove]').forEach(b =>
@@ -458,7 +571,7 @@ window.saveSessionSnapshot = async function () {
     try {
       const meta = window.NOTES && window.NOTES.find(n => n.id === id);
       if (meta) title = meta.title;
-    } catch {}
+    } catch { }
 
     list.unshift({ id, title });
     saveFav(list);
@@ -796,5 +909,87 @@ window.saveSessionSnapshot = async function () {
       const url = extractUrl(v) || extractUrl(getComputedStyle(h, '::before').backgroundImage);
       if (url) openLightbox(url.replace(/^"|"$/g, ''));
     });
+  });
+})();
+
+// Create Page Modal
+(function () {
+  const modal = document.getElementById('createPageModal');
+  const form = document.getElementById('createPageForm');
+  const btnOpen = document.getElementById('btnCreatePage');
+  const btnCancel = document.getElementById('btnCancelCreate');
+  const statusDiv = document.getElementById('createPageStatus');
+
+  if (!modal || !form || !btnOpen) return;
+
+  function openModal() {
+    modal.style.display = 'flex';
+    document.getElementById('pageTitle').focus();
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    form.reset();
+    statusDiv.style.display = 'none';
+    statusDiv.className = '';
+  }
+
+  function showStatus(message, type) {
+    statusDiv.textContent = message;
+    statusDiv.className = type;
+    statusDiv.style.display = 'block';
+  }
+
+  btnOpen.addEventListener('click', openModal);
+  btnCancel.addEventListener('click', closeModal);
+
+  // Close on overlay click
+  modal.querySelector('.modal-overlay').addEventListener('click', closeModal);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const type = document.getElementById('pageType').value;
+    const title = document.getElementById('pageTitle').value.trim();
+
+    if (!title) {
+      showStatus('Please enter a page title', 'error');
+      return;
+    }
+
+    // Disable form
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    showStatus('Creating page...', 'loading');
+
+    try {
+      const response = await fetch('/api/create-page', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, title })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showStatus('Page created! Redirecting...', 'success');
+        setTimeout(() => {
+          window.location.href = data.url;
+        }, 1000);
+      } else {
+        showStatus(data.error || 'Failed to create page', 'error');
+        submitBtn.disabled = false;
+      }
+    } catch (err) {
+      showStatus('Network error: ' + err.message, 'error');
+      submitBtn.disabled = false;
+    }
   });
 })();

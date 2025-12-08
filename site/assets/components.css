@@ -1,3 +1,35 @@
+/* WYSIWYG Editor Styles */
+.inplace-wysiwyg-editor {
+    min-height: 350px;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 1em;
+    font-size: 1.1em;
+    outline: none;
+    border-radius: 4px;
+    margin-bottom: 0.5em;
+}
+
+.wysiwyg-toolbar {
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.wysiwyg-btn {
+    background: #f5f5f5;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    padding: 0.2em 0.7em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.wysiwyg-btn:hover {
+    background: #e0e0e0;
+}
+
 /* UI Components and Controls */
 
 /* Search & Input */
