@@ -195,31 +195,39 @@
     margin-right: -8px;
 }
 
+/* One row per favorite */
 #navFav .fav-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
     padding: 0 8px 0 4px;
 }
 
-#navFav .fav-link {
-    flex: 1;
+/* The title fills the available space */
+#navFav .fav-link,
+#navFav .fav-item > a {
+    flex: 1 1 auto;
     min-width: 0;
+    display: block;
     padding: 8px 10px;
     border-radius: 10px;
     color: var(--text);
     text-decoration: none;
     transition: background-color .15s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-#navFav .fav-link:hover {
+#navFav .fav-link:hover,
+#navFav .fav-item > a:hover {
     background: rgba(139, 92, 246, 0.1);
 }
 
-#navFav .fav-remove {
-    flex-shrink: 0;
-    margin-left: auto;
+/* The ✕ is pinned to the right */
+#navFav .fav-remove,
+#navFav .fav-item > button[title="Remove"] {
+    flex: 0 0 auto;
     background: transparent;
     border: none;
     color: var(--muted);
@@ -231,10 +239,13 @@
     padding: 4px 8px;
 }
 
-#navFav .fav-item:hover .fav-remove {
+/* Show X on hover */
+#navFav .fav-item:hover .fav-remove,
+#navFav .fav-item:hover > button[title="Remove"] {
     opacity: 1;
 }
 
-#navFav .fav-remove:hover {
+#navFav .fav-remove:hover,
+#navFav .fav-item > button[title="Remove"]:hover {
     color: var(--text);
 }

@@ -114,7 +114,7 @@ function buildPage(title, content, sections, rightTop, extraScripts = '') {
     // Replace nested placeholders in partials
     html = html.replace('{{SECTIONS}}', sections);
     html = html.replace('{{RIGHT_TOP}}', rightTop);
-    
+
     return html;
 }
 
@@ -125,12 +125,12 @@ function processFile(filePath) {
     try {
         const originalHtml = fs.readFileSync(filePath, 'utf8');
 
-            // Extract components
-            const title = extractTitle(originalHtml);
-            const content = extractContent(originalHtml);
-            const sections = ''; // Sections are now in sidebar.html partial, not page-specific
-            const rightTop = extractRightTop(originalHtml);
-            const extraScripts = extractExtraScripts(originalHtml);        // Build new HTML
+        // Extract components
+        const title = extractTitle(originalHtml);
+        const content = extractContent(originalHtml);
+        const sections = ''; // Sections are now in sidebar.html partial, not page-specific
+        const rightTop = extractRightTop(originalHtml);
+        const extraScripts = extractExtraScripts(originalHtml);        // Build new HTML
         const newHtml = buildPage(title, content, sections, rightTop, extraScripts);
 
         // Write back

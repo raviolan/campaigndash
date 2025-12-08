@@ -159,7 +159,7 @@ a:hover {
     gap: 8px
 }
 
-.pane-body > .card {
+.pane-body>.card {
     width: 100%;
     box-sizing: border-box;
     display: flex;
@@ -167,7 +167,7 @@ a:hover {
     min-height: 0
 }
 
-.pane-body > .card:last-child {
+.pane-body>.card:last-child {
     flex: 1
 }
 
