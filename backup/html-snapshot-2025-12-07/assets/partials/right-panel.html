@@ -1,0 +1,42 @@
+<!-- Right Panel Partial: Drawer with notepad, to-do, and tools -->
+<div class="drawer" aria-label="Tools">
+    <div class="drawer-handle">
+        <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Close</button>
+        <button id="drawerPin" class="chip" aria-pressed="true" title="Pin panel"></button>
+        <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
+    </div>
+    <div id="drawerContent" class="drawer-content">
+        <div id="drawerTop">{{RIGHT_TOP}}</div>
+        <div class="right-split">
+            <div id="paneTop" class="pane">
+                <div class="pane-body" data-pane="top">
+                    <div class="card">
+                        <h3 style="margin:0">Notepad</h3>
+                    </div>
+                    <div class="card"><textarea id="toolNotepad" placeholder="Quick notes..."
+                            style="width:100%;min-height:26vh;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:6px;padding:10px"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="pane-resizer-h" aria-hidden="true"></div>
+            <div id="paneBottom" class="pane">
+                <div class="pane-body" data-pane="bottom">
+                    <div class="card">
+                        <h3 style="margin:0">To-Do</h3>
+                    </div>
+                    <div id="todoBox" class="card" aria-label="Session To-Do">
+                        <form id="todoForm" class="todo-form" autocomplete="off">
+                            <label class="sr-only" for="todoInput">Add a task</label>
+                            <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter" />
+                            <button type="submit" class="todo-add">Add</button>
+                        </form>
+                        <div class="todo-actions">
+                            <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>
+                        </div>
+                        <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

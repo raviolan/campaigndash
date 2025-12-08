@@ -7,7 +7,7 @@ import { spawn } from 'child_process';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const VAULT_ROOT = path.resolve(process.cwd());
-const ROOT = path.join(VAULT_ROOT, 'site');
+const ROOT = VAULT_ROOT; // Site root is already the cwd
 const port = process.env.PORT || 8080;
 
 const mime = {

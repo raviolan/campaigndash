@@ -1,12 +1,15 @@
 {
-  "name": "campaign-site",
-  "version": "1.0.0",
+  "name": "dm-vault-site",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node scripts/rebuild-from-partials.js",
     "patch": "node scripts/tools/patch-entity-images.js",
     "headers": "node scripts/tools/patch-entity-images.js",
-    "serve": "node scripts/serve.js"
-  },
-  "description": "D&D Campaign site - HTML-first architecture with header image injection"
+    "serve": "node scripts/serve.js",
+    "update-html": "node scripts/tools/update-existing-html.js",
+    "rebuild-search": "node scripts/tools/rebuild-search-index.js",
+    "enhance-todo": "node scripts/tools/add-enhanced-todo-css.js"
+  }
 }

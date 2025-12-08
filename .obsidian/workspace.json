@@ -8,49 +8,16 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a90674ca73cc78db",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "000_today's tools/Madryck.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Madryck"
-            }
-          },
-          {
-            "id": "fbf0569b97f34c27",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "000_today's tools/Lost items.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Lost items"
-            }
-          },
-          {
             "id": "02657dd8402e15e6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "000_today's tools/Hither.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Hither"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -123,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "000_today's tools/Lost items.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Lost items"
+              "title": "Backlinks"
             }
           },
           {
@@ -142,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "000_today's tools/Lost items.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Lost items"
+              "title": "Outgoing links"
             }
           },
           {
@@ -185,13 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000_today's tools/Lost items.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Lost items"
+              "title": "Outline"
             }
           }
         ]
@@ -212,23 +176,36 @@
       "bases:Create new base": false
     }
   },
-  "active": "fbf0569b97f34c27",
+  "active": "02657dd8402e15e6",
   "lastOpenFiles": [
-    "site/assets/lysaledger-avatar.jpeg",
-    "site/assets/lysaledger-header.jpeg",
-    "site/assets/primewater-header.jpeg",
-    "site/assets/sanbalet-header.jpeg",
-    "site/assets/ravenqueen-avatar.webp",
-    "site/assets/cyrieth-header.jpeg",
-    "site/assets/ravenqueen-header.jpeg",
-    "site/assets/xendros-header.jpeg",
-    "site/assets/salabaster.png",
-    "site/assets/cyrieth.png",
-    "site/assets/Kedjou.webp",
+    "site/assets/daddy-salabaster.png",
+    "site/web/assets",
+    "site/web",
+    "site/scripts/lib",
+    "site/backup-index.html",
+    "site/backup/pre-sections-fix/session.html",
+    "site/backup/pre-sections-fix/search.html",
+    "site/backup/pre-sections-fix/index.html",
+    "site/backup/pre-sections-fix/graph.html",
+    "site/backup/pre-sections-fix/2025-12-04.html",
+    "site/backup/pre-sections-fix",
+    "site/GLOBAL-PARTIALS.md",
+    "000_today's tools/Lost items.md",
+    "site/singleTruth.md",
+    "site/assets/kedjou-header.png",
+    "site/assets/saltmarsh-header.webp",
+    "site/assets/imbroglio-header.webp",
+    "site/assets/feywild-header.webp",
+    "site/assets/trek-header.jpg",
+    "site/assets/group-photo.png",
+    "site/REFACTORING_PLAN.md",
+    "site/site/99_Attachments/Pasted image 20251117171301.png",
+    "site/site/99_Attachments/Pasted image 20251117171121.png",
+    "site/site/99_Attachments/Pasted image 20251117170949.png",
+    "site/site/99_Attachments/Pasted image 20251117120341.png",
     "000_today's tools/Quick links.md",
     "000_today's tools/Madryck.md",
     "000_today's tools/Hither.md",
-    "000_today's tools/Lost items.md",
     "00_Campaign/01_Session notes.md",
     "000_today's tools/The Wild Beyond the Witchlight.md",
     "000_today's tools/Structure.md",
@@ -240,7 +217,6 @@
     "00_Campaign/03_Sessions/01 Finishing up in Saltmarsh.md",
     "01_Arcs/The Feywild/the trek.md",
     "stolen.md",
-    "000_today's tools",
     "00_Campaign/00_Campaign Dashboard.md"
   ]
 }

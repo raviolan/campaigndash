@@ -1,0 +1,117 @@
+<!-- Layout Partial: Main wrapper, references other partials -->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>2025-12-04</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%238b5cf6'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/assets/style.css?v=1765195587290" />
+    <link rel="stylesheet" href="/assets/enhanced-features.css?v=1765195587290" />
+    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765195587290" />
+    <script>window.SITE_BASE = "/"</script>
+</head>
+
+<body>
+    <div class="layout">
+        <!-- Header Partial: Top toolbar and navigation -->
+<div class="top">
+    <div class="toolbar">
+        <a class="chip" href="/index.html">Hembränt</a>
+        <a class="chip" href="/graph.html">Graph</a>
+        <a class="chip" href="/tags/index.html">Tags</a>
+        <a class="chip" href="/session.html">Session</a>
+    </div>
+    <div class="search">
+        <input id="searchBox" type="search" placeholder="Search titles, headings, #tags (Cmd/Ctrl-K)" />
+        <div id="searchResults" class="hovercard"></div>
+    </div>
+</div>
+        <aside class="left"><!-- Sidebar Partial: Navigation drawer and sections -->
+<div class="drawer" aria-label="Navigation">
+    <div class="drawer-handle">
+        <button id="leftDrawerToggle" class="chip" aria-expanded="true" aria-controls="leftDrawer">Nav</button>
+        <button id="leftDrawerPin" class="chip" aria-pressed="true">Pin</button>
+        <button id="leftCollapseExpand" class="chip" title="Collapse/Expand All">Collapse all</button>
+    </div>
+    <div id="leftDrawer" class="drawer-content">
+        <aside class="sidebar" role="navigation">
+            <div class="campaign-header">
+                <div class="campaign-title">Feywild Adventures</div>
+            </div>
+            <nav class="nav">
+                <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon">🏠</span><span
+                        class="nav-text">Dashboard</span></a>
+                <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..." /></div>
+                <details class="nav-details" open>
+                    <summary class="nav-label"><span class="nav-icon">⭐</span><span>Favorites</span></summary>
+                    <div id="navFav"></div>
+                </details>
+                <ul class="nav-sections">{{SECTIONS}}</ul>
+            </nav>
+        </aside>
+    </div>
+</div></aside>
+        <main class="main">
+            <div id="breadcrumbText" class="main-breadcrumb meta"></div><article><div class="page-header" style="--page-header:url('/assets/ph-header.svg')"></div><h1>2025-12-04</h1>
+</article>
+        </main>
+        <aside class="right"><!-- Right Panel Partial: Drawer with notepad, to-do, and tools -->
+<div class="drawer" aria-label="Tools">
+    <div class="drawer-handle">
+        <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Close</button>
+        <button id="drawerPin" class="chip" aria-pressed="true" title="Pin panel"></button>
+        <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
+    </div>
+    <div id="drawerContent" class="drawer-content">
+        <div id="drawerTop">{{RIGHT_TOP}}</div>
+        <div class="right-split">
+            <div id="paneTop" class="pane">
+                <div class="pane-body" data-pane="top">
+                    <div class="card">
+                        <h3 style="margin:0">Notepad</h3>
+                    </div>
+                    <div class="card"><textarea id="toolNotepad" placeholder="Quick notes..."
+                            style="width:100%;min-height:26vh;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:6px;padding:10px"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="pane-resizer-h" aria-hidden="true"></div>
+            <div id="paneBottom" class="pane">
+                <div class="pane-body" data-pane="bottom">
+                    <div class="card">
+                        <h3 style="margin:0">To-Do</h3>
+                    </div>
+                    <div id="todoBox" class="card" aria-label="Session To-Do">
+                        <form id="todoForm" class="todo-form" autocomplete="off">
+                            <label class="sr-only" for="todoInput">Add a task</label>
+                            <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter" />
+                            <button type="submit" class="todo-add">Add</button>
+                        </form>
+                        <div class="todo-actions">
+                            <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>
+                        </div>
+                        <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></aside>
+        <div class="resizer resizer-left" aria-hidden="true"></div>
+        <div class="resizer resizer-right" aria-hidden="true"></div>
+    </div>
+    <button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
+    <script src="/assets/site.js?v=1765195587290"></script>
+    <script src="/assets/keyboard-nav.js?v=1765195587290"></script>
+    <script src="/assets/recent-pages.js?v=1765195587290"></script>
+    
+    <!-- Footer Partial: Add site-wide footer content here if needed -->
+<footer class="footer">
+    <div class="meta">&copy; 2025 Feywild Adventures</div>
+</footer>
+</body>
+
+</html>

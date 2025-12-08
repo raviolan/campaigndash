@@ -1,0 +1,25 @@
+<!-- Sidebar Partial: Navigation drawer and sections -->
+<div class="drawer" aria-label="Navigation">
+    <div class="drawer-handle">
+        <button id="leftDrawerToggle" class="chip" aria-expanded="true" aria-controls="leftDrawer">Nav</button>
+        <button id="leftDrawerPin" class="chip" aria-pressed="true">Pin</button>
+        <button id="leftCollapseExpand" class="chip" title="Collapse/Expand All">Collapse all</button>
+    </div>
+    <div id="leftDrawer" class="drawer-content">
+        <aside class="sidebar" role="navigation">
+            <div class="campaign-header">
+                <div class="campaign-title">Feywild Adventures</div>
+            </div>
+            <nav class="nav">
+                <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon">🏠</span><span
+                        class="nav-text">Dashboard</span></a>
+                <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..." /></div>
+                <details class="nav-details" open>
+                    <summary class="nav-label"><span class="nav-icon">⭐</span><span>Favorites</span></summary>
+                    <ul id="navFav" class="nav-list"></ul>
+                </details>
+                <ul class="nav-sections">{{SECTIONS}}</ul>
+            </nav>
+        </aside>
+    </div>
+</div>

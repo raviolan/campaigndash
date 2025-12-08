@@ -2,14 +2,37 @@
 
 ## Your Setup
 
-**Architecture:** HTML-first static site
-- **Source files:** HTML pages in `/site` (no markdown source)
+**Architecture:** HTML-first static site with global partials
+- **Source files:** HTML pages in `/site` (page-specific content only)
+- **Global features:** Sidebar, header, footer in `/assets/partials` (single source of truth)
 - **Assets:** Images, CSS, JS in `/assets`
-- **Header injection:** Automated via patch script
+- **Build system:** Extracts content and wraps with global templates
+
+## ⚠️ IMPORTANT: Global vs Page-Specific
+
+### Global Features (Edit Once, Apply Everywhere)
+Edit these files in `/assets/partials/`:
+- **sidebar.html** - Left navigation (favorites, sections)
+- **header.html** - Top toolbar and search
+- **footer.html** - Page footer
+- **layout.html** - Overall page structure
+
+After editing global features, run:
+```bash
+npm run build
+```
+
+### Page-Specific Content (Edit Individual Pages)
+Edit the `<main>` content section in individual HTML files:
+- Page title
+- Headers, paragraphs, lists
+- Tables, images, specific content
+
+No rebuild needed after editing page content - changes are immediate.
 
 ## Daily Workflow
 
-### Editing Content
+### Editing Page Content
 
 Edit HTML files directly in their respective folders:
 
@@ -23,12 +46,36 @@ site/
   └── 05_Tools & Tables/  # DM tools
 ```
 
-After editing, run:
+**Note:** Only edit content inside `<main>` tags. Global features (sidebar, header) are in partials.
+
+After editing, optionally run:
 ```bash
 npm run patch
 ```
 
 This ensures all pages have correct headers/avatars.
+
+### Editing Global Features
+
+To change sidebar, navigation, header, or footer for ALL pages:
+
+1. Edit the appropriate file in `assets/partials/`:
+   - `sidebar.html` - Left navigation, favorites, sections
+   - `header.html` - Top toolbar, search bar
+   - `footer.html` - Footer content
+   - `layout.html` - Page structure, scripts
+
+2. Rebuild all pages:
+```bash
+npm run build
+```
+
+3. Verify changes on any page - they'll be everywhere!
+
+**Examples:**
+- Change favorites list structure → edit `sidebar.html` → run `npm run build`
+- Add new toolbar button → edit `header.html` → run `npm run build`
+- Update footer text → edit `footer.html` → run `npm run build`
 
 ### Adding Header Images
 
