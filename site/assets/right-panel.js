@@ -1,13 +1,30 @@
 // Right panel tools: tabs, pinning, notepad autosave, default home
 (function () {
-    // Color theme definitions
+    // Color theme definitions (each palette provides 6 values used as:
+    // 1: --bg, 2: --panel, 3: --accent, 4: --text, 5: --muted, 6: --border)
+    // Originals preserved in comments for reference.
     const COLOR_THEMES = {
-        auburn: ['#642F37', '#C0350F', '#F3904B', '#F7C767', '#B89DBB'],
-        desert: ['#ae5433', '#ecc481', '#aa462d', '#9e895f', '#d5c79f', '#4a4231'],
-        mother: ['#080d22', '#531f4f', '#6e234b', '#932549', '#fdf3eb'],
-        orchid: ['#CB438B', '#BF3556', '#6C6A43', '#4D3449', '#FFF0D2'],
-        pearls: ['#414B9e', '#9792CB', '#AA74A0', '#E2C99E', '#8527736'],
+        // auburn: ['#642F37', '#C0350F', '#F3904B', '#F7C767', '#B89DBB']
+        auburn: ['#3E1F21', '#642F2F', '#D97729', '#F6E6B3', '#A68298', '#2B1415'],
+
+        // desert: ['#ae5433', '#ecc481', '#aa462d', '#9e895f', '#d5c79f', '#4a4231']
+        // nudge the muted tone toward a greener, more visible shade
+        desert: ['#4a3728', '#aa6b45', '#ecc481', '#f4e9d0', '#A7B06A', '#3f372e'],
+
+        // mother: ['#080d22', '#531f4f', '#6e234b', '#932549', '#fdf3eb']
+        mother: ['#080d22', '#24102a', '#932549', '#fdf3eb', '#6e234b', '#0b0d14'],
+
+        // orchid: ['#CB438B', '#BF3556', '#6C6A43', '#4D3449', '#FFF0D2']
+        // make the muted/nature green brighter for better visibility against panels
+        orchid: ['#2b1023', '#4D3449', '#CB438B', '#FFF0D2', '#9CB575', '#21121b'],
+
+        // pearls: ['#414B9e', '#9792CB', '#AA74A0', '#E2C99E', '#8527736'] (fixed)
+        pearls: ['#2b2f73', '#414B9E', '#7B6ED9', '#E6DCC4', '#9792CB', '#2a254f'],
+
+        // light (kept original ordering)
         light: ['#ffffff', '#f6f7f8', '#0ea5ff', '#111827', '#6b7280', '#d1d5db'],
+
+        // dark (kept original ordering)
         dark: ['#0b1220', '#0f1724', '#8b5cf6', '#e5e7eb', '#9aa3b2', '#0b0f16']
     };
 

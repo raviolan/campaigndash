@@ -446,6 +446,136 @@ pre {
     border-radius: 6px
 }
 
+/* Apply theme colors to form controls and buttons */
+button,
+.chip,
+.pane-tab,
+.todo-add,
+.bookmark-btn,
+.fav-remove,
+.theme-swatch {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover,
+.chip:hover,
+.pane-tab:hover,
+.theme-swatch:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.chip.active,
+.pane-tab.active {
+    background: var(--panel);
+    color: var(--text);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+input,
+textarea,
+select,
+.todo-input,
+.collapsible-content [contenteditable],
+.wysiwyg,
+.wysiwyg * {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    caret-color: var(--accent);
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.todo-input:focus,
+.wysiwyg:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.0);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    /* subtle accent ring */
+}
+
+/* Make theme swatch previews more prominent */
+.swatch-preview {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Ensure chips / small controls use muted color when inactive */
+.chip {
+    background: transparent;
+    color: var(--muted);
+    border-radius: 6px;
+    padding: 6px 8px;
+}
+
+.chip.active {
+    color: var(--text);
+}
+
+/* Toolbar and icon rules: make SVGs inherit color so icons follow theme */
+.toolbar,
+.toolbar button,
+.right .drawer-handle,
+.wysiwyg-toolbar {
+    color: var(--text);
+}
+
+.toolbar svg,
+.toolbar button svg,
+.chip svg,
+.pane-tab svg,
+.toolbar .icon,
+.drawer-handle svg {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+/* Search inputs */
+.search input,
+.nav-quick input,
+.todo-input,
+.nav-search input {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.search input::placeholder,
+.nav-quick input::placeholder,
+.todo-input::placeholder {
+    color: var(--muted);
+}
+
+/* Tags and small chips */
+.tag,
+.tag-pc,
+.tag-npc,
+.tag-location,
+.tag-arc,
+.tag-planning {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.tag:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Small controls and toolbar buttons should use accent for subtle emphasis */
+.toolbar .chip.active,
+.drawer-handle .chip.active {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.02));
+    color: var(--accent);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
 pre {
     padding: 12px;
     overflow: auto
@@ -772,6 +902,62 @@ body[data-theme='light'] .todo-add {
     border-color: #e5e7eb
 }
 
+/* Final theme-driven overrides to ensure components inherit palette variables */
+.tool-tab,
+.tool-pin,
+.tool-tab,
+.tool-pin,
+.delete-page-btn,
+.right .drawer-handle .chip,
+.left .drawer-handle .chip,
+.todo-add,
+.todo-input,
+.graph-panel,
+.card,
+.components {
+    background: var(--panel) !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+
+.tool-tab {
+    background: var(--panel) !important;
+    color: var(--muted) !important;
+}
+
+.tool-tab.active,
+.tool-pin.active,
+.chip.active {
+    background: var(--accent) !important;
+    color: var(--text) !important;
+    border-color: transparent !important;
+}
+
+.todo-input {
+    background: var(--panel) !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+
+.todo-add {
+    background: var(--panel) !important;
+    color: var(--muted) !important;
+    border-color: var(--border) !important;
+}
+
+.todo-add:hover {
+    background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+    color: var(--text) !important;
+}
+
+/* Make sure toolbar icons use currentColor */
+.toolbar svg,
+.drawer-handle svg,
+.chip svg {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+}
+
 body[data-theme='light'] .todo-item {
     background: #ffffff
 }
@@ -803,9 +989,9 @@ body[data-theme='light'] .todo-btn:hover {
     padding: 4px 8px;
     border: 1px solid var(--border);
     border-radius: 12px;
-    background: #10131a;
+    background: var(--panel);
     color: var(--muted);
-    cursor: pointer
+    cursor: pointer;
 }
 
 .chip.active {

@@ -2,8 +2,12 @@
 (function () {
     const rightPane = document.querySelector('.right');
     if (!rightPane) return;
+    // Respect any saved custom color theme; only apply legacy light/dark on load
+    const savedColorTheme = localStorage.getItem('colorTheme');
     let theme = localStorage.getItem('theme') || 'dark';
-    document.body.setAttribute('data-theme', theme);
+    if (!savedColorTheme || savedColorTheme === 'light' || savedColorTheme === 'dark') {
+        document.body.setAttribute('data-theme', theme);
+    }
     const handle = rightPane.querySelector('.drawer-handle');
     const content = document.getElementById('drawerContent');
     function attach(el) {
