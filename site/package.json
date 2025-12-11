@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/rebuild-from-partials.js",
+    "build": "node scripts/rebuild-from-partials.js && node scripts/sync-landing-images.js",
     "patch": "node scripts/tools/patch-entity-images.js",
     "headers": "node scripts/tools/patch-entity-images.js",
     "serve": "node scripts/serve.js",
     "update-html": "node scripts/tools/update-existing-html.js",
     "rebuild-search": "node scripts/tools/rebuild-search-index.js",
-    "enhance-todo": "node scripts/tools/add-enhanced-todo-css.js"
+    "enhance-todo": "node scripts/tools/add-enhanced-todo-css.js",
+    "sync-images": "node scripts/sync-landing-images.js"
   }
 }

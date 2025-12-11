@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import { spawn } from 'child_process';
+import { syncLandingImages } from './sync-landing-images.js';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const VAULT_ROOT = path.resolve(process.cwd());
@@ -486,6 +487,71 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+  if (pathname === '/api/upload-image' && req.method === 'POST') {
+    // Handle multipart/form-data image upload
+    const boundary = req.headers['content-type']?.split('boundary=')[1];
+    if (!boundary) return sendJson(res, 400, { error: 'No boundary' });
+
+    let data = [];
+    req.on('data', chunk => data.push(chunk));
+    req.on('end', () => {
+      try {
+        const buffer = Buffer.concat(data);
+        const parts = buffer.toString('binary').split('--' + boundary);
+
+        let imageData = null;
+        let imageType = null;
+        let filename = null;
+
+        for (const part of parts) {
+          if (part.includes('Content-Disposition')) {
+            const nameMatch = part.match(/name="([^"]+)"/);
+            const filenameMatch = part.match(/filename="([^"]+)"/);
+
+            if (nameMatch && nameMatch[1] === 'image' && filenameMatch) {
+              filename = filenameMatch[1];
+              const contentTypeMatch = part.match(/Content-Type: (.+)/);
+              if (contentTypeMatch) {
+                imageType = contentTypeMatch[1].trim();
+              }
+
+              // Extract binary data (everything after double CRLF)
+              const dataStart = part.indexOf('\r\n\r\n') + 4;
+              const dataEnd = part.lastIndexOf('\r\n');
+              imageData = Buffer.from(part.substring(dataStart, dataEnd), 'binary');
+            }
+          }
+        }
+
+        if (!imageData || !filename) {
+          return sendJson(res, 400, { error: 'No image data found' });
+        }
+
+        // Sanitize filename
+        const ext = path.extname(filename);
+        const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const timestamp = Date.now();
+        const finalName = `${path.basename(safeName, ext)}-${timestamp}${ext}`;
+
+        // Save to assets folder
+        const assetsDir = path.join(ROOT, 'assets');
+        if (!fs.existsSync(assetsDir)) {
+          fs.mkdirSync(assetsDir, { recursive: true });
+        }
+
+        const filePath = path.join(assetsDir, finalName);
+        fs.writeFileSync(filePath, imageData);
+
+        const url = '/assets/' + finalName;
+        console.log('[upload-image] Saved:', url);
+        sendJson(res, 200, { ok: true, url });
+      } catch (e) {
+        console.error('[upload-image error]', e);
+        sendJson(res, 500, { error: 'Upload failed: ' + e.message });
+      }
+    });
+    return;
+  }
   if (pathname === '/api/edit-page' && req.method === 'POST') {
     const body = await parseBody(req);
     let { url, html } = body || {};
@@ -498,14 +564,43 @@ const server = http.createServer(async (req, res) => {
     try {
       let orig = fs.readFileSync(abs, 'utf8');
       let updated = orig;
-      if (/<main[^>]*class=["']main["'][^>]*>/.test(orig)) {
-        updated = orig.replace(/(<main[^>]*class=["']main["'][^>]*>)[\s\S]*?(<\/main>)/i, `$1\n${html}\n$2`);
-      } else if (/<body[^>]*>/.test(orig)) {
-        updated = orig.replace(/(<body[^>]*>)[\s\S]*?(<\/body>)/i, `$1\n${html}\n$2`);
+
+      // Also update entity-header and entity-avatar if present in the new HTML
+      const headerMatch = html.match(/entity-header[^>]*style="([^"]*)"/);
+      const avatarMatch = html.match(/entity-avatar[^>]*<img[^>]*src="([^"]*)"/);
+
+      if (headerMatch) {
+        // Update header image URL in the original file
+        updated = updated.replace(
+          /(entity-header[^>]*style=")([^"]*)(">)/,
+          `$1${headerMatch[1]}$3`
+        );
+      }
+
+      if (avatarMatch) {
+        // Update avatar image URL in the original file
+        updated = updated.replace(
+          /(entity-avatar[^>]*<img[^>]*src=")([^"]*)(")/,
+          `$1${avatarMatch[1]}$3`
+        );
+      }
+
+      if (/<main[^>]*class=["']main["'][^>]*>/.test(updated)) {
+        updated = updated.replace(/(<main[^>]*class=["']main["'][^>]*>)[\s\S]*?(<\/main>)/i, `$1\n${html}\n$2`);
+      } else if (/<body[^>]*>/.test(updated)) {
+        updated = updated.replace(/(<body[^>]*>)[\s\S]*?(<\/body>)/i, `$1\n${html}\n$2`);
       } else {
         return sendJson(res, 400, { error: 'No editable region found' });
       }
       fs.writeFileSync(abs, updated, 'utf8');
+
+      // Auto-sync landing page images after saving
+      try {
+        syncLandingImages(VAULT_ROOT, true); // silent mode
+      } catch (err) {
+        console.error('[sync-landing-images]', err.message);
+      }
+
       sendJson(res, 200, { ok: true });
     } catch (e) {
       console.error('[edit-page error]', e);

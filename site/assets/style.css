@@ -1009,9 +1009,23 @@ body[data-theme='light'] .todo-disclose {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 8px;
-    padding: 4px;
+    padding: 4px 8px;
     cursor: pointer;
-    color: #fff
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+
+.bookmark-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.1);
+}
+
+.bookmark-btn.favorited {
+    background: rgba(139, 92, 246, 0.3);
+    border-color: var(--accent);
+    color: #fbbf24;
 }
 
 .bookmark-btn.active {
@@ -1119,7 +1133,7 @@ body[data-theme='light'] .entity-tabs a:hover {
 
 .entity-body section,
 article section[id],
-main.main > section[id] {
+main.main>section[id] {
     margin-bottom: 24px;
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -1130,7 +1144,7 @@ main.main > section[id] {
 
 .entity-body section.collapsed,
 article section[id].collapsed,
-main.main > section[id].collapsed {
+main.main>section[id].collapsed {
     padding: 0
 }
 
@@ -1138,8 +1152,8 @@ main.main > section[id].collapsed {
 .entity-body section h2,
 article section[id] h1,
 article section[id] h2,
-main.main > section[id] h1,
-main.main > section[id] h2 {
+main.main>section[id] h1,
+main.main>section[id] h2 {
     margin-top: 0;
     padding: 16px 20px;
     margin: -20px -20px 16px -20px;
@@ -1155,8 +1169,8 @@ main.main > section[id] h2 {
 .entity-body section.collapsed h2,
 article section[id].collapsed h1,
 article section[id].collapsed h2,
-main.main > section[id].collapsed h1,
-main.main > section[id].collapsed h2 {
+main.main>section[id].collapsed h1,
+main.main>section[id].collapsed h2 {
     margin: 0;
     border-radius: 10px
 }
@@ -1165,8 +1179,8 @@ main.main > section[id].collapsed h2 {
 .entity-body section h2:hover,
 article section[id] h1:hover,
 article section[id] h2:hover,
-main.main > section[id] h1:hover,
-main.main > section[id] h2:hover {
+main.main>section[id] h1:hover,
+main.main>section[id] h2:hover {
     background: rgba(139, 92, 246, 0.14)
 }
 
@@ -1174,8 +1188,8 @@ main.main > section[id] h2:hover {
 .entity-body section h2::before,
 article section[id] h1::before,
 article section[id] h2::before,
-main.main > section[id] h1::before,
-main.main > section[id] h2::before {
+main.main>section[id] h1::before,
+main.main>section[id] h2::before {
     content: '▼';
     display: inline-block;
     margin-right: 10px;
@@ -1188,21 +1202,21 @@ main.main > section[id] h2::before {
 .entity-body section.collapsed h2::before,
 article section[id].collapsed h1::before,
 article section[id].collapsed h2::before,
-main.main > section[id].collapsed h1::before,
-main.main > section[id].collapsed h2::before {
+main.main>section[id].collapsed h1::before,
+main.main>section[id].collapsed h2::before {
     transform: rotate(-90deg)
 }
 
 .entity-body section .section-content,
 article section[id] .section-content,
-main.main > section[id] .section-content {
+main.main>section[id] .section-content {
     display: block;
     animation: slideDown 0.2s ease
 }
 
 .entity-body section.collapsed .section-content,
 article section[id].collapsed .section-content,
-main.main > section[id].collapsed .section-content {
+main.main>section[id].collapsed .section-content {
     display: none
 }
 
@@ -1699,4 +1713,104 @@ body[data-theme='light'] .nav-item:hover {
     border: 1px solid var(--border);
     background: var(--panel);
     color: var(--text)
+}
+
+/* Favorites section - modern styling matching nav items */
+#navFav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#navFav .meta {
+    padding: 12px 10px;
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* One row per favorite */
+#navFav .fav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    position: relative;
+    border-radius: 10px;
+    transition: all .15s ease;
+}
+
+/* The title fills the available space */
+#navFav .fav-link,
+#navFav .fav-item>a {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    color: var(--text);
+    text-decoration: none;
+    transition: all .15s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+/* Star icon before favorite */
+#navFav .fav-link::before,
+#navFav .fav-item>a::before {
+    content: "★";
+    color: #fbbf24;
+    font-size: 14px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.4));
+}
+
+/* Gradient hover effect matching nav items */
+#navFav .fav-item:hover {
+    background-image: linear-gradient(90deg,
+            rgba(139, 92, 246, .5) 0%,
+            rgba(139, 92, 246, .18) 28%,
+            rgba(139, 92, 246, 0) 70%);
+}
+
+#navFav .fav-link:hover,
+#navFav .fav-item>a:hover {
+    color: var(--text);
+}
+
+/* The remove button */
+#navFav .fav-remove,
+#navFav .fav-item>button[title="Remove"] {
+    flex: 0 0 auto;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    opacity: 0;
+    transition: all .2s ease;
+    font-size: 14px;
+    line-height: 1;
+    padding: 6px 8px;
+    margin-right: 4px;
+}
+
+/* Show remove button on hover */
+#navFav .fav-item:hover .fav-remove,
+#navFav .fav-item:hover>button[title="Remove"] {
+    opacity: 1;
+}
+
+/* Remove button hover state */
+#navFav .fav-remove:hover,
+#navFav .fav-item>button[title="Remove"]:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    transform: scale(1.05);
 }

@@ -9,8 +9,12 @@
       sidebarContainer.innerHTML = html;
       // Initialize split-click navigation
       initializeSplitClickNavigation();
+      // Initialize favorites after sidebar is loaded
+      if (window.initializeFavorites) window.initializeFavorites();
       // Re-run any sidebar initialization if needed
       if (window.initializeSidebar) window.initializeSidebar();
+      // Initialize nav section state persistence
+      if (window.initializeNavSectionState) window.initializeNavSectionState();
     })
     .catch(err => console.error('Failed to load sidebar:', err));
 })();
@@ -198,16 +202,16 @@ function showConfirmModal(title, message) {
 
         // Insert the section at cursor/selection
         range.deleteContents();
-        
+
         // Find if we're inside another section and if so, insert after it instead of nesting
         let insertPoint = range.startContainer;
         if (insertPoint.nodeType === Node.TEXT_NODE) {
           insertPoint = insertPoint.parentNode;
         }
-        
+
         // Find the closest parent section
         const parentSection = insertPoint.closest('section[id]');
-        
+
         if (parentSection) {
           // Insert after the parent section instead of inside it
           parentSection.parentNode.insertBefore(section, parentSection.nextSibling);
@@ -275,6 +279,279 @@ function showConfirmModal(title, message) {
     return temp.innerHTML;
   }
 
+  function createImageUploadUI(editor) {
+    const entityHeader = editor ? editor.querySelector('.entity-header') : document.querySelector('.entity-header');
+    const entityAvatar = editor ? editor.querySelector('.entity-avatar img') : document.querySelector('.entity-avatar img');
+
+    if (!entityHeader) return null;
+
+    const uploadUI = document.createElement('div');
+    uploadUI.className = 'image-upload-ui';
+    uploadUI.style.cssText = 'margin-bottom: 1em; padding: 1em; background: var(--panel); border: 1px solid var(--border); border-radius: 4px;';
+
+    const title = document.createElement('h3');
+    title.textContent = 'Page Images';
+    title.style.marginTop = '0';
+    uploadUI.appendChild(title);
+
+    // Header image upload
+    const headerSection = document.createElement('div');
+    headerSection.style.marginBottom = '1em';
+
+    const headerLabel = document.createElement('label');
+    headerLabel.textContent = 'Header Image: ';
+    headerLabel.style.fontWeight = 'bold';
+
+    const headerInput = document.createElement('input');
+    headerInput.type = 'file';
+    headerInput.accept = 'image/*';
+    headerInput.style.marginLeft = '0.5em';
+
+    const headerStatus = document.createElement('span');
+    headerStatus.style.marginLeft = '1em';
+    headerStatus.style.color = 'var(--meta)';
+
+    headerSection.appendChild(headerLabel);
+    headerSection.appendChild(headerInput);
+    headerSection.appendChild(headerStatus);
+
+    // Header position controls
+    const headerPosSection = document.createElement('div');
+    headerPosSection.style.cssText = 'margin-top: 0.5em; margin-left: 1.5em; display: flex; gap: 1em; align-items: center;';
+
+    const headerPosLabel = document.createElement('span');
+    headerPosLabel.textContent = 'Position:';
+    headerPosLabel.style.fontSize = '0.9em';
+    headerPosLabel.style.color = 'var(--meta)';
+
+    const headerPosX = document.createElement('input');
+    headerPosX.type = 'range';
+    headerPosX.min = '0';
+    headerPosX.max = '100';
+    headerPosX.value = '50';
+    headerPosX.title = 'Horizontal position';
+    headerPosX.style.width = '120px';
+
+    const headerPosY = document.createElement('input');
+    headerPosY.type = 'range';
+    headerPosY.min = '0';
+    headerPosY.max = '100';
+    headerPosY.value = '50';
+    headerPosY.title = 'Vertical position';
+    headerPosY.style.width = '120px';
+
+    const headerPosReset = document.createElement('button');
+    headerPosReset.textContent = 'Center';
+    headerPosReset.type = 'button';
+    headerPosReset.className = 'chip';
+    headerPosReset.style.fontSize = '0.8em';
+
+    headerPosSection.appendChild(headerPosLabel);
+    headerPosSection.appendChild(document.createTextNode('H: '));
+    headerPosSection.appendChild(headerPosX);
+    headerPosSection.appendChild(document.createTextNode('V: '));
+    headerPosSection.appendChild(headerPosY);
+    headerPosSection.appendChild(headerPosReset);
+
+    // Get current position from inline style if it exists
+    const currentStyle = entityHeader.getAttribute('style') || '';
+    const bgPosMatch = currentStyle.match(/background-position:\s*(\d+)%\s+(\d+)%/);
+    if (bgPosMatch) {
+      headerPosX.value = bgPosMatch[1];
+      headerPosY.value = bgPosMatch[2];
+    }
+
+    const updateHeaderPosition = () => {
+      const x = headerPosX.value;
+      const y = headerPosY.value;
+      const currentStyle = entityHeader.getAttribute('style') || '';
+
+      // Update or add background-position to inline style
+      let newStyle = currentStyle;
+      if (newStyle.includes('background-position:')) {
+        newStyle = newStyle.replace(/background-position:[^;]+;?/, `background-position: ${x}% ${y}%;`);
+      } else {
+        newStyle += `background-position: ${x}% ${y};`;
+      }
+
+      entityHeader.setAttribute('style', newStyle.trim());
+    };
+
+    headerPosX.addEventListener('input', updateHeaderPosition);
+    headerPosY.addEventListener('input', updateHeaderPosition);
+    headerPosReset.addEventListener('click', () => {
+      headerPosX.value = '50';
+      headerPosY.value = '50';
+      updateHeaderPosition();
+    });
+
+    uploadUI.appendChild(headerSection);
+    uploadUI.appendChild(headerPosSection);
+
+    // Profile image upload (only if avatar exists)
+    if (entityAvatar) {
+      const avatarSection = document.createElement('div');
+
+      const avatarLabel = document.createElement('label');
+      avatarLabel.textContent = 'Profile Image: ';
+      avatarLabel.style.fontWeight = 'bold';
+
+      const avatarInput = document.createElement('input');
+      avatarInput.type = 'file';
+      avatarInput.accept = 'image/*';
+      avatarInput.style.marginLeft = '0.5em';
+
+      const avatarStatus = document.createElement('span');
+      avatarStatus.style.marginLeft = '1em';
+      avatarStatus.style.color = 'var(--meta)';
+
+      avatarSection.appendChild(avatarLabel);
+      avatarSection.appendChild(avatarInput);
+      avatarSection.appendChild(avatarStatus);
+      uploadUI.appendChild(avatarSection);
+
+      // Avatar position controls
+      const avatarPosSection = document.createElement('div');
+      avatarPosSection.style.cssText = 'margin-top: 0.5em; margin-left: 1.5em; display: flex; gap: 1em; align-items: center;';
+
+      const avatarPosLabel = document.createElement('span');
+      avatarPosLabel.textContent = 'Position:';
+      avatarPosLabel.style.fontSize = '0.9em';
+      avatarPosLabel.style.color = 'var(--meta)';
+
+      const avatarPosX = document.createElement('input');
+      avatarPosX.type = 'range';
+      avatarPosX.min = '0';
+      avatarPosX.max = '100';
+      avatarPosX.value = '50';
+      avatarPosX.title = 'Horizontal position';
+      avatarPosX.style.width = '120px';
+
+      const avatarPosY = document.createElement('input');
+      avatarPosY.type = 'range';
+      avatarPosY.min = '0';
+      avatarPosY.max = '100';
+      avatarPosY.value = '50';
+      avatarPosY.title = 'Vertical position';
+      avatarPosY.style.width = '120px';
+
+      const avatarPosReset = document.createElement('button');
+      avatarPosReset.textContent = 'Center';
+      avatarPosReset.type = 'button';
+      avatarPosReset.className = 'chip';
+      avatarPosReset.style.fontSize = '0.8em';
+
+      avatarPosSection.appendChild(avatarPosLabel);
+      avatarPosSection.appendChild(document.createTextNode('H: '));
+      avatarPosSection.appendChild(avatarPosX);
+      avatarPosSection.appendChild(document.createTextNode('V: '));
+      avatarPosSection.appendChild(avatarPosY);
+      avatarPosSection.appendChild(avatarPosReset);
+
+      // Get current position from inline style if it exists
+      const currentAvatarStyle = entityAvatar.getAttribute('style') || '';
+      const objPosMatch = currentAvatarStyle.match(/object-position:\s*(\d+)%\s+(\d+)%/);
+      if (objPosMatch) {
+        avatarPosX.value = objPosMatch[1];
+        avatarPosY.value = objPosMatch[2];
+      }
+
+      const updateAvatarPosition = () => {
+        const x = avatarPosX.value;
+        const y = avatarPosY.value;
+        const currentStyle = entityAvatar.getAttribute('style') || '';
+
+        // Update or add object-position to inline style
+        let newStyle = currentStyle;
+        if (newStyle.includes('object-position:')) {
+          newStyle = newStyle.replace(/object-position:[^;]+;?/, `object-position: ${x}% ${y}%;`);
+        } else {
+          newStyle += `object-position: ${x}% ${y};`;
+        }
+
+        entityAvatar.setAttribute('style', newStyle.trim());
+      };
+
+      avatarPosX.addEventListener('input', updateAvatarPosition);
+      avatarPosY.addEventListener('input', updateAvatarPosition);
+      avatarPosReset.addEventListener('click', () => {
+        avatarPosX.value = '50';
+        avatarPosY.value = '50';
+        updateAvatarPosition();
+      });
+
+      uploadUI.appendChild(avatarPosSection);
+
+      avatarInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        avatarStatus.textContent = 'Uploading...';
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('type', 'avatar');
+
+        try {
+          const resp = await fetch('/api/upload-image', {
+            method: 'POST',
+            body: formData
+          });
+
+          const data = await resp.json();
+
+          if (data.ok) {
+            avatarStatus.textContent = '✓ Uploaded';
+            avatarStatus.style.color = 'green';
+            entityAvatar.src = data.url;
+            setTimeout(() => { avatarStatus.textContent = ''; }, 3000);
+          } else {
+            avatarStatus.textContent = '✗ ' + (data.error || 'Upload failed');
+            avatarStatus.style.color = 'red';
+          }
+        } catch (err) {
+          avatarStatus.textContent = '✗ Upload error';
+          avatarStatus.style.color = 'red';
+        }
+      });
+    }
+
+    headerInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      headerStatus.textContent = 'Uploading...';
+
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('type', 'header');
+
+      try {
+        const resp = await fetch('/api/upload-image', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await resp.json();
+
+        if (data.ok) {
+          headerStatus.textContent = '✓ Uploaded';
+          headerStatus.style.color = 'green';
+          entityHeader.style.setProperty('--header', `url('${data.url}')`);
+          setTimeout(() => { headerStatus.textContent = ''; }, 3000);
+        } else {
+          headerStatus.textContent = '✗ ' + (data.error || 'Upload failed');
+          headerStatus.style.color = 'red';
+        }
+      } catch (err) {
+        headerStatus.textContent = '✗ Upload error';
+        headerStatus.style.color = 'red';
+      }
+    });
+
+    return uploadUI;
+  }
+
   function startEdit() {
     originalHtml = main.innerHTML;
     // Create contenteditable div for WYSIWYG editing
@@ -291,6 +568,9 @@ function showConfirmModal(title, message) {
 
     // Toolbar
     toolbar = createToolbar(editor);
+
+    // Image upload UI - pass editor so it updates the correct elements
+    const imageUploadUI = createImageUploadUI(editor);
 
     // Save/Cancel buttons
     saveBtn = document.createElement('button');
@@ -309,6 +589,7 @@ function showConfirmModal(title, message) {
     btnWrap.appendChild(status);
 
     main.innerHTML = '';
+    if (imageUploadUI) main.appendChild(imageUploadUI);
     main.appendChild(toolbar);
     main.appendChild(editor);
     main.appendChild(btnWrap);
@@ -436,6 +717,108 @@ if (searchBox) {
   });
 }
 document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); searchBox && searchBox.focus(); } });
+
+// Global keyboard shortcuts
+let blurred = false;
+
+console.log('[Shortcuts] Initializing global keyboard shortcuts');
+
+document.addEventListener('keydown', (e) => {
+  // Skip if typing in input/textarea (except for Cmd+S and blur)
+  const isTyping = e.target && /input|textarea/i.test(e.target.tagName) && !e.target.classList.contains('inplace-wysiwyg-editor');
+  const isEditMode = document.querySelector('.inplace-wysiwyg-editor');
+
+  // Debug logging
+  if (e.altKey || (e.metaKey && e.key.toLowerCase() === 's')) {
+    console.log('[Shortcuts] Key pressed:', {
+      key: e.key,
+      code: e.code,
+      altKey: e.altKey,
+      metaKey: e.metaKey,
+      ctrlKey: e.ctrlKey,
+      isTyping,
+      isEditMode: !!isEditMode
+    });
+  }
+
+  // Option+B: Blur/unblur screen (works everywhere)
+  if (e.altKey && e.code === 'KeyB') {
+    console.log('[Shortcuts] Blur/unblur triggered');
+    e.preventDefault();
+    blurred = !blurred;
+    if (blurred) {
+      document.body.style.filter = 'blur(8px)';
+      document.body.style.userSelect = 'none';
+    } else {
+      document.body.style.filter = '';
+      document.body.style.userSelect = '';
+    }
+    return;
+  }
+
+  // Skip other shortcuts if typing (except blur)
+  if (isTyping && !(e.metaKey || e.ctrlKey)) return;
+
+  // Cmd+S: Save and exit edit mode (only in edit mode)
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's' && isEditMode) {
+    console.log('[Shortcuts] Save triggered');
+    e.preventDefault();
+    const saveBtn = document.querySelector('.btn-primary');
+    if (saveBtn && !saveBtn.disabled) {
+      saveBtn.click();
+    }
+    return;
+  }
+
+  // Skip remaining shortcuts if typing
+  if (isTyping) return;
+
+  // Option+C: Collapse all nav sections except current
+  if (e.altKey && e.code === 'KeyC') {
+    console.log('[Shortcuts] Collapse except current triggered');
+    e.preventDefault();
+    const currentPath = window.location.pathname;
+    const allDetails = document.querySelectorAll('.left .nav-details');
+
+    console.log('[Shortcuts] Found details elements:', allDetails.length);
+
+    allDetails.forEach(det => {
+      const links = det.querySelectorAll('a.nav-item');
+      const isCurrentSection = [...links].some(link => link.getAttribute('href') === currentPath);
+
+      if (!isCurrentSection) {
+        det.open = false;
+      } else {
+        det.open = true;
+      }
+    });
+    return;
+  }
+
+  // Option+Q: Collapse ALL nav sections
+  if (e.altKey && e.code === 'KeyQ') {
+    console.log('[Shortcuts] Collapse all triggered');
+    e.preventDefault();
+    const allDetails = document.querySelectorAll('.left .nav-details');
+    console.log('[Shortcuts] Found details elements:', allDetails.length);
+    allDetails.forEach(det => {
+      det.open = false;
+    });
+    return;
+  }
+
+  // Option+D: Toggle bookmark for current page
+  if (e.altKey && e.code === 'KeyD') {
+    console.log('[Shortcuts] Bookmark toggle triggered');
+    e.preventDefault();
+    const bookmarkBtn = document.querySelector('.bookmark-btn');
+    console.log('[Shortcuts] Bookmark button:', bookmarkBtn);
+    if (bookmarkBtn) {
+      bookmarkBtn.click();
+    }
+    return;
+  }
+});
 
 const hover = document.createElement('div'); hover.className = 'hovercard'; document.body.appendChild(hover);
 document.body.addEventListener('mousemove', (e) => { hover.style.left = (e.pageX + 12) + 'px'; hover.style.top = (e.pageY + 12) + 'px'; });
@@ -679,88 +1062,142 @@ window.saveSessionSnapshot = async function () {
   }
   let collapsed = true;
   btnCollapse?.addEventListener('click', () => {
+    const KEY_SEC = 'navOpenSections';
     if (collapsed) {
       document.querySelectorAll('.left details').forEach(d => d.open = true);
       btnCollapse.textContent = 'Collapse all';
+      // Save all sections as open
+      const opens = [...document.querySelectorAll('.left details.nav-details')]
+        .map(d => d.querySelector('.nav-label span:last-child')?.textContent || '')
+        .filter(Boolean);
+      try { localStorage.setItem(KEY_SEC, JSON.stringify(opens)); } catch(e) {}
     } else {
       collapseAll(true);
       btnCollapse.textContent = 'Expand all';
+      // Save current state after collapsing
+      const opens = [...document.querySelectorAll('.left details.nav-details')]
+        .filter(d => d.open)
+        .map(d => d.querySelector('.nav-label span:last-child')?.textContent || '')
+        .filter(Boolean);
+      try { localStorage.setItem(KEY_SEC, JSON.stringify(opens)); } catch(e) {}
     }
     collapsed = !collapsed;
   });
   if (btnCollapse) btnCollapse.textContent = 'Collapse all';
   applyState();
-  // Mark active nav item (pathname-based)
-  const path = location.pathname;
-  const a = [...document.querySelectorAll('.left a.nav-item')].find(el => { try { return new URL(el.href, location.origin).pathname === path; } catch { return false; } });
-  if (a) { a.classList.add('active'); let el = a.parentElement; while (el && !el.classList.contains('left')) { if (el.tagName === 'DETAILS') el.open = true; el = el.parentElement; } a.scrollIntoView({ block: 'center' }); }
-  // Auto-collapse sections except current
-  if (a) {
-    const keep = new Set(); let el = a.parentElement; while (el && !el.classList.contains('left')) { if (el.tagName === 'DETAILS') keep.add(el); el = el.parentElement; }
-    document.querySelectorAll('.left details.nav-details').forEach(d => { if (!keep.has(d)) d.open = false; });
-  }
-  // Breadcrumb
-  const bc = document.getElementById('breadcrumbText');
-  if (bc && a) {
-    const sec = a.closest('.nav-group')?.querySelector('.nav-label span:last-child')?.textContent || '';
-    const title = document.title || a.textContent;
-    bc.textContent = `You Are Here: ${sec} > ${title}`;
-  }
-  // Persist section open/closed
+})();
+
+// Initialize nav section state - called after sidebar is loaded
+window.initializeNavSectionState = function() {
   const KEY_SEC = 'navOpenSections';
-  function saveSections() { const opens = [...document.querySelectorAll('.left details.nav-details')].filter(d => d.open).map(d => d.querySelector('.nav-label span:last-child')?.textContent || ''); localStorage.setItem(KEY_SEC, JSON.stringify(opens)); }
-  function loadSections() { try { return JSON.parse(localStorage.getItem(KEY_SEC) || '[]'); } catch { return [] } }
-  document.querySelectorAll('.left details.nav-details').forEach(d => d.addEventListener('toggle', saveSections));
-  (function restore() {
-    const opens = new Set(loadSections());
-    if (opens.size) {
-      document.querySelectorAll('.left details.nav-details').forEach(d => {
-        const n = d.querySelector('.nav-label span:last-child')?.textContent || '';
+  
+  function saveSections() { 
+    const opens = [...document.querySelectorAll('.left details.nav-details')]
+      .filter(d => d.open)
+      .map(d => d.querySelector('.nav-label span:last-child')?.textContent || '')
+      .filter(Boolean);
+    try {
+      localStorage.setItem(KEY_SEC, JSON.stringify(opens));
+      console.log('[NavState] Saved sections:', opens);
+    } catch(e) {
+      console.error('Failed to save nav section state:', e);
+    }
+  }
+  
+  function loadSections() { 
+    try { 
+      return JSON.parse(localStorage.getItem(KEY_SEC) || 'null');
+    } catch { 
+      return null;
+    }
+  }
+  
+  // Mark active nav item first (before restoring state)
+  const path = location.pathname;
+  const activeLink = [...document.querySelectorAll('.left a.nav-item')].find(el => { 
+    try { 
+      return new URL(el.href, location.origin).pathname === path;
+    } catch { 
+      return false;
+    }
+  });
+  
+  if (activeLink) { 
+    activeLink.classList.add('active');
+    activeLink.scrollIntoView({ block: 'center' });
+  }
+  
+  // Restore saved state if available
+  const savedSections = loadSections();
+  if (savedSections !== null) {
+    console.log('[NavState] Restoring sections:', savedSections);
+    const opens = new Set(savedSections);
+    document.querySelectorAll('.left details.nav-details').forEach(d => {
+      const n = d.querySelector('.nav-label span:last-child')?.textContent || '';
+      if (n) {
         d.open = opens.has(n);
-      });
-      if (a) {
-        let el = a.parentElement;
-        while (el && !el.classList.contains('left')) {
-          if (el.tagName === 'DETAILS') el.open = true;
-          el = el.parentElement;
-        }
+      }
+    });
+    
+    // Always ensure active link's parents are open
+    if (activeLink) {
+      let el = activeLink.parentElement;
+      while (el && !el.classList.contains('left')) { 
+        if (el.tagName === 'DETAILS') el.open = true;
+        el = el.parentElement;
       }
     }
-  })();
-  // Recents: store and render
-  (function recents() {
-    const KEY = 'recents'; function load() { try { return JSON.parse(localStorage.getItem(KEY) || '[]') } catch { return [] } } function save(v) { localStorage.setItem(KEY, JSON.stringify(v)); }
-    const id = decodeURIComponent(location.pathname.replace(/^\//, '')).replace(/\.html$/i, '.md'); let list = load().filter(x => x.id !== id); const title = document.title || id; list.unshift({ id, title }); list = list.slice(0, 12); save(list);
-    const ul = document.getElementById('navRecents'); if (ul) { ul.innerHTML = list.map(r => '<li><a class="nav-item" href="' + urlFor(r.id) + '"><span class="nav-icon">' + svgIcon('clock') + '</span><span class="nav-text">' + r.title + '</span></a></li>').join('') || '<li class="meta">No recents</li>'; }
-  })();
-  // Quick Nav filter
-  (function quick() {
-    const q = document.getElementById('navQuick'); if (!q) return; q.addEventListener('input', () => {
-      const term = q.value.trim().toLowerCase(); const items = [...document.querySelectorAll('.left .nav-list a.nav-item')]; items.forEach(a => { const t = a.textContent.toLowerCase(); const show = !term || t.includes(term); a.parentElement.style.display = show ? '' : 'none'; }); // Hide empty groups
-      document.querySelectorAll('.left .nav-group').forEach(g => { const any = [...g.querySelectorAll('.nav-list li')].some(li => li.style.display !== 'none'); g.style.display = any ? '' : 'none'; });
-    });
-  })();
+  }
+  
+  // Attach toggle listeners to save state
+  document.querySelectorAll('.left details.nav-details').forEach(d => {
+    d.addEventListener('toggle', saveSections);
+  });
+  
+  // Breadcrumb
+  const bc = document.getElementById('breadcrumbText');
+  if (bc && activeLink) {
+    const sec = activeLink.closest('.nav-group')?.querySelector('.nav-label span:last-child')?.textContent || '';
+    const title = document.title || activeLink.textContent;
+    bc.textContent = `You Are Here: ${sec} > ${title}`;
+  }
+};
 
-  // Per-section mini filters
-  (function sectionFilters() {
-    const inputs = [...document.querySelectorAll('.left .nav-mini-input')]; if (!inputs.length) return;
-    inputs.forEach(inp => {
-      inp.addEventListener('input', () => {
-        const term = (inp.value || '').trim().toLowerCase();
-        const details = inp.closest('details.nav-details'); if (!details) return;
-        const items = [...details.querySelectorAll('ul.nav-list > li')];
-        items.forEach(li => {
-          const t = (li.textContent || '').toLowerCase();
-          li.style.display = !term || t.includes(term) ? '' : 'none';
-        });
+// Recents: store and render
+(function recents() {
+  const KEY = 'recents'; function load() { try { return JSON.parse(localStorage.getItem(KEY) || '[]') } catch { return [] } } function save(v) { localStorage.setItem(KEY, JSON.stringify(v)); }
+  const id = decodeURIComponent(location.pathname.replace(/^\//, '')).replace(/\.html$/i, '.md'); let list = load().filter(x => x.id !== id); const title = document.title || id; list.unshift({ id, title }); list = list.slice(0, 12); save(list);
+  const ul = document.getElementById('navRecents'); if (ul) { ul.innerHTML = list.map(r => '<li><a class="nav-item" href="' + urlFor(r.id) + '"><span class="nav-icon">' + svgIcon('clock') + '</span><span class="nav-text">' + r.title + '</span></a></li>').join('') || '<li class="meta">No recents</li>'; }
+})();
+
+// Quick Nav filter
+(function quick() {
+  const q = document.getElementById('navQuick'); if (!q) return; q.addEventListener('input', () => {
+    const term = q.value.trim().toLowerCase(); const items = [...document.querySelectorAll('.left .nav-list a.nav-item')]; items.forEach(a => { const t = a.textContent.toLowerCase(); const show = !term || t.includes(term); a.parentElement.style.display = show ? '' : 'none'; }); // Hide empty groups
+    document.querySelectorAll('.left .nav-group').forEach(g => { const any = [...g.querySelectorAll('.nav-list li')].some(li => li.style.display !== 'none'); g.style.display = any ? '' : 'none'; });
+  });
+})();
+
+// Per-section mini filters
+(function sectionFilters() {
+  const inputs = [...document.querySelectorAll('.left .nav-mini-input')]; if (!inputs.length) return;
+  inputs.forEach(inp => {
+    inp.addEventListener('input', () => {
+      const term = (inp.value || '').trim().toLowerCase();
+      const details = inp.closest('details.nav-details'); if (!details) return;
+      const items = [...details.querySelectorAll('ul.nav-list > li')];
+      items.forEach(li => {
+        const t = (li.textContent || '').toLowerCase();
+        li.style.display = !term || t.includes(term) ? '' : 'none';
       });
     });
-  })();
+  });
+})();
 
-  // "Show only this section" toggle
-  (function onlySection() {
-    const KEY = 'navOnlySection';
-    function applyOnly(sectionLabel) {
+// "Show only this section" toggle
+(function onlySection() {
+  const KEY = 'navOnlySection';
+  function applyOnly(sectionLabel) {
       const groups = [...document.querySelectorAll('.left .nav-group')];
       groups.forEach(g => {
         const label = g.querySelector('.nav-label span:last-child')?.textContent || '';
@@ -785,15 +1222,20 @@ window.saveSessionSnapshot = async function () {
         applyOnly(next);
       });
     });
-  })();
-  // Hotkeys g + (c/n/l/a/d)
-  (function hotkeys() { let gated = false; let to = null; document.addEventListener('keydown', (e) => { if (e.target && (/input|textarea/i.test(e.target.tagName))) return; if (!gated && e.key.toLowerCase() === 'g') { gated = true; clearTimeout(to); to = setTimeout(() => { gated = false }, 1500); return; } if (gated) { const k = e.key.toLowerCase(); gated = false; const map = { c: 'Characters', n: 'NPCs', l: 'World', a: 'Arcs', d: 'Dashboard', t: 'Tools', w: 'World' }; const target = map[k]; if (!target) return; if (k === 'd') { location.href = '/index.html'; return; } const label = [...document.querySelectorAll('.left .nav-group .nav-label span:last-child')].find(span => span.textContent === target); const det = label?.closest('.nav-details'); if (det) { det.open = true; det.scrollIntoView({ block: 'start' }); const first = det.parentElement.querySelector('.nav-list a.nav-item'); first?.focus(); } } }); })();
 })();
 
+// Hotkeys g + (c/n/l/a/d)
+(function hotkeys() { let gated = false; let to = null; document.addEventListener('keydown', (e) => { if (e.target && (/input|textarea/i.test(e.target.tagName))) return; if (!gated && e.key.toLowerCase() === 'g') { gated = true; clearTimeout(to); to = setTimeout(() => { gated = false }, 1500); return; } if (gated) { const k = e.key.toLowerCase(); gated = false; const map = { c: 'Characters', n: 'NPCs', l: 'World', a: 'Arcs', d: 'Dashboard', t: 'Tools', w: 'World' }; const target = map[k]; if (!target) return; if (k === 'd') { location.href = '/index.html'; return; } const label = [...document.querySelectorAll('.left .nav-group .nav-label span:last-child')].find(span => span.textContent === target); const det = label?.closest('.nav-details'); if (det) { det.open = true; det.scrollIntoView({ block: 'start' }); const first = det.parentElement.querySelector('.nav-list a.nav-item'); first?.focus(); } } }); })();
+
 // Favorites rendering and actions
-(function () {
+window.initializeFavorites = function () {
+  console.log('[Favorites] Initializing favorites...');
   const favList = document.getElementById('navFav');
-  if (!favList) return;
+  if (!favList) {
+    console.warn('[Favorites] navFav element not found!');
+    return;
+  }
+  console.log('[Favorites] navFav element found:', favList);
 
   function loadFav() {
     try { return JSON.parse(localStorage.getItem('favorites') || '[]'); }
@@ -813,6 +1255,7 @@ window.saveSessionSnapshot = async function () {
   }
 
   function render() {
+    console.log('[Favorites] Rendering favorites, count:', loadFav().length);
     const list = loadFav();
     favList.innerHTML = list.length
       ? list.map((f, i) =>
@@ -854,16 +1297,81 @@ window.saveSessionSnapshot = async function () {
   };
 
   window.toggleFavorite = function (id, title) {
+    console.log('[Favorites] toggleFavorite called:', { id, title });
     const list = loadFav();
     const i = list.findIndex(x => x.id === id);
-    if (i >= 0) { list.splice(i, 1); } else { list.unshift({ id, title: title || id }); }
+    if (i >= 0) {
+      console.log('[Favorites] Removing from favorites');
+      list.splice(i, 1);
+    } else {
+      console.log('[Favorites] Adding to favorites');
+      list.unshift({ id, title: title || id });
+    }
     saveFav(list);
     render();
     document.dispatchEvent(new CustomEvent('favorites-changed'));
   };
 
-  document.addEventListener('favorites-changed', () => { try { render(); } catch { } });
+  document.addEventListener('favorites-changed', () => {
+    console.log('[Favorites] favorites-changed event received');
+    try { render(); } catch { }
+  });
+
+  // Initial render
   render();
+};
+
+// Bookmark button functionality
+(function initBookmarkButtons() {
+  function updateBookmarkButton(btn, isFavorited) {
+    if (isFavorited) {
+      btn.innerHTML = '★';
+      btn.classList.add('favorited');
+      btn.title = 'Remove from favorites';
+    } else {
+      btn.innerHTML = '☆';
+      btn.classList.remove('favorited');
+      btn.title = 'Add to favorites';
+    }
+  }
+
+  function setupBookmarkButton(btn) {
+    const relPath = btn.getAttribute('data-rel');
+    if (!relPath) return;
+
+    // Check if already favorited
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const isFavorited = favorites.some(f => f.id === relPath);
+    updateBookmarkButton(btn, isFavorited);
+
+    // Add click handler
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const title = document.title || relPath;
+      window.toggleFavorite(relPath, title);
+
+      // Update button appearance
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const nowFavorited = favorites.some(f => f.id === relPath);
+      updateBookmarkButton(btn, nowFavorited);
+    });
+  }
+
+  // Setup all bookmark buttons
+  document.querySelectorAll('.bookmark-btn').forEach(setupBookmarkButton);
+
+  // Update buttons when favorites change
+  document.addEventListener('favorites-changed', () => {
+    document.querySelectorAll('.bookmark-btn').forEach(btn => {
+      const relPath = btn.getAttribute('data-rel');
+      if (!relPath) return;
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const isFavorited = favorites.some(f => f.id === relPath);
+      updateBookmarkButton(btn, isFavorited);
+    });
+  });
 })();
 
 // Global To-Do (works on any page with todo elements present)
@@ -1077,6 +1585,20 @@ window.saveSessionSnapshot = async function () {
         <li><span><kbd class="todo-key">Drag</kbd></span><span>Reorder/nest tasks</span></li>
         <li><span><kbd class="todo-key">⋯</kbd></span><span>Delete task</span></li>
         <li><span><kbd class="todo-key">▸/▾</kbd></span><span>Expand/collapse</span></li>
+        <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"><strong>Global Shortcuts</strong></li>
+        <li><span><kbd class="todo-key">Cmd/Ctrl+K</kbd></span><span>Focus search</span></li>
+        <li><span><kbd class="todo-key">Cmd+S</kbd></span><span>Save & exit edit</span></li>
+        <li><span><kbd class="todo-key">Esc</kbd></span><span>Cancel edit mode</span></li>
+        <li><span><kbd class="todo-key">Option+B</kbd></span><span>Blur/unblur screen</span></li>
+        <li><span><kbd class="todo-key">Option+C</kbd></span><span>Collapse nav (except current)</span></li>
+        <li><span><kbd class="todo-key">Option+Q</kbd></span><span>Collapse all nav</span></li>
+        <li><span><kbd class="todo-key">Option+D</kbd></span><span>Toggle bookmark</span></li>
+        <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"><strong>Quick Navigation</strong></li>
+        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">C</kbd></span><span>Go to Characters</span></li>
+        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">N</kbd></span><span>Go to NPCs</span></li>
+        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">L</kbd></span><span>Go to Locations</span></li>
+        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">A</kbd></span><span>Go to Arcs</span></li>
+        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">D</kbd></span><span>Go to Dashboard</span></li>
       </ul>
     `;
     todoBox.appendChild(shortcuts);
@@ -1380,7 +1902,7 @@ window.saveSessionSnapshot = async function () {
     topLevelHeadings.forEach((heading, index) => {
       // Skip if already in a section
       if (heading.closest('section[id]')) return;
-      
+
       const section = document.createElement('section');
       section.id = 'section-' + (index + 1);
 
