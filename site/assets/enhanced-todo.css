@@ -358,15 +358,61 @@
     background: rgba(139, 92, 246, 0.1);
 }
 
-/* Keyboard shortcuts hint */
-.todo-shortcuts {
-    margin-top: 12px;
-    padding: 8px 10px;
+/* Todo list container - scrollable */
+.todo-list-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+}
+
+/* Keyboard shortcuts in left sidebar */
+.sidebar-shortcuts {
+    margin-top: 16px;
+    padding: 10px;
     background: rgba(139, 92, 246, 0.05);
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 12px;
     color: var(--muted);
     line-height: 1.6;
+    border: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.sidebar-shortcuts summary {
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sidebar-shortcuts summary:hover {
+    color: var(--text);
+}
+
+.shortcuts-list {
+    margin-top: 8px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.shortcuts-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    gap: 16px;
+    font-size: 11px;
+}
+
+.shortcut-key {
+    font-family: 'Monaco', 'Menlo', monospace;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
 }
 
 .todo-shortcuts summary {

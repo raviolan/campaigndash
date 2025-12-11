@@ -15,6 +15,8 @@
       if (window.initializeSidebar) window.initializeSidebar();
       // Initialize nav section state persistence
       if (window.initializeNavSectionState) window.initializeNavSectionState();
+      // Add keyboard shortcuts to sidebar
+      if (window.addKeyboardShortcuts) window.addKeyboardShortcuts();
     })
     .catch(err => console.error('Failed to load sidebar:', err));
 })();
@@ -1070,7 +1072,7 @@ window.saveSessionSnapshot = async function () {
       const opens = [...document.querySelectorAll('.left details.nav-details')]
         .map(d => d.querySelector('.nav-label span:last-child')?.textContent || '')
         .filter(Boolean);
-      try { localStorage.setItem(KEY_SEC, JSON.stringify(opens)); } catch(e) {}
+      try { localStorage.setItem(KEY_SEC, JSON.stringify(opens)); } catch (e) { }
     } else {
       collapseAll(true);
       btnCollapse.textContent = 'Expand all';
@@ -1079,7 +1081,7 @@ window.saveSessionSnapshot = async function () {
         .filter(d => d.open)
         .map(d => d.querySelector('.nav-label span:last-child')?.textContent || '')
         .filter(Boolean);
-      try { localStorage.setItem(KEY_SEC, JSON.stringify(opens)); } catch(e) {}
+      try { localStorage.setItem(KEY_SEC, JSON.stringify(opens)); } catch (e) { }
     }
     collapsed = !collapsed;
   });
@@ -1088,10 +1090,10 @@ window.saveSessionSnapshot = async function () {
 })();
 
 // Initialize nav section state - called after sidebar is loaded
-window.initializeNavSectionState = function() {
+window.initializeNavSectionState = function () {
   const KEY_SEC = 'navOpenSections';
-  
-  function saveSections() { 
+
+  function saveSections() {
     const opens = [...document.querySelectorAll('.left details.nav-details')]
       .filter(d => d.open)
       .map(d => d.querySelector('.nav-label span:last-child')?.textContent || '')
@@ -1099,34 +1101,34 @@ window.initializeNavSectionState = function() {
     try {
       localStorage.setItem(KEY_SEC, JSON.stringify(opens));
       console.log('[NavState] Saved sections:', opens);
-    } catch(e) {
+    } catch (e) {
       console.error('Failed to save nav section state:', e);
     }
   }
-  
-  function loadSections() { 
-    try { 
+
+  function loadSections() {
+    try {
       return JSON.parse(localStorage.getItem(KEY_SEC) || 'null');
-    } catch { 
+    } catch {
       return null;
     }
   }
-  
+
   // Mark active nav item first (before restoring state)
   const path = location.pathname;
-  const activeLink = [...document.querySelectorAll('.left a.nav-item')].find(el => { 
-    try { 
+  const activeLink = [...document.querySelectorAll('.left a.nav-item')].find(el => {
+    try {
       return new URL(el.href, location.origin).pathname === path;
-    } catch { 
+    } catch {
       return false;
     }
   });
-  
-  if (activeLink) { 
+
+  if (activeLink) {
     activeLink.classList.add('active');
     activeLink.scrollIntoView({ block: 'center' });
   }
-  
+
   // Restore saved state if available
   const savedSections = loadSections();
   if (savedSections !== null) {
@@ -1138,22 +1140,22 @@ window.initializeNavSectionState = function() {
         d.open = opens.has(n);
       }
     });
-    
+
     // Always ensure active link's parents are open
     if (activeLink) {
       let el = activeLink.parentElement;
-      while (el && !el.classList.contains('left')) { 
+      while (el && !el.classList.contains('left')) {
         if (el.tagName === 'DETAILS') el.open = true;
         el = el.parentElement;
       }
     }
   }
-  
+
   // Attach toggle listeners to save state
   document.querySelectorAll('.left details.nav-details').forEach(d => {
     d.addEventListener('toggle', saveSections);
   });
-  
+
   // Breadcrumb
   const bc = document.getElementById('breadcrumbText');
   if (bc && activeLink) {
@@ -1198,30 +1200,30 @@ window.initializeNavSectionState = function() {
 (function onlySection() {
   const KEY = 'navOnlySection';
   function applyOnly(sectionLabel) {
-      const groups = [...document.querySelectorAll('.left .nav-group')];
-      groups.forEach(g => {
-        const label = g.querySelector('.nav-label span:last-child')?.textContent || '';
-        const show = !sectionLabel || label === sectionLabel;
-        g.style.display = show ? '' : 'none';
-      });
-      // reflect active button state
-      document.querySelectorAll('.nav-only').forEach(btn => {
-        const lab = btn.getAttribute('data-section');
-        btn.setAttribute('aria-pressed', sectionLabel && lab === sectionLabel ? 'true' : 'false');
-      });
-    }
-    const saved = (function () { try { return localStorage.getItem(KEY) || '' } catch { return '' } })();
-    if (saved) applyOnly(saved);
-    document.querySelectorAll('.nav-only').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const label = btn.getAttribute('data-section') || '';
-        const cur = (function () { try { return localStorage.getItem(KEY) || '' } catch { return '' } })();
-        const next = (cur === label) ? '' : label;
-        try { if (next) localStorage.setItem(KEY, next); else localStorage.removeItem(KEY); } catch { }
-        applyOnly(next);
-      });
+    const groups = [...document.querySelectorAll('.left .nav-group')];
+    groups.forEach(g => {
+      const label = g.querySelector('.nav-label span:last-child')?.textContent || '';
+      const show = !sectionLabel || label === sectionLabel;
+      g.style.display = show ? '' : 'none';
     });
+    // reflect active button state
+    document.querySelectorAll('.nav-only').forEach(btn => {
+      const lab = btn.getAttribute('data-section');
+      btn.setAttribute('aria-pressed', sectionLabel && lab === sectionLabel ? 'true' : 'false');
+    });
+  }
+  const saved = (function () { try { return localStorage.getItem(KEY) || '' } catch { return '' } })();
+  if (saved) applyOnly(saved);
+  document.querySelectorAll('.nav-only').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const label = btn.getAttribute('data-section') || '';
+      const cur = (function () { try { return localStorage.getItem(KEY) || '' } catch { return '' } })();
+      const next = (cur === label) ? '' : label;
+      try { if (next) localStorage.setItem(KEY, next); else localStorage.removeItem(KEY); } catch { }
+      applyOnly(next);
+    });
+  });
 })();
 
 // Hotkeys g + (c/n/l/a/d)
@@ -1569,43 +1571,45 @@ window.initializeFavorites = function () {
   TOGGLE?.addEventListener('click', () => { const next = !hideCompleted(); setHideCompleted(next); render(); });
   FORM.addEventListener('submit', (e) => { e.preventDefault(); const t = (INPUT.value || '').trim(); if (!t) return; const items = load(); items.unshift({ id: genId(), text: t, done: false, collapsed: false, children: [] }); save(items); INPUT.value = ''; render(); });
 
-  // Add keyboard shortcuts guide after the list
-  const todoBox = document.getElementById('todoBox');
-  if (todoBox && !document.getElementById('todoShortcuts')) {
-    const shortcuts = document.createElement('details');
-    shortcuts.id = 'todoShortcuts';
-    shortcuts.className = 'todo-shortcuts';
-    shortcuts.innerHTML = `
-      <summary>⌨️ Keyboard Shortcuts</summary>
-      <ul class="todo-shortcuts-list">
-        <li><span><kbd class="todo-key">Enter</kbd></span><span>New task below</span></li>
-        <li><span><kbd class="todo-key">Tab</kbd></span><span>Nest as subtask</span></li>
-        <li><span><kbd class="todo-key">Shift+Tab</kbd></span><span>Unnest subtask</span></li>
-        <li><span><kbd class="todo-key">Backspace</kbd></span><span>Delete empty task</span></li>
-        <li><span><kbd class="todo-key">Drag</kbd></span><span>Reorder/nest tasks</span></li>
-        <li><span><kbd class="todo-key">⋯</kbd></span><span>Delete task</span></li>
-        <li><span><kbd class="todo-key">▸/▾</kbd></span><span>Expand/collapse</span></li>
-        <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"><strong>Global Shortcuts</strong></li>
-        <li><span><kbd class="todo-key">Cmd/Ctrl+K</kbd></span><span>Focus search</span></li>
-        <li><span><kbd class="todo-key">Cmd+S</kbd></span><span>Save & exit edit</span></li>
-        <li><span><kbd class="todo-key">Esc</kbd></span><span>Cancel edit mode</span></li>
-        <li><span><kbd class="todo-key">Option+B</kbd></span><span>Blur/unblur screen</span></li>
-        <li><span><kbd class="todo-key">Option+C</kbd></span><span>Collapse nav (except current)</span></li>
-        <li><span><kbd class="todo-key">Option+Q</kbd></span><span>Collapse all nav</span></li>
-        <li><span><kbd class="todo-key">Option+D</kbd></span><span>Toggle bookmark</span></li>
-        <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"><strong>Quick Navigation</strong></li>
-        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">C</kbd></span><span>Go to Characters</span></li>
-        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">N</kbd></span><span>Go to NPCs</span></li>
-        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">L</kbd></span><span>Go to Locations</span></li>
-        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">A</kbd></span><span>Go to Arcs</span></li>
-        <li><span><kbd class="todo-key">G</kbd> then <kbd class="todo-key">D</kbd></span><span>Go to Dashboard</span></li>
-      </ul>
-    `;
-    todoBox.appendChild(shortcuts);
-  }
-
   render();
 })();
+
+// Add keyboard shortcuts guide at the bottom of left sidebar
+window.addKeyboardShortcuts = function () {
+  const sidebar = document.querySelector('.left .sidebar');
+  if (sidebar && !document.getElementById('sidebarShortcuts')) {
+    const shortcuts = document.createElement('details');
+    shortcuts.id = 'sidebarShortcuts';
+    shortcuts.className = 'sidebar-shortcuts';
+    shortcuts.innerHTML = `
+      <summary>⌨️ Keyboard Shortcuts</summary>
+      <ul class="shortcuts-list">
+        <li><span><kbd class="shortcut-key">Enter</kbd></span><span>New task below</span></li>
+        <li><span><kbd class="shortcut-key">Tab</kbd></span><span>Nest as subtask</span></li>
+        <li><span><kbd class="shortcut-key">Shift+Tab</kbd></span><span>Unnest subtask</span></li>
+        <li><span><kbd class="shortcut-key">Backspace</kbd></span><span>Delete empty task</span></li>
+        <li><span><kbd class="shortcut-key">Drag</kbd></span><span>Reorder/nest tasks</span></li>
+        <li><span><kbd class="shortcut-key">⋯</kbd></span><span>Delete task</span></li>
+        <li><span><kbd class="shortcut-key">▸/▾</kbd></span><span>Expand/collapse</span></li>
+        <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"><strong>Global Shortcuts</strong></li>
+        <li><span><kbd class="shortcut-key">Cmd/Ctrl+K</kbd></span><span>Focus search</span></li>
+        <li><span><kbd class="shortcut-key">Cmd+S</kbd></span><span>Save & exit edit</span></li>
+        <li><span><kbd class="shortcut-key">Esc</kbd></span><span>Cancel edit mode</span></li>
+        <li><span><kbd class="shortcut-key">Option+B</kbd></span><span>Blur/unblur screen</span></li>
+        <li><span><kbd class="shortcut-key">Option+C</kbd></span><span>Collapse nav (except current)</span></li>
+        <li><span><kbd class="shortcut-key">Option+Q</kbd></span><span>Collapse all nav</span></li>
+        <li><span><kbd class="shortcut-key">Option+D</kbd></span><span>Toggle bookmark</span></li>
+        <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);"><strong>Quick Navigation</strong></li>
+        <li><span><kbd class="shortcut-key">G</kbd> then <kbd class="shortcut-key">C</kbd></span><span>Go to Characters</span></li>
+        <li><span><kbd class="shortcut-key">G</kbd> then <kbd class="shortcut-key">N</kbd></span><span>Go to NPCs</span></li>
+        <li><span><kbd class="shortcut-key">G</kbd> then <kbd class="shortcut-key">L</kbd></span><span>Go to Locations</span></li>
+        <li><span><kbd class="shortcut-key">G</kbd> then <kbd class="shortcut-key">A</kbd></span><span>Go to Arcs</span></li>
+        <li><span><kbd class="shortcut-key">G</kbd> then <kbd class="shortcut-key">D</kbd></span><span>Go to Dashboard</span></li>
+      </ul>
+    `;
+    sidebar.appendChild(shortcuts);
+  }
+};
 
 // Theme toggle in right drawer handle (with fallback card)
 (function () {
