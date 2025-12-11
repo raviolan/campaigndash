@@ -245,6 +245,204 @@ h4 {
     border-radius: 8px
 }
 
+/* Weather card: more app-like layout */
+.weather-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* reduced gap to condense vertical spacing */
+    margin-top: 10px;
+    padding: 8px; /* reduced padding to make card more compact */
+}
+.weather-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.weather-title { font-weight: 700; font-size: 14px }
+.weather-now {
+    /* Center the main block and make it more prominent */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px; /* slightly tighter gap */
+    padding: 6px 10px; /* make main block more condensed */
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+}
+.weather-icon {
+    font-size: 56px;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    margin: 0 auto;
+}
+.weather-icon svg { width:88px; height:88px }
+.weather-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* tighten spacing between condition and meta/temp */
+    align-items: center;
+}
+.weather-condition { font-weight: 800; font-size: 18px }
+.weather-meta { color: rgba(255,255,255,0.9); font-size: 12px }
+.weather-temp { font-weight: 800; font-size: 28px; color: inherit }
+
+/* Ensure inner weather card elements inherit the card's computed color
+   so text and SVG icons remain readable against varied gradients. */
+.weather-card .weather-condition,
+.weather-card .weather-meta,
+.weather-card .weather-temp,
+.weather-card .weather-icon,
+.weather-card .forecast-item .f-time,
+.weather-card .forecast-item .f-temp,
+.weather-card .forecast-item .f-desc {
+    color: inherit !important;
+}
+.weather-card .weather-icon svg { color: inherit; fill: currentColor }
+
+.weather-forecast {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; /* keep items in a single horizontal row */
+    justify-content: center; /* center the row under the main block */
+    gap: 6px; /* slightly tighter gap between forecast tiles */
+    overflow-x: auto;
+    padding: 2px 8px 4px 8px; /* bring tiles closer to the main block */
+}
+.forecast-item {
+    min-width: 64px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 6px 6px; /* slightly reduced padding */
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto; /* prevent items from stretching to full width */
+}
+.forecast-item .f-time { color: rgba(255,255,255,0.85); font-size: 12px }
+.forecast-item .f-icon svg { width:28px; height:28px }
+.forecast-item .f-temp { font-weight: 800; color: inherit }
+
+.weather-effects { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 6px }
+.effect-badge {
+    background: rgba(255,255,255,0.02);
+    color: var(--muted);
+    padding: 10px 14px; /* larger padding for readability */
+    border-radius: 999px;
+    font-size: 15px; /* larger font for emphasis */
+    font-weight: 600;
+    line-height: 1;
+    border: 1px solid rgba(255,255,255,0.03);
+    /* Use CSS vars set by JS for accessible contrast when available */
+    background: var(--badge-bg, rgba(255,255,255,0.02));
+    color: var(--badge-color, var(--muted));
+}
+
+/* Make the chip button visually lighter in the card */
+.weather-card .chip { padding: 6px 8px; font-size: 13px }
+
+/* Tall card look */
+.weather-card {
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.28);
+    overflow: hidden;
+    /* Slightly reduce brightness & saturation so gradients don't feel too intense */
+    filter: brightness(0.94) saturate(0.92);
+    transition: background 420ms ease, color 300ms ease, filter 300ms ease;
+}
+
+/* Use pseudo-element for reliable background gradient behind content */
+.weather-card { position: relative; }
+.weather-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: transparent;
+    transition: background 420ms ease, opacity 300ms ease;
+}
+.weather-card > * { position: relative; z-index: 1 }
+
+/* Condition gradients applied to pseudo-element */
+.weather-card.wc-clear::before { background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.14)), linear-gradient(180deg,#f6e7c9,#f1d9b0); }
+.weather-card.wc-partly::before { background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.12)), linear-gradient(180deg,#f7efdb,#efe3c8); }
+.weather-card.wc-cloudy::before { background: linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.10)), linear-gradient(180deg,#e6edf2,#cfd8de); }
+.weather-card.wc-light_rain::before { background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.12)), linear-gradient(180deg,#d7eaf8,#c9e2f6); }
+.weather-card.wc-heavy_rain::before { background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.14)), linear-gradient(180deg,#b9d5ee,#98bddf); }
+.weather-card.wc-thunder::before { background: linear-gradient(180deg,#2b333c,#162027); }
+.weather-card.wc-fog::before { background: linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.10)), linear-gradient(180deg,#eef3f4,#e3e9ea); }
+.weather-card.wc-snow::before { background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.18)), linear-gradient(180deg,#f0f8ff,#e1eefc); }
+
+/* Improve legibility with a subtle text shadow on key items */
+.weather-card .weather-condition,
+.weather-card .weather-temp,
+.weather-card .forecast-item .f-time,
+.weather-card .forecast-item .f-temp {
+    /* Remove the bright highlight so text doesn't appear washed out on light cards */
+    text-shadow: 0 2px 6px rgba(0,0,0,0.16);
+}
+
+/* Card sizing: fit to left column width */
+.weather-card { width: 100%; box-sizing: border-box }
+
+/* Top meta row */
+.weather-meta-row { display:flex; justify-content:space-between; font-size:12px; opacity:0.95 }
+
+/* Compact weather strip at top of page */
+.weather-strip {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.weather-strip-inner {
+    display:flex; align-items:center; gap:10px; width:100%; justify-content:flex-start;
+}
+.weather-strip .strip-icon { width:36px; height:36px; display:flex; align-items:center; justify-content:center }
+.weather-strip .strip-temp { font-weight:700; font-size:16px }
+.weather-strip .strip-effects { display:flex; gap:8px; margin-left:12px }
+.weather-strip .effect-badge { padding:8px 10px; font-size:14px; font-weight:600 }
+
+/* allow condition gradients on strip too */
+.weather-strip.wc-clear { background: linear-gradient(90deg,#fff2df,#ffe6c8); color:#06202a }
+.weather-strip.wc-partly { background: linear-gradient(90deg,#fff6e6,#fff0dd); color:#06202a }
+.weather-strip.wc-cloudy { background: linear-gradient(90deg,#e9eef4,#e0e8f0); color:#071025 }
+.weather-strip.wc-light_rain { background: linear-gradient(90deg,#dbeffd,#cfe9ff); color:#021328 }
+.weather-strip.wc-heavy_rain { background: linear-gradient(90deg,#cbdff7,#b7d6f2); color:#021328 }
+.weather-strip.wc-thunder { background: linear-gradient(90deg,#c1c9d3,#aebac6); color:#071025 }
+.weather-strip.wc-fog { background: linear-gradient(90deg,#eef2f3,#e2e7e8); color:#071025 }
+.weather-strip.wc-snow { background: linear-gradient(90deg,#f3f9ff,#e8f3ff); color:#06202a }
+
+/* Tone down strip also */
+.weather-strip { filter: brightness(0.96) saturate(0.92); }
+
+/* Icon animations */
+.weather-icon svg { width:56px; height:56px; display:block }
+.weather-icon { transition: transform .35s ease; }
+.weather-rolling .weather-icon { transform: rotate(8deg) scale(1.02) }
+
+/* Forecast styling adjustments for the tall card */
+.weather-forecast { padding: 8px 0 4px 0 }
+.forecast-item { min-width: 72px; padding: 10px 8px }
+
+/* Stats row */
+.weather-stats { display:flex; gap:8px; align-items:center; margin-top:4px }
+.stat-chip { background: rgba(255,255,255,0.08); padding:6px 8px; border-radius:999px; font-size:12px }
+
 .star {
     cursor: pointer;
     color: #ffd365

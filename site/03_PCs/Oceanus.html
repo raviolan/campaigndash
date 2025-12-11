@@ -8,10 +8,11 @@
     <title>Oceanus</title>
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%238b5cf6'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="/assets/style.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/modal.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765485187472" />
+    <link rel="stylesheet" href="/assets/style.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/components.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/modal.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765487325589" />
     <script>window.SITE_BASE = "/"</script>
 </head>
 
@@ -116,6 +117,8 @@
         </div>
     </div>
 </div>
+        <!-- Compact weather strip: mirrors left-panel weather card -->
+        <div id="weatherStrip" class="weather-strip" aria-hidden="false"></div>
         <aside class="left"><!-- Sidebar Partial: Navigation drawer and sections -->
 <div class="drawer" aria-label="Navigation">
     <div class="drawer-handle">
@@ -264,6 +267,26 @@
                 </details>
             </li></ul>
             </nav>
+            <!-- Weather card: DnD dice-driven weather generator -->
+            <div id="weatherCard" class="card weather-card" aria-label="Weather">
+                <div class="weather-header">
+                    <div class="weather-title">Weather</div>
+                    <button id="rollWeather" class="chip" title="Roll weather">Roll</button>
+                </div>
+                <div class="weather-now" aria-live="polite">
+                    <div class="weather-icon">⛅</div>
+                    <div class="weather-desc">
+                        <div class="weather-condition">Unknown</div>
+                        <div class="weather-meta">--</div>
+                    </div>
+                </div>
+                <ul class="weather-forecast" role="list">
+                    <!-- forecast rows populated by JS -->
+                </ul>
+                <div class="weather-effects" aria-hidden="false">
+                    <!-- effects populated by JS -->
+                </div>
+            </div>
         </aside>
     </div>
 </div></aside>
@@ -279,43 +302,155 @@
                     </svg>
                 </button>
             </div><article class="entity-page">
-        <section class="entity">
-          <div class="entity-header" style="--header:url('/assets/oceanus-header.png')">
-            <button class="bookmark-btn" data-rel="03_PCs/Oceanus.md" title="Toggle favorite"></button>
-            <div class="entity-id">
-              <div class="entity-avatar"><img src="/assets/oceanus-avatar.png" alt="Oceanus"></div>
-              <div class="entity-meta">
-                <div class="entity-name">Oceanus</div>
-                <div class="entity-sub">Lore</div>
-                <div class="entity-badges"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <nav class="entity-tabs">
-          <a href="#overview">Overview</a>
-          <a href="#connections">Connections</a>
-          <a href="#abilities">Abilities</a>
-          <a href="#inventory">Inventory</a>
-          <a class="chip" href="https://www.dndbeyond.com/characters/141409762" target="_blank" rel="noopener">Stat Sheet</a>
-        </nav><div class="entity-body"><section id="overview"><h2>Overview</h2><p>#pc </p><p>Hittades tillfångatagen i en grotta i <a href="/02_World/Locations/Saltmarsh.html" class="wikilink" data-target="Saltmarsh">Saltmarsh</a>, där <a href="#" class="wikilink" data-target="Sanbaleet">Sanbaleet</a>s kumpaner hade tagit honom till fånga.</p>
+                <section class="entity">
+                    <div class="entity-header" style="--header:url('/assets/oceanus-header.png')">
+                        <button class="bookmark-btn" data-rel="03_PCs/Oceanus.md" title="Toggle favorite"></button>
+                        <div class="entity-id">
+                            <div class="entity-avatar"><img src="/assets/oceanus-avatar.png" alt="Oceanus"></div>
+                            <div class="entity-meta">
+                                <div class="entity-name">Oceanus</div>
+                                <div class="entity-sub">High Elf Ranger, Etheral Ocean Boy</div>
+                                <div class="entity-badges"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <nav class="entity-tabs">
+                    <a href="#overview">Overview</a>
+                    <a href="#connections">Connections</a>
+                    <a href="#abilities">Abilities</a>
+                    <a href="#inventory">Inventory</a>
+                    <a class="chip" href="https://www.dndbeyond.com/characters/141409762" target="_blank"
+                        rel="noopener">Stat Sheet</a>
+                </nav>
+                <div class="entity-body">
+                    <section id="overview">
+                        <h2>Overview</h2>
+                        <p>#pc </p>
+                        <p>Hittades tillfångatagen i en grotta i <a href="/02_World/Locations/Saltmarsh.html"
+                                class="wikilink" data-target="Saltmarsh">Saltmarsh</a>, där <a href="#" class="wikilink"
+                                data-target="Sanbaleet">Sanbaleet</a>s kumpaner hade tagit honom till fånga.</p>
 
-<h2>Lore</h2>
-<h3>Background:</h3><p>You are a member of the tribe of Manaan, an undersea settlement southeast of Saltmarsh. Your tribe has long maintained a vigilant watch over the coastline, wary of the land-dwellers' activities that might disrupt the balance of the ocean. Recently, they noticed unusual movement in a seemingly deserted stretch of the coastline—small boats, sporadic lights, and strange disturbances at night.   </p><p>While investigating deeper into the caverns by the shore,  </p>
-<p>Your mission: The tribal chief, suspicious of these activities, tasked you with investigating the area and reporting back. Your orders are simple: observe, gather information, and avoid direct confrontation unless absolutely necessary.  </p>
+                        <h2>Lore</h2>
+                        <h3>Background:</h3>
+                        <p>You are a member of the tribe of Manaan, an undersea settlement southeast of Saltmarsh. Your
+                            tribe has long maintained a vigilant watch over the coastline, wary of the land-dwellers'
+                            activities that might disrupt the balance of the ocean. Recently, they noticed unusual
+                            movement in a seemingly deserted stretch of the coastline—small boats, sporadic lights, and
+                            strange disturbances at night.  </p>
+                        <p>While investigating deeper into the caverns by the shore, </p>
+                        <p>Your mission: The tribal chief, suspicious of these activities, tasked you with investigating
+                            the area and reporting back. Your orders are simple: observe, gather information, and avoid
+                            direct confrontation unless absolutely necessary. </p>
 
-<h3>How you ended up here:</h3><p>While observing the coastline, you followed the faint trails of activity leading from the coastline to the cavern entrance. You found discarded crates marked with unfamiliar symbols and faint tracks leading into the darkness. Curious and cautious, you entered the caverns to investigate further. You ventured in and stumbled upon a group of smugglers unpacking supplies, and moving a large amount of weapons. You tried to retreat but accidentally dislodged some loose rocks, giving away your position. The smugglers quickly subdued and captured you, stripping you of your weapons and gear. You have been held captive here in one of the caverns, bruised and hungry but still determined to escape. You didn’t see much of your captors, but one of the men was badly bruised and beaten himself.   </p>
-<p>Before being captured, you overheard snippets of conversation, including mentions of a ship, a “boss,” and plans to “move the goods.” You don’t know the group's motives but you understand that they are organized and dangerous.  </p>
+                        <h3>How you ended up here:</h3>
+                        <p>While observing the coastline, you followed the faint trails of activity leading from the
+                            coastline to the cavern entrance. You found discarded crates marked with unfamiliar symbols
+                            and faint tracks leading into the darkness. Curious and cautious, you entered the caverns to
+                            investigate further. You ventured in and stumbled upon a group of smugglers unpacking
+                            supplies, and moving a large amount of weapons. You tried to retreat but accidentally
+                            dislodged some loose rocks, giving away your position. The smugglers quickly subdued and
+                            captured you, stripping you of your weapons and gear. You have been held captive here in one
+                            of the caverns, bruised and hungry but still determined to escape. You didn’t see much of
+                            your captors, but one of the men was badly bruised and beaten himself.  </p>
+                        <p>Before being captured, you overheard snippets of conversation, including mentions of a ship,
+                            a “boss,” and plans to “move the goods.” You don’t know the group's motives but you
+                            understand that they are organized and dangerous. </p>
 
-<h3>Extra character info:</h3>
-<ul><li>You can breathe air and water</li><li>Using gestures and sound, you can communicate simple ideas with any animal/beast that has an innate swimming speed.</li><li>You are currently stripped of your weapons and items, as they were taken by your captors.</li></ul>
-<h3>🌊 Varför Oceanus hatar sahuagin</h3><p>🧝‍♂️ 1. Oceanus är en Sea Elf</p><p>Sea Elves (eller Alu-Tel’Quessir) är en gren av alver som lever i haven, ofta i hidden kingdoms under ytan.</p><p>De är vanligtvis nobla, hederliga och traditionellt bundna till beskydd av haven.</p><p>De är fiender till både sahuagin och vissa djuphavsdemoner, och ser sig ofta som havets väktare.</p><p>🦈 2. Sahuagin = Sea Elves' mortal enemies</p><p>Sahuagin och sea elves har en uråldrig fiendskap. Den här konflikten är inte bara politisk – den är nästan rasminne.</p><p>De två folken har slagits i tusentals år, och sahuagin ser sea elves som ömtåliga, arroganta och lätta byten.</p><p>Sea Elves ser sahuagin som barbariska, grymma kannibaler som förstör allt de inte kan erövra.</p><p>"For generations, sahuagin and sea elves have waged war beneath the waves, their battles echoing through sunken trenches and coral graves."  — Volo’s Guide to Monsters</p><p>🔪 3. Sahuagin attackerar med brutalitet</p><p>De attackerar ofta i nattliga räder, dödar civila, förstör heliga platser och tar slavar.</p><p>Sahuagin njuter av tortyr och skräck – de tycker det är stärkande att känna fiendens rädsla.</p><p>I vissa kustområden är "sahuagin raids" ett lika känt skräckbegrepp som pirater.</p><p>🧠 4. De tillber Sekolah – hajarnas demonherre</p><p>Sahuagin följer Sekolah, en demonisk hajgud som uppmuntrar slakt, dominans och blodbad.</p><p>Detta gör dem inte bara till fiender – utan till onda kultister, vilket är extra avskyvärt för många sea elves.</p><p>🐚 5. I Danger at Dunwater specifikt:</p><p>Sahuagin är den verkliga hotbilden bakom varför lizardfolk rustar upp.</p><p>Oceanus känner igen deras taktik, spjut, symboler och doft på långt håll.</p><p>Han kan påminna gruppen att:</p><p>“If the sahuagin are involved… then no one is safe. Not Saltmarsh. Not the Lair. Not even my people, beneath the waves.”</p><p>🎯 Vad betyder detta för Oceanus personligen?</p><p>Även om du inte skriver hela backstoryn åt spelaren kan du ge dem:</p><p>En fiendskap med historisk och kulturell tyngd.</p><p>Möjligheten att personifiera det: “Min hemstad låg i spillror när jag var femtio. De tog min bror. De flår sina offer levande för Sekolah.”</p>
-<p><img alt="Pasted image 20251117171301.png" src="/99_Attachments/Pasted%20image%2020251117171301.png" /></p>
+                        <h3>Extra character info:</h3>
+                        <ul>
+                            <li>You can breathe air and water</li>
+                            <li>Using gestures and sound, you can communicate simple ideas with any animal/beast that
+                                has an innate swimming speed.</li>
+                            <li>You are currently stripped of your weapons and items, as they were taken by your
+                                captors.</li>
+                        </ul>
+                        <h3>🌊 Varför Oceanus hatar sahuagin</h3>
+                        <p>🧝‍♂️ 1. Oceanus är en Sea Elf</p>
+                        <p>Sea Elves (eller Alu-Tel’Quessir) är en gren av alver som lever i haven, ofta i hidden
+                            kingdoms under ytan.</p>
+                        <p>De är vanligtvis nobla, hederliga och traditionellt bundna till beskydd av haven.</p>
+                        <p>De är fiender till både sahuagin och vissa djuphavsdemoner, och ser sig ofta som havets
+                            väktare.</p>
+                        <p>🦈 2. Sahuagin = Sea Elves' mortal enemies</p>
+                        <p>Sahuagin och sea elves har en uråldrig fiendskap. Den här konflikten är inte bara politisk –
+                            den är nästan rasminne.</p>
+                        <p>De två folken har slagits i tusentals år, och sahuagin ser sea elves som ömtåliga, arroganta
+                            och lätta byten.</p>
+                        <p>Sea Elves ser sahuagin som barbariska, grymma kannibaler som förstör allt de inte kan erövra.
+                        </p>
+                        <p>"For generations, sahuagin and sea elves have waged war beneath the waves, their battles
+                            echoing through sunken trenches and coral graves."  — Volo’s Guide to Monsters</p>
+                        <p>🔪 3. Sahuagin attackerar med brutalitet</p>
+                        <p>De attackerar ofta i nattliga räder, dödar civila, förstör heliga platser och tar slavar.</p>
+                        <p>Sahuagin njuter av tortyr och skräck – de tycker det är stärkande att känna fiendens rädsla.
+                        </p>
+                        <p>I vissa kustområden är "sahuagin raids" ett lika känt skräckbegrepp som pirater.</p>
+                        <p>🧠 4. De tillber Sekolah – hajarnas demonherre</p>
+                        <p>Sahuagin följer Sekolah, en demonisk hajgud som uppmuntrar slakt, dominans och blodbad.</p>
+                        <p>Detta gör dem inte bara till fiender – utan till onda kultister, vilket är extra avskyvärt
+                            för många sea elves.</p>
+                        <p>🐚 5. I Danger at Dunwater specifikt:</p>
+                        <p>Sahuagin är den verkliga hotbilden bakom varför lizardfolk rustar upp.</p>
+                        <p>Oceanus känner igen deras taktik, spjut, symboler och doft på långt håll.</p>
+                        <p>Han kan påminna gruppen att:</p>
+                        <p>“If the sahuagin are involved… then no one is safe. Not Saltmarsh. Not the Lair. Not even my
+                            people, beneath the waves.”</p>
+                        <p>🎯 Vad betyder detta för Oceanus personligen?</p>
+                        <p>Även om du inte skriver hela backstoryn åt spelaren kan du ge dem:</p>
+                        <p>En fiendskap med historisk och kulturell tyngd.</p>
+                        <p>Möjligheten att personifiera det: “Min hemstad låg i spillror när jag var femtio. De tog min
+                            bror. De flår sina offer levande för Sekolah.”</p>
+                        <p><img alt="Pasted image 20251117171301.png"
+                                src="/99_Attachments/Pasted%20image%2020251117171301.png" /></p>
 
-<h2>Custom items inventory</h2>
+                        <h2>Custom items inventory</h2>
 
-<h2>Requests to DM</h2>
-</section><section id="connections"><h2>Connections</h2><div class="conn"><h3>Links</h3><ul><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li></ul><h3>Backlinks</h3><ul><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html">Sahuagin</a></li><li><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a></li><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li><li><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a></li><li><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a></li><li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li></ul></div></section><section id="abilities"><h2>Abilities</h2><div class="meta">Add an "Abilities" section in the note to populate.</div></section><section id="inventory"><h2>Inventory</h2><div class="meta">Add an "Inventory" section in the note to populate.</div></section></div></article><details class="appendix" id="sec-local"><summary>Local Graph</summary><div class="graph-panel" id="localGraph" data-rel="03_PCs/Oceanus.md"></div></details><details class="appendix" id="sec-backlinks"><summary>Backlinks</summary><div class="backlinks"><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html">Sahuagin</a><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div></details>
+                        <h2>Requests to DM</h2>
+                    </section>
+                    <section id="connections">
+                        <h2>Connections</h2>
+                        <div class="conn">
+                            <h3>Links</h3>
+                            <ul>
+                                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                            </ul>
+                            <h3>Backlinks</h3>
+                            <ul>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html">Sahuagin</a>
+                                </li>
+                                <li><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a></li>
+                                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                                <li><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a></li>
+                                <li><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a></li>
+                                <li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section id="abilities">
+                        <h2>Abilities</h2>
+                        <div class="meta">Add an "Abilities" section in the note to populate.</div>
+                    </section>
+                    <section id="inventory">
+                        <h2>Inventory</h2>
+                        <div class="meta">Add an "Inventory" section in the note to populate.</div>
+                    </section>
+                </div>
+            </article>
+            <details class="appendix" id="sec-local">
+                <summary>Local Graph</summary>
+                <div class="graph-panel" id="localGraph" data-rel="03_PCs/Oceanus.md"></div>
+            </details>
+            <details class="appendix" id="sec-backlinks">
+                <summary>Backlinks</summary>
+                <div class="backlinks"><a
+                        href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html">Sahuagin</a><a
+                        href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a><a
+                        href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a><a
+                        href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a><a
+                        href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a><a
+                        href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div>
+            </details>
         </main>
         <aside class="right"><!-- Right Panel Partial: Drawer with notepad, to-do, and tools -->
 <div class="drawer" aria-label="Tools">
@@ -476,14 +611,15 @@
     </div>
     <button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
     <script src="/assets/markdown.js"></script>
-    <script src="/assets/site.js?v=1765485187472"></script>
-    <script src="/assets/favorites.js?v=1765485187472"></script>
-    <script src="/assets/wysiwyg.js?v=1765485187472"></script>
-    <script src="/assets/right-panel.js?v=1765485187472"></script>
-    <script src="/assets/keyboard-nav.js?v=1765485187472"></script>
-    <script src="/assets/theme.js?v=1765485187472"></script>
-    <script src="/assets/shortcuts-guide.js?v=1765485187472"></script>
-    <script src="/assets/collapsible-sections.js?v=1765485187472"></script>
+    <script src="/assets/site.js?v=1765487325589"></script>
+    <script src="/assets/favorites.js?v=1765487325589"></script>
+    <script src="/assets/wysiwyg.js?v=1765487325589"></script>
+    <script src="/assets/right-panel.js?v=1765487325589"></script>
+    <script src="/assets/keyboard-nav.js?v=1765487325589"></script>
+    <script src="/assets/theme.js?v=1765487325589"></script>
+    <script src="/assets/shortcuts-guide.js?v=1765487325589"></script>
+    <script src="/assets/collapsible-sections.js?v=1765487325589"></script>
+    <script src="/assets/weather.js?v=1765487325589"></script>
     
     <!-- Footer Partial: Add site-wide footer content here if needed -->
 <footer class="footer">

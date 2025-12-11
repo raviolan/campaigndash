@@ -9,6 +9,7 @@
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%238b5cf6'/%3E%3C/svg%3E" />
     <link rel="stylesheet" href="/assets/style.css?v={{VERSION}}" />
+    <link rel="stylesheet" href="/assets/components.css?v={{VERSION}}" />
     <link rel="stylesheet" href="/assets/enhanced-todo.css?v={{VERSION}}" />
     <link rel="stylesheet" href="/assets/modal.css?v={{VERSION}}" />
     <link rel="stylesheet" href="/assets/landing-pages.css?v={{VERSION}}" />
@@ -18,6 +19,8 @@
 <body>
     <div class="layout">
         {{HEADER}}
+        <!-- Compact weather strip: mirrors left-panel weather card -->
+        <div id="weatherStrip" class="weather-strip" aria-hidden="false"></div>
         <aside class="left">{{SIDEBAR}}</aside>
         <main class="main">
             <div class="breadcrumb-container">
@@ -46,6 +49,7 @@
     <script src="/assets/theme.js?v={{VERSION}}"></script>
     <script src="/assets/shortcuts-guide.js?v={{VERSION}}"></script>
     <script src="/assets/collapsible-sections.js?v={{VERSION}}"></script>
+    <script src="/assets/weather.js?v={{VERSION}}"></script>
     {{EXTRA_SCRIPTS}}
     {{FOOTER}}
 </body>

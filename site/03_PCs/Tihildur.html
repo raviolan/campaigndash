@@ -8,10 +8,11 @@
     <title>Tihildur</title>
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%238b5cf6'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="/assets/style.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/modal.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765485187472" />
+    <link rel="stylesheet" href="/assets/style.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/components.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/modal.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765487325589" />
     <script>window.SITE_BASE = "/"</script>
 </head>
 
@@ -116,6 +117,8 @@
         </div>
     </div>
 </div>
+        <!-- Compact weather strip: mirrors left-panel weather card -->
+        <div id="weatherStrip" class="weather-strip" aria-hidden="false"></div>
         <aside class="left"><!-- Sidebar Partial: Navigation drawer and sections -->
 <div class="drawer" aria-label="Navigation">
     <div class="drawer-handle">
@@ -264,6 +267,26 @@
                 </details>
             </li></ul>
             </nav>
+            <!-- Weather card: DnD dice-driven weather generator -->
+            <div id="weatherCard" class="card weather-card" aria-label="Weather">
+                <div class="weather-header">
+                    <div class="weather-title">Weather</div>
+                    <button id="rollWeather" class="chip" title="Roll weather">Roll</button>
+                </div>
+                <div class="weather-now" aria-live="polite">
+                    <div class="weather-icon">⛅</div>
+                    <div class="weather-desc">
+                        <div class="weather-condition">Unknown</div>
+                        <div class="weather-meta">--</div>
+                    </div>
+                </div>
+                <ul class="weather-forecast" role="list">
+                    <!-- forecast rows populated by JS -->
+                </ul>
+                <div class="weather-effects" aria-hidden="false">
+                    <!-- effects populated by JS -->
+                </div>
+            </div>
         </aside>
     </div>
 </div></aside>
@@ -279,37 +302,180 @@
                     </svg>
                 </button>
             </div><article class="entity-page">
-        <section class="entity">
-          <div class="entity-header" style="--header:url('/assets/tihildur-header.png')">
-            <button class="bookmark-btn" data-rel="03_PCs/Tihildur.md" title="Toggle favorite"></button>
-            <div class="entity-id">
-              <div class="entity-avatar"><img src="/assets/tihildur-avatar.png" alt="Tihildur"></div>
-              <div class="entity-meta">
-                <div class="entity-name">Tihildur</div>
-                <div class="entity-sub">The Salabaster-Sanbalet Connection</div>
-                <div class="entity-badges"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <nav class="entity-tabs">
-          <a href="#overview">Overview</a>
-          <a href="#connections">Connections</a>
-          <a href="#abilities">Abilities</a>
-          <a href="#inventory">Inventory</a>
-          <a class="chip" href="https://www.dndbeyond.com/characters/134555684" target="_blank" rel="noopener">Stat Sheet</a>
-        </nav><div class="entity-body"><section id="overview"><h2>Overview</h2><p>#pc </p>
-<p>Tihildur's father runs a major shipping company.  Tihildur is unaware of its full involvement in smuggling and black-market dealings. </p>
-<ul><li>Önskar sig <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html" class="wikilink" data-target="Bloodwell Vial">Bloodwell Vial</a></li>
-</ul>
-<h3>The Salabaster-Sanbalet Connection</h3><p>Business Relationship: Daddy Salabaster is first and foremost a pragmatic businessman. He doesn’t care who he works with, as long as it’s profitable. While he runs a legitimate shipping empire on the surface, he’s no stranger to turning a blind eye to shadier business ventures if the price is right—particularly smuggling operations. </p><p>Sanbalet's Role: <a href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a> is a mid-level player in <a href="/02_World/Locations/Saltmarsh.html" class="wikilink" data-target="Saltmarsh">Saltmarsh</a>'s smuggling world. He works with <a href="/04_NPCs/Salabaster%20Shipping.html" class="wikilink" data-target="Salabaster Shipping">Salabaster Shipping</a> through intermediaries, ensuring plausible deniability for <a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink" data-target="Daddy Salabaster">Daddy Salabaster</a>. The goods being smuggled through Sanbalet’s operation range from mundane contraband (illegal imports, untaxed goods) to more dangerous items like black-market alchemical supplies and magical artifacts. </p><p>Primewater's Involvement: <a href="/04_NPCs/Gellan%20Primewater.html" class="wikilink" data-target="Gellan Primewater">Gellan Primewater</a> is a high-value client for both <a href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a> and <a href="/04_NPCs/Salabaster%20Shipping.html" class="wikilink" data-target="Salabaster Shipping">Salabaster Shipping</a>. He uses Salabaster’s services for legal trade but also benefits from the smuggling network. Disrupting Sanbalet’s operation would jeopardize that relationship, something <a href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink" data-target="Daddy Salabaster">Daddy Salabaster</a> would prefer to avoid.</p>
-<p>Daddy Salabaster’s Reaction to Tihildur’s Actions</p><p>Daddy Salabaster is a cold, calculating man, but he has complicated feelings about his son’s meddling. </p><p>Business First: He’s undoubtedly angry and annoyed that Tihildur interfered in a delicate situation, especially if it risks exposing the smuggling ring or losing Primewater as a client. He will scold and reprimand Tihildur, reminding him that “business is not a playground for petulant noble brats.” </p><p>Opportunity for Growth: Despite his frustration, he might recognize Tihildur’s ambition and view this as a chance to mold him. Daddy Salabaster’s long-term goal is to bring Tihildur into the fold—not just to take over the shipping empire, but to understand the hidden layers of power that fuel it. He might decide that it’s time for Tihildur to learn how things really work.</p><p>The Offer: "If you want to meddle in my business, then fine. Let’s see how you do when you’re on the inside. But remember—this is not a game. One wrong move, and there are consequences beyond your worst imaginings."</p>
-<p>Ultimatum: Depending on how Tihildur responds, Daddy Salabaster could give him an ultimatum:</p><p>Work for him officially, learning the family trade under his direct supervision.</p><p>Or be cut off from the family, left to fend for himself with no access to family resources or influence.</p><p>Daddy Salabaster might even consider arranging a political marriage to tie Tihildur more deeply into the family’s affairs—something Tihildur would likely hate.</p>
-<p>Sanbalet’s Knowledge</p><p>Sanbalet’s parting words to Tihildur were full of implications:</p><p>He Knows About the Smuggling Business: He understands exactly how he fits into the larger web of Salabaster Shipping’s operations. His taunt to Tihildur was both a warning and a test.</p><p>He Doesn’t Want to Get on Daddy’s Bad Side: Sanbalet might respect Daddy Salabaster’s power but doesn’t fear him enough to stay loyal forever. He’s opportunistic and could be working with other factions, like the <a href="/04_NPCs/Scarlet%20Brotherhood.html" class="wikilink" data-target="Scarlet Brotherhood">Scarlet Brotherhood</a>, to hedge his bets.</p><p>He Sees Tihildur as a Threat: If Tihildur is serious about taking over the family business, Sanbalet knows that Tihildur could complicate his life—and maybe even cut him out entirely.</p>
+                <section class="entity">
+                    <div class="entity-header" style="--header:url('/assets/tihildur-header.png')">
+                        <button class="bookmark-btn" data-rel="03_PCs/Tihildur.md" title="Toggle favorite"></button>
+                        <div class="entity-id">
+                            <div class="entity-avatar"><img src="/assets/tihildur-avatar.png" alt="Tihildur"></div>
+                            <div class="entity-meta">
+                                <div class="entity-name">Tihildur</div>
+                                <div class="entity-sub">Half-elf Storm Sorcerer with daddy issues</div>
+                                <div class="entity-badges"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <nav class="entity-tabs">
+                    <a href="#overview">Overview</a>
+                    <a href="#connections">Connections</a>
+                    <a href="#abilities">Abilities</a>
+                    <a href="#inventory">Inventory</a>
+                    <a class="chip" href="https://www.dndbeyond.com/characters/134555684" target="_blank"
+                        rel="noopener">Stat Sheet</a>
+                </nav>
+                <div class="entity-body">
+                    <section id="overview">
+                        <h2>Overview</h2>
+                        <p>#pc </p>
+                        <p>Tihildur's father runs a major shipping company. Tihildur is unaware of its full involvement
+                            in smuggling and black-market dealings. </p>
+                        <ul>
+                            <li>Önskar sig <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html"
+                                    class="wikilink" data-target="Bloodwell Vial">Bloodwell Vial</a></li>
+                        </ul>
+                        <h3>The Salabaster-Sanbalet Connection</h3>
+                        <p>Business Relationship: Daddy Salabaster is first and foremost a pragmatic businessman. He
+                            doesn’t care who he works with, as long as it’s profitable. While he runs a legitimate
+                            shipping empire on the surface, he’s no stranger to turning a blind eye to shadier business
+                            ventures if the price is right—particularly smuggling operations. </p>
+                        <p>Sanbalet's Role: <a href="/04_NPCs/Sanbalet.html" class="wikilink"
+                                data-target="Sanbalet">Sanbalet</a> is a mid-level player in <a
+                                href="/02_World/Locations/Saltmarsh.html" class="wikilink"
+                                data-target="Saltmarsh">Saltmarsh</a>'s smuggling world. He works with <a
+                                href="/04_NPCs/Salabaster%20Shipping.html" class="wikilink"
+                                data-target="Salabaster Shipping">Salabaster Shipping</a> through intermediaries,
+                            ensuring plausible deniability for <a href="/04_NPCs/Daddy%20Salabaster.html"
+                                class="wikilink" data-target="Daddy Salabaster">Daddy Salabaster</a>. The goods being
+                            smuggled through Sanbalet’s operation range from mundane contraband (illegal imports,
+                            untaxed goods) to more dangerous items like black-market alchemical supplies and magical
+                            artifacts. </p>
+                        <p>Primewater's Involvement: <a href="/04_NPCs/Gellan%20Primewater.html" class="wikilink"
+                                data-target="Gellan Primewater">Gellan Primewater</a> is a high-value client for both <a
+                                href="/04_NPCs/Sanbalet.html" class="wikilink" data-target="Sanbalet">Sanbalet</a> and
+                            <a href="/04_NPCs/Salabaster%20Shipping.html" class="wikilink"
+                                data-target="Salabaster Shipping">Salabaster Shipping</a>. He uses Salabaster’s services
+                            for legal trade but also benefits from the smuggling network. Disrupting Sanbalet’s
+                            operation would jeopardize that relationship, something <a
+                                href="/04_NPCs/Daddy%20Salabaster.html" class="wikilink"
+                                data-target="Daddy Salabaster">Daddy Salabaster</a> would prefer to avoid.</p>
+                        <p>Daddy Salabaster’s Reaction to Tihildur’s Actions</p>
+                        <p>Daddy Salabaster is a cold, calculating man, but he has complicated feelings about his son’s
+                            meddling. </p>
+                        <p>Business First: He’s undoubtedly angry and annoyed that Tihildur interfered in a delicate
+                            situation, especially if it risks exposing the smuggling ring or losing Primewater as a
+                            client. He will scold and reprimand Tihildur, reminding him that “business is not a
+                            playground for petulant noble brats.” </p>
+                        <p>Opportunity for Growth: Despite his frustration, he might recognize Tihildur’s ambition and
+                            view this as a chance to mold him. Daddy Salabaster’s long-term goal is to bring Tihildur
+                            into the fold—not just to take over the shipping empire, but to understand the hidden layers
+                            of power that fuel it. He might decide that it’s time for Tihildur to learn how things
+                            really work.</p>
+                        <p>The Offer: "If you want to meddle in my business, then fine. Let’s see how you do when you’re
+                            on the inside. But remember—this is not a game. One wrong move, and there are consequences
+                            beyond your worst imaginings."</p>
+                        <p>Ultimatum: Depending on how Tihildur responds, Daddy Salabaster could give him an ultimatum:
+                        </p>
+                        <p>Work for him officially, learning the family trade under his direct supervision.</p>
+                        <p>Or be cut off from the family, left to fend for himself with no access to family resources or
+                            influence.</p>
+                        <p>Daddy Salabaster might even consider arranging a political marriage to tie Tihildur more
+                            deeply into the family’s affairs—something Tihildur would likely hate.</p>
+                        <p>Sanbalet’s Knowledge</p>
+                        <p>Sanbalet’s parting words to Tihildur were full of implications:</p>
+                        <p>He Knows About the Smuggling Business: He understands exactly how he fits into the larger web
+                            of Salabaster Shipping’s operations. His taunt to Tihildur was both a warning and a test.
+                        </p>
+                        <p>He Doesn’t Want to Get on Daddy’s Bad Side: Sanbalet might respect Daddy Salabaster’s power
+                            but doesn’t fear him enough to stay loyal forever. He’s opportunistic and could be working
+                            with other factions, like the <a href="/04_NPCs/Scarlet%20Brotherhood.html" class="wikilink"
+                                data-target="Scarlet Brotherhood">Scarlet Brotherhood</a>, to hedge his bets.</p>
+                        <p>He Sees Tihildur as a Threat: If Tihildur is serious about taking over the family business,
+                            Sanbalet knows that Tihildur could complicate his life—and maybe even cut him out entirely.
+                        </p>
 
-<h2>Custom items inventory</h2>
-<h2>Requests to DM</h2>
-</section><section id="connections"><h2>Connections</h2><div class="conn"><h3>Links</h3><ul><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li><li><a href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a></li><li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li><li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a></li><li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li><li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li></ul><h3>Backlinks</h3><ul><li><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Call%20Lightning.html">Call Lightning</a></li><li><a href="/04_NPCs/Cyrieth%20Nerolien.html">Cyrieth Nerolien</a></li><li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li><li><a href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a></li><li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li><li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li><li><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a></li><li><a href="/02_World/Locations/Bent%20Willow%20Tavern.html">Bent Willow Tavern</a></li><li><a href="/02_World/Locations/Old%20King's%20Road.html">Old King's Road</a></li><li><a href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html">Road Through the Feywild Leak</a></li><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li><li><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a></li><li><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a></li><li><a href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a></li><li><a href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a></li><li><a href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a></li><li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li></ul></div></section><section id="abilities"><h2>Abilities</h2><div class="meta">Add an "Abilities" section in the note to populate.</div></section><section id="inventory"><h2>Inventory</h2><div class="meta">Add an "Inventory" section in the note to populate.</div></section></div></article><details class="appendix" id="sec-local"><summary>Local Graph</summary><div class="graph-panel" id="localGraph" data-rel="03_PCs/Tihildur.md"></div></details><details class="appendix" id="sec-backlinks"><summary>Backlinks</summary><div class="backlinks"><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Call%20Lightning.html">Call Lightning</a><a href="/04_NPCs/Cyrieth%20Nerolien.html">Cyrieth Nerolien</a><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a><a href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a><a href="/04_NPCs/Sanbalet.html">Sanbalet</a><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a><a href="/02_World/Locations/Bent%20Willow%20Tavern.html">Bent Willow Tavern</a><a href="/02_World/Locations/Old%20King's%20Road.html">Old King's Road</a><a href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html">Road Through the Feywild Leak</a><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a><a href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a><a href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a><a href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div></details>
+                        <h2>Custom items inventory</h2>
+                        <h2>Requests to DM</h2>
+                    </section>
+                    <section id="connections">
+                        <h2>Connections</h2>
+                        <div class="conn">
+                            <h3>Links</h3>
+                            <ul>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell
+                                        Vial</a></li>
+                                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                                <li><a href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a></li>
+                                <li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li>
+                                <li><a href="/04_NPCs/Gellan%20Primewater.html">Gellan Primewater</a></li>
+                                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                                <li><a href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a></li>
+                                <li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li>
+                                <li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li>
+                            </ul>
+                            <h3>Backlinks</h3>
+                            <ul>
+                                <li><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell
+                                        Vial</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Call%20Lightning.html">Call
+                                        Lightning</a></li>
+                                <li><a href="/04_NPCs/Cyrieth%20Nerolien.html">Cyrieth Nerolien</a></li>
+                                <li><a href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a></li>
+                                <li><a href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a></li>
+                                <li><a href="/04_NPCs/Sanbalet.html">Sanbalet</a></li>
+                                <li><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet Brotherhood</a></li>
+                                <li><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a></li>
+                                <li><a href="/02_World/Locations/Bent%20Willow%20Tavern.html">Bent Willow Tavern</a>
+                                </li>
+                                <li><a href="/02_World/Locations/Old%20King's%20Road.html">Old King's Road</a></li>
+                                <li><a href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html">Road
+                                        Through the Feywild Leak</a></li>
+                                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                                <li><a href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a></li>
+                                <li><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a></li>
+                                <li><a href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a></li>
+                                <li><a href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a></li>
+                                <li><a href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a></li>
+                                <li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section id="abilities">
+                        <h2>Abilities</h2>
+                        <div class="meta">Add an "Abilities" section in the note to populate.</div>
+                    </section>
+                    <section id="inventory">
+                        <h2>Inventory</h2>
+                        <div class="meta">Add an "Inventory" section in the note to populate.</div>
+                    </section>
+                </div>
+            </article>
+            <details class="appendix" id="sec-local">
+                <summary>Local Graph</summary>
+                <div class="graph-panel" id="localGraph" data-rel="03_PCs/Tihildur.md"></div>
+            </details>
+            <details class="appendix" id="sec-backlinks">
+                <summary>Backlinks</summary>
+                <div class="backlinks"><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a><a
+                        href="/05_Tools%20%26%20Tables/Items%20%26%20More/Bloodwell%20Vial.html">Bloodwell Vial</a><a
+                        href="/05_Tools%20%26%20Tables/Items%20%26%20More/Call%20Lightning.html">Call Lightning</a><a
+                        href="/04_NPCs/Cyrieth%20Nerolien.html">Cyrieth Nerolien</a><a
+                        href="/04_NPCs/Daddy%20Salabaster.html">Daddy Salabaster</a><a
+                        href="/04_NPCs/Salabaster%20Shipping.html">Salabaster Shipping</a><a
+                        href="/04_NPCs/Sanbalet.html">Sanbalet</a><a href="/04_NPCs/Scarlet%20Brotherhood.html">Scarlet
+                        Brotherhood</a><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a><a
+                        href="/02_World/Locations/Bent%20Willow%20Tavern.html">Bent Willow Tavern</a><a
+                        href="/02_World/Locations/Old%20King's%20Road.html">Old King's Road</a><a
+                        href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html">Road Through the Feywild
+                        Leak</a><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a><a
+                        href="/02_World/Locations/Stormwreck%20Island.html">Stormwreck Island</a><a
+                        href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a><a
+                        href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html">Arc - Cyrieth's Web</a><a
+                        href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a><a
+                        href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a><a
+                        href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div>
+            </details>
         </main>
         <aside class="right"><!-- Right Panel Partial: Drawer with notepad, to-do, and tools -->
 <div class="drawer" aria-label="Tools">
@@ -470,14 +636,15 @@
     </div>
     <button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
     <script src="/assets/markdown.js"></script>
-    <script src="/assets/site.js?v=1765485187472"></script>
-    <script src="/assets/favorites.js?v=1765485187472"></script>
-    <script src="/assets/wysiwyg.js?v=1765485187472"></script>
-    <script src="/assets/right-panel.js?v=1765485187472"></script>
-    <script src="/assets/keyboard-nav.js?v=1765485187472"></script>
-    <script src="/assets/theme.js?v=1765485187472"></script>
-    <script src="/assets/shortcuts-guide.js?v=1765485187472"></script>
-    <script src="/assets/collapsible-sections.js?v=1765485187472"></script>
+    <script src="/assets/site.js?v=1765487325589"></script>
+    <script src="/assets/favorites.js?v=1765487325589"></script>
+    <script src="/assets/wysiwyg.js?v=1765487325589"></script>
+    <script src="/assets/right-panel.js?v=1765487325589"></script>
+    <script src="/assets/keyboard-nav.js?v=1765487325589"></script>
+    <script src="/assets/theme.js?v=1765487325589"></script>
+    <script src="/assets/shortcuts-guide.js?v=1765487325589"></script>
+    <script src="/assets/collapsible-sections.js?v=1765487325589"></script>
+    <script src="/assets/weather.js?v=1765487325589"></script>
     
     <!-- Footer Partial: Add site-wide footer content here if needed -->
 <footer class="footer">

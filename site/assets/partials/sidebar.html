@@ -20,6 +20,26 @@
                 </details>
                 <ul class="nav-sections">{{SECTIONS}}</ul>
             </nav>
+            <!-- Weather card: DnD dice-driven weather generator -->
+            <div id="weatherCard" class="card weather-card" aria-label="Weather">
+                <div class="weather-header">
+                    <div class="weather-title">Weather</div>
+                    <button id="rollWeather" class="chip" title="Roll weather">Roll</button>
+                </div>
+                <div class="weather-now" aria-live="polite">
+                    <div class="weather-icon">⛅</div>
+                    <div class="weather-desc">
+                        <div class="weather-condition">Unknown</div>
+                        <div class="weather-meta">--</div>
+                    </div>
+                </div>
+                <ul class="weather-forecast" role="list">
+                    <!-- forecast rows populated by JS -->
+                </ul>
+                <div class="weather-effects" aria-hidden="false">
+                    <!-- effects populated by JS -->
+                </div>
+            </div>
         </aside>
     </div>
 </div>

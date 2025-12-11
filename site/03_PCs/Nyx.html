@@ -8,10 +8,11 @@
     <title>Nyx</title>
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%238b5cf6'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="/assets/style.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/modal.css?v=1765485187472" />
-    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765485187472" />
+    <link rel="stylesheet" href="/assets/style.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/components.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/modal.css?v=1765487325589" />
+    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765487325589" />
     <script>window.SITE_BASE = "/"</script>
 </head>
 
@@ -116,6 +117,8 @@
         </div>
     </div>
 </div>
+        <!-- Compact weather strip: mirrors left-panel weather card -->
+        <div id="weatherStrip" class="weather-strip" aria-hidden="false"></div>
         <aside class="left"><!-- Sidebar Partial: Navigation drawer and sections -->
 <div class="drawer" aria-label="Navigation">
     <div class="drawer-handle">
@@ -264,6 +267,26 @@
                 </details>
             </li></ul>
             </nav>
+            <!-- Weather card: DnD dice-driven weather generator -->
+            <div id="weatherCard" class="card weather-card" aria-label="Weather">
+                <div class="weather-header">
+                    <div class="weather-title">Weather</div>
+                    <button id="rollWeather" class="chip" title="Roll weather">Roll</button>
+                </div>
+                <div class="weather-now" aria-live="polite">
+                    <div class="weather-icon">⛅</div>
+                    <div class="weather-desc">
+                        <div class="weather-condition">Unknown</div>
+                        <div class="weather-meta">--</div>
+                    </div>
+                </div>
+                <ul class="weather-forecast" role="list">
+                    <!-- forecast rows populated by JS -->
+                </ul>
+                <div class="weather-effects" aria-hidden="false">
+                    <!-- effects populated by JS -->
+                </div>
+            </div>
         </aside>
     </div>
 </div></aside>
@@ -279,35 +302,139 @@
                     </svg>
                 </button>
             </div><article class="entity-page">
-        <section class="entity">
-          <div class="entity-header" style="--header:url('/assets/nyx-header.png')">
-            <button class="bookmark-btn" data-rel="03_PCs/Nyx.md" title="Toggle favorite"></button>
-            <div class="entity-id">
-              <div class="entity-avatar"><img src="/assets/nyx-avatar.png" alt="Nyx"></div>
-              <div class="entity-meta">
-                <div class="entity-name">Nyx</div>
-                <div class="entity-sub">Background lore</div>
-                <div class="entity-badges"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <nav class="entity-tabs">
-          <a href="#overview">Overview</a>
-          <a href="#connections">Connections</a>
-          <a href="#abilities">Abilities</a>
-          <a href="#inventory">Inventory</a>
-          <a class="chip" href="https://www.dndbeyond.com/characters/134359738" target="_blank" rel="noopener">Stat Sheet</a>
-        </nav><div class="entity-body"><section id="overview"><h2>Overview</h2><p>#pc</p>
+                <section class="entity">
+                    <div class="entity-header" style="--header:url('/assets/nyx-header.png')">
+                        <button class="bookmark-btn" data-rel="03_PCs/Nyx.md" title="Toggle favorite"></button>
+                        <div class="entity-id">
+                            <div class="entity-avatar"><img src="/assets/nyx-avatar.png" alt="Nyx"></div>
+                            <div class="entity-meta">
+                                <div class="entity-name">Nyx</div>
+                                <div class="entity-sub">Tiefling Warlock, delusional thief</div>
+                                <div class="entity-badges"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <nav class="entity-tabs">
+                    <a href="#overview">Overview</a>
+                    <a href="#connections">Connections</a>
+                    <a href="#abilities">Abilities</a>
+                    <a href="#inventory">Inventory</a>
+                    <a class="chip" href="https://www.dndbeyond.com/characters/134359738" target="_blank"
+                        rel="noopener">Stat Sheet</a>
+                </nav>
+                <div class="entity-body">
+                    <section id="overview">
+                        <h2>Overview</h2>
+                        <p>#pc</p>
 
-<h2>Background lore</h2><p>Stal magisk ring  </p><p>Blir långsamt galen  </p><p>Hittar ibland coola grejer och människor men ser ibland hallucinationer</p>
-<ol><li>Minidrake/imp (undecided) som familiar.   </li><li>Godhjärtad tjuv som älskar guld och glitter  </li><li>Chaotic good  </li><li>På en resa i ett främmande avlägset land för många år sen stal Nyx en magisk ring med ett compartnent i….’  </li><li>…som visade sig innehålla jord-Genien <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink" data-target="Dao">Dao</a> som blev Nyx Patreon för att få vedergällning för stölden av ringen.  </li><li>Den guldringen sitter nu på Nyx finger och hon kan gå in i den till sin hemliga lya för vila eller sneaky gömställe för sina skatter  </li><li>Hon blir tack vare <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink" data-target="Dao">Dao</a> resistent mot bludgeoening  </li><li>Hon kommer kunna flyga i korta perioder  </li><li>Senare lvls kan vänner få besöka hennes ring för att vila där  </li><li>Min familiar kan ha den ringen på sig när Nyx vill som ett coolt halsband/smycke  </li><li>Och Nyx kan hoppa fram ur den ringen på familiar på valfri plats</li>
-</ol><p>The Genie <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink" data-target="Dao">Dao</a>'s Influence:  </p>
-<ul><li>A Test of Trust: <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink" data-target="Dao">Dao</a> may demand Nyx retrieve an artifact that he claims belongs to him. This quest could align with, or conflict against, the party’s goals.</li><li>Unlocking Her Power: The presence of a powerful elemental force (perhaps <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html" class="wikilink" data-target="Sahuagin">Sahuagin</a> magic tied to <a href="/02_World/Locations/Saltmarsh.html" class="wikilink" data-target="Saltmarsh">Saltmarsh</a>) might enhance her connection to <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink" data-target="Dao">Dao</a>, unlocking her short-term flight or greater abilities.</li><li>Allies in the Shadows: Nyx's familiar could be an extension of <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink" data-target="Dao">Dao</a>'s influence, creating tension or guidance as it subtly represents her patron’s will.</li>
+                        <h2>Background lore</h2>
+                        <p>Stal magisk ring </p>
+                        <p>Blir långsamt galen </p>
+                        <p>Hittar ibland coola grejer och människor men ser ibland hallucinationer</p>
+                        <ol>
+                            <li>Minidrake/imp (undecided) som familiar.  </li>
+                            <li>Godhjärtad tjuv som älskar guld och glitter </li>
+                            <li>Chaotic good </li>
+                            <li>På en resa i ett främmande avlägset land för många år sen stal Nyx en magisk ring med
+                                ett compartnent i….’ </li>
+                            <li>…som visade sig innehålla jord-Genien <a
+                                    href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink"
+                                    data-target="Dao">Dao</a> som blev Nyx Patreon för att få vedergällning för stölden
+                                av ringen. </li>
+                            <li>Den guldringen sitter nu på Nyx finger och hon kan gå in i den till sin hemliga lya för
+                                vila eller sneaky gömställe för sina skatter </li>
+                            <li>Hon blir tack vare <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html"
+                                    class="wikilink" data-target="Dao">Dao</a> resistent mot bludgeoening </li>
+                            <li>Hon kommer kunna flyga i korta perioder </li>
+                            <li>Senare lvls kan vänner få besöka hennes ring för att vila där </li>
+                            <li>Min familiar kan ha den ringen på sig när Nyx vill som ett coolt halsband/smycke </li>
+                            <li>Och Nyx kan hoppa fram ur den ringen på familiar på valfri plats</li>
+                        </ol>
+                        <p>The Genie <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink"
+                                data-target="Dao">Dao</a>'s Influence: </p>
+                        <ul>
+                            <li>A Test of Trust: <a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html"
+                                    class="wikilink" data-target="Dao">Dao</a> may demand Nyx retrieve an artifact that
+                                he claims belongs to him. This quest could align with, or conflict against, the party’s
+                                goals.</li>
+                            <li>Unlocking Her Power: The presence of a powerful elemental force (perhaps <a
+                                    href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html" class="wikilink"
+                                    data-target="Sahuagin">Sahuagin</a> magic tied to <a
+                                    href="/02_World/Locations/Saltmarsh.html" class="wikilink"
+                                    data-target="Saltmarsh">Saltmarsh</a>) might enhance her connection to <a
+                                    href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink"
+                                    data-target="Dao">Dao</a>, unlocking her short-term flight or greater abilities.
+                            </li>
+                            <li>Allies in the Shadows: Nyx's familiar could be an extension of <a
+                                    href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html" class="wikilink"
+                                    data-target="Dao">Dao</a>'s influence, creating tension or guidance as it subtly
+                                represents her patron’s will.</li>
 
-</ul>
-<h2>Custom inventory Items</h2><p> - [ ] Blind box potion: Blind <a href="/Shops/Potions%20Store.md">potion</a> som är:  5 Potion of Cold Resistance 150 gp Resistance to cold 1 hour.  </p>
-<h2>Requests to DM</h2></section><section id="connections"><h2>Connections</h2><div class="conn"><h3>Links</h3><ul><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html">Sahuagin</a></li><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li></ul><h3>Backlinks</h3><ul><li><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a></li><li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li><li><a href="/04_NPCs/Agile%20Hand.html">Agile Hand</a></li><li><a href="/04_NPCs/Captain%20Xendros.html">Captain Xendros</a></li><li><a href="/04_NPCs/Dusk.html">Dusk</a></li><li><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a></li><li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li><li><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a></li><li><a href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a></li><li><a href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a></li><li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li></ul></div></section><section id="abilities"><h2>Abilities</h2><div class="meta">Add an "Abilities" section in the note to populate.</div></section><section id="inventory"><h2>Inventory</h2><div class="meta">Add an "Inventory" section in the note to populate.</div></section></div></article><details class="appendix" id="sec-local"><summary>Local Graph</summary><div class="graph-panel" id="localGraph" data-rel="03_PCs/Nyx.md"></div></details><details class="appendix" id="sec-backlinks"><summary>Backlinks</summary><div class="backlinks"><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a><a href="/04_NPCs/Agile%20Hand.html">Agile Hand</a><a href="/04_NPCs/Captain%20Xendros.html">Captain Xendros</a><a href="/04_NPCs/Dusk.html">Dusk</a><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a><a href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a><a href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div></details>
+                        </ul>
+                        <h2>Custom inventory Items</h2>
+                        <p> - [ ] Blind box potion: Blind <a href="/Shops/Potions%20Store.md">potion</a> som är:  5
+                            Potion of Cold Resistance 150 gp Resistance to cold 1 hour.  </p>
+                        <h2>Requests to DM</h2>
+                    </section>
+                    <section id="connections">
+                        <h2>Connections</h2>
+                        <div class="conn">
+                            <h3>Links</h3>
+                            <ul>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Sahuagin.html">Sahuagin</a>
+                                </li>
+                                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li>
+                            </ul>
+                            <h3>Backlinks</h3>
+                            <ul>
+                                <li><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a></li>
+                                <li><a href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a></li>
+                                <li><a href="/04_NPCs/Agile%20Hand.html">Agile Hand</a></li>
+                                <li><a href="/04_NPCs/Captain%20Xendros.html">Captain Xendros</a></li>
+                                <li><a href="/04_NPCs/Dusk.html">Dusk</a></li>
+                                <li><a href="/03_PCs/Extras%20and%20quirks.html">Extras and quirks</a></li>
+                                <li><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a></li>
+                                <li><a href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a></li>
+                                <li><a href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a></li>
+                                <li><a href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a></li>
+                                <li><a href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section id="abilities">
+                        <h2>Abilities</h2>
+                        <div class="meta">Add an "Abilities" section in the note to populate.</div>
+                    </section>
+                    <section id="inventory">
+                        <h2>Inventory</h2>
+                        <div class="meta">Add an "Inventory" section in the note to populate.</div>
+                    </section>
+                </div>
+            </article>
+            <details class="appendix" id="sec-local">
+                <summary>Local Graph</summary>
+                <div class="graph-panel" id="localGraph" data-rel="03_PCs/Nyx.md"></div>
+            </details>
+            <details class="appendix" id="sec-backlinks">
+                <summary>Backlinks</summary>
+                <div class="backlinks"><a href="/05_Tools%20%26%20Tables/Shops/Shops%20Index.html">Shops Index</a><a
+                        href="/05_Tools%20%26%20Tables/Items%20%26%20More/Dao.html">Dao</a><a
+                        href="/04_NPCs/Agile%20Hand.html">Agile Hand</a><a
+                        href="/04_NPCs/Captain%20Xendros.html">Captain Xendros</a><a
+                        href="/04_NPCs/Dusk.html">Dusk</a><a href="/03_PCs/Extras%20and%20quirks.html">Extras and
+                        quirks</a><a href="/02_World/Locations/Saltmarsh.html">Saltmarsh</a><a
+                        href="/01_Arcs/01_Arcs%20Overview.html">01_Arcs Overview</a><a
+                        href="/01_Arcs/The%20Feywild/the%20trek.html">the trek</a><a
+                        href="/01_Arcs/GoSM/Generally%2C%20GoSM.html">Generally, GoSM</a><a
+                        href="/00_Campaign/00_Campaign%20Dashboard.html">00_Campaign Dashboard</a></div>
+            </details>
         </main>
         <aside class="right"><!-- Right Panel Partial: Drawer with notepad, to-do, and tools -->
 <div class="drawer" aria-label="Tools">
@@ -468,14 +595,15 @@
     </div>
     <button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
     <script src="/assets/markdown.js"></script>
-    <script src="/assets/site.js?v=1765485187472"></script>
-    <script src="/assets/favorites.js?v=1765485187472"></script>
-    <script src="/assets/wysiwyg.js?v=1765485187472"></script>
-    <script src="/assets/right-panel.js?v=1765485187472"></script>
-    <script src="/assets/keyboard-nav.js?v=1765485187472"></script>
-    <script src="/assets/theme.js?v=1765485187472"></script>
-    <script src="/assets/shortcuts-guide.js?v=1765485187472"></script>
-    <script src="/assets/collapsible-sections.js?v=1765485187472"></script>
+    <script src="/assets/site.js?v=1765487325589"></script>
+    <script src="/assets/favorites.js?v=1765487325589"></script>
+    <script src="/assets/wysiwyg.js?v=1765487325589"></script>
+    <script src="/assets/right-panel.js?v=1765487325589"></script>
+    <script src="/assets/keyboard-nav.js?v=1765487325589"></script>
+    <script src="/assets/theme.js?v=1765487325589"></script>
+    <script src="/assets/shortcuts-guide.js?v=1765487325589"></script>
+    <script src="/assets/collapsible-sections.js?v=1765487325589"></script>
+    <script src="/assets/weather.js?v=1765487325589"></script>
     
     <!-- Footer Partial: Add site-wide footer content here if needed -->
 <footer class="footer">
