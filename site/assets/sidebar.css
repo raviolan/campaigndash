@@ -86,21 +86,25 @@
     background-image: linear-gradient(90deg, rgba(245, 158, 11, .5) 0%, rgba(245, 158, 11, .18) 28%, rgba(245, 158, 11, 0) 70%)
 }
 
-/* Color coding on hover for folder (summary) rows */
+/* Color coding on hover for folder (summary) rows - with split-click gradient */
 .left details.f-pc>summary.nav-label:hover {
-    background-image: linear-gradient(90deg, rgba(34, 211, 238, .5) 0%, rgba(34, 211, 238, .18) 28%, rgba(34, 211, 238, 0) 70%)
+    background-image: linear-gradient(90deg, rgba(34, 211, 238, .5) 0%, rgba(34, 211, 238, .18) 28%, rgba(34, 211, 238, 0) 45%, transparent 50%, rgba(34, 211, 238, .15) 70%, rgba(34, 211, 238, .25) 100%)
 }
 
 .left details.f-npc>summary.nav-label:hover {
-    background-image: linear-gradient(90deg, rgba(244, 114, 182, .5) 0%, rgba(244, 114, 182, .18) 28%, rgba(244, 114, 182, 0) 70%)
+    background-image: linear-gradient(90deg, rgba(244, 114, 182, .5) 0%, rgba(244, 114, 182, .18) 28%, rgba(244, 114, 182, 0) 45%, transparent 50%, rgba(244, 114, 182, .15) 70%, rgba(244, 114, 182, .25) 100%)
 }
 
 .left details.f-location>summary.nav-label:hover {
-    background-image: linear-gradient(90deg, rgba(163, 230, 53, .5) 0%, rgba(163, 230, 53, .18) 28%, rgba(163, 230, 53, 0) 70%)
+    background-image: linear-gradient(90deg, rgba(163, 230, 53, .5) 0%, rgba(163, 230, 53, .18) 28%, rgba(163, 230, 53, 0) 45%, transparent 50%, rgba(163, 230, 53, .15) 70%, rgba(163, 230, 53, .25) 100%)
 }
 
 .left details.f-arc>summary.nav-label:hover {
-    background-image: linear-gradient(90deg, rgba(245, 158, 11, .5) 0%, rgba(245, 158, 11, .18) 28%, rgba(245, 158, 11, 0) 70%)
+    background-image: linear-gradient(90deg, rgba(245, 158, 11, .5) 0%, rgba(245, 158, 11, .18) 28%, rgba(245, 158, 11, 0) 45%, transparent 50%, rgba(245, 158, 11, .15) 70%, rgba(245, 158, 11, .25) 100%)
+}
+
+.left details.f-other>summary.nav-label:hover {
+    background-image: linear-gradient(90deg, rgba(148, 163, 184, .3) 0%, rgba(148, 163, 184, .12) 28%, rgba(148, 163, 184, 0) 45%, transparent 50%, rgba(148, 163, 184, .15) 70%, rgba(148, 163, 184, .25) 100%)
 }
 
 .nav-icon {
@@ -131,7 +135,9 @@
     align-items: center;
     gap: 6px;
     padding: 6px 2px;
-    color: var(--muted)
+    color: var(--muted);
+    position: relative;
+    transition: background 0.2s ease;
 }
 
 .nav-details>summary {

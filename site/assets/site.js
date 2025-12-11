@@ -1,3 +1,135 @@
+// --- Dynamic Sidebar Loading ---
+(function loadSidebarDynamically() {
+  const sidebarContainer = document.querySelector('.left');
+  if (!sidebarContainer) return;
+
+  fetch('/api/sidebar')
+    .then(res => res.text())
+    .then(html => {
+      sidebarContainer.innerHTML = html;
+      // Initialize split-click navigation
+      initializeSplitClickNavigation();
+      // Re-run any sidebar initialization if needed
+      if (window.initializeSidebar) window.initializeSidebar();
+    })
+    .catch(err => console.error('Failed to load sidebar:', err));
+})();
+
+// --- Split-Click Navigation for Category Landing Pages ---
+function initializeSplitClickNavigation() {
+  const categoryMapping = {
+    'Characters': '/03_PCs/Characters.html',
+    'NPCs': '/04_NPCs/NPCs.html',
+    'Locations': '/02_World/Locations/Locations.html',
+    'Arcs': '/01_Arcs/Arcs.html',
+    '03_Sessions': '/00_Campaign/03_Sessions/03_Sessions.html',
+    'Tools': '/05_Tools & Tables/Tools.html'
+  };
+
+  // Find all main category summaries (not nested ones)
+  const mainCategories = document.querySelectorAll('.nav-group > .nav-details > summary.nav-label');
+
+  mainCategories.forEach(summary => {
+    const labelText = summary.querySelector('span:last-child')?.textContent.trim();
+    const landingPage = categoryMapping[labelText];
+
+    if (!landingPage) return;
+
+    summary.addEventListener('click', (e) => {
+      const rect = summary.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const width = rect.width;
+      const clickedRightHalf = clickX > width / 2;
+
+      if (clickedRightHalf) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = landingPage;
+      }
+      // If left half, let the default toggle behavior happen
+    });
+  });
+}
+
+// --- Confirmation Modal ---
+function showConfirmModal(title, message) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('confirmModal');
+    const titleEl = document.getElementById('confirmModalTitle');
+    const messageEl = document.getElementById('confirmModalMessage');
+    const yesBtn = document.getElementById('confirmModalYes');
+    const noBtn = document.getElementById('confirmModalNo');
+
+    if (!modal) {
+      resolve(window.confirm(message)); // Fallback
+      return;
+    }
+
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    modal.style.display = 'flex';
+
+    // Get all focusable elements in the modal
+    const modalContent = modal.querySelector('.modal-content');
+    const focusableElements = modalContent.querySelectorAll('button:not([disabled])');
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+
+    // Focus the No button by default (safer)
+    setTimeout(() => noBtn.focus(), 100);
+
+    function cleanup() {
+      modal.style.display = 'none';
+      yesBtn.removeEventListener('click', handleYes);
+      noBtn.removeEventListener('click', handleNo);
+      document.removeEventListener('keydown', handleKey);
+      modalContent.removeEventListener('keydown', trapFocus);
+    }
+
+    function handleYes() {
+      cleanup();
+      resolve(true);
+    }
+
+    function handleNo() {
+      cleanup();
+      resolve(false);
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        handleNo();
+      }
+    }
+
+    // Trap focus within modal for accessibility
+    function trapFocus(e) {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) { // Shift + Tab
+          if (document.activeElement === firstFocusable) {
+            e.preventDefault();
+            lastFocusable.focus();
+          }
+        } else { // Tab
+          if (document.activeElement === lastFocusable) {
+            e.preventDefault();
+            firstFocusable.focus();
+          }
+        }
+      }
+    }
+
+    yesBtn.addEventListener('click', handleYes);
+    noBtn.addEventListener('click', handleNo);
+    document.addEventListener('keydown', handleKey);
+    modalContent.addEventListener('keydown', trapFocus);
+
+    // Close on overlay click
+    modal.querySelector('.modal-overlay').addEventListener('click', handleNo, { once: true });
+  });
+}
+
 // --- In-place HTML Editing (WYSIWYG) ---
 (function () {
   const btnEdit = document.getElementById('btnEditPage');
@@ -103,9 +235,41 @@
         saveBtn.disabled = false;
       }
     };
-    cancelBtn.onclick = function () {
-      main.innerHTML = originalHtml;
+    cancelBtn.onclick = async function () {
+      const confirmed = await showConfirmModal(
+        'Discard Changes?',
+        'Are you sure you want to discard your changes? This cannot be undone.'
+      );
+      if (confirmed) {
+        main.innerHTML = originalHtml;
+      }
     };
+
+    // Add keyboard shortcut: Cmd+Enter to save
+    editor.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (!saveBtn.disabled) {
+          saveBtn.click();
+        }
+      }
+    });
+
+    // Add keyboard shortcut: Escape to cancel editing with confirmation
+    const escapeHandler = async function (e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        const confirmed = await showConfirmModal(
+          'Discard Changes?',
+          'Are you sure you want to discard your changes? This cannot be undone.'
+        );
+        if (confirmed) {
+          main.innerHTML = originalHtml;
+          document.removeEventListener('keydown', escapeHandler);
+        }
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
   }
 
   btnEdit.addEventListener('click', startEdit);
@@ -990,6 +1154,104 @@ window.saveSessionSnapshot = async function () {
     } catch (err) {
       showStatus('Network error: ' + err.message, 'error');
       submitBtn.disabled = false;
+    }
+  });
+})();
+
+// Delete Page Modal
+(function () {
+  const modal = document.getElementById('deletePageModal');
+  const form = document.getElementById('deletePageForm');
+  const btnOpen = document.getElementById('btnDeletePage');
+  const btnCancel = document.getElementById('btnCancelDelete');
+  const confirmInput = document.getElementById('deletePageConfirm');
+  const titleDisplay = document.getElementById('deletePageTitle');
+  const statusDiv = document.getElementById('deletePageStatus');
+
+  if (!modal || !form || !btnOpen) return;
+
+  // Extract page title from the h1 or document title
+  function getPageTitle() {
+    const h1 = document.querySelector('main.main h1');
+    if (h1) return h1.textContent.trim();
+    return document.title.split('|')[0].trim();
+  }
+
+  function openModal() {
+    const title = getPageTitle();
+    titleDisplay.textContent = title;
+    confirmInput.dataset.expectedTitle = title;
+    modal.style.display = 'flex';
+    confirmInput.value = '';
+    confirmInput.focus();
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    form.reset();
+    statusDiv.style.display = 'none';
+    statusDiv.className = '';
+  }
+
+  function showStatus(message, type) {
+    statusDiv.textContent = message;
+    statusDiv.className = type;
+    statusDiv.style.display = 'block';
+  }
+
+  btnOpen.addEventListener('click', openModal);
+  btnCancel.addEventListener('click', closeModal);
+
+  // Close on overlay click
+  modal.querySelector('.modal-overlay').addEventListener('click', closeModal);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const expectedTitle = confirmInput.dataset.expectedTitle;
+    const enteredTitle = confirmInput.value.trim();
+
+    if (enteredTitle !== expectedTitle) {
+      showStatus('Title does not match. Please type the exact title to confirm deletion.', 'error');
+      return;
+    }
+
+    // Disable form
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    confirmInput.disabled = true;
+    showStatus('Deleting page...', 'loading');
+
+    try {
+      const response = await fetch('/api/delete-page', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: window.location.pathname })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showStatus('Page deleted! Redirecting to dashboard...', 'success');
+        setTimeout(() => {
+          window.location.href = '/index.html';
+        }, 1500);
+      } else {
+        showStatus(data.error || 'Failed to delete page', 'error');
+        submitBtn.disabled = false;
+        confirmInput.disabled = false;
+      }
+    } catch (err) {
+      showStatus('Network error: ' + err.message, 'error');
+      submitBtn.disabled = false;
+      confirmInput.disabled = false;
     }
   });
 })();

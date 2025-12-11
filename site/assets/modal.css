@@ -137,3 +137,122 @@
     color: rgba(139, 92, 246, 1);
     border: 1px solid rgba(139, 92, 246, 0.3);
 }
+
+/* Confirmation Modal Specific Styles */
+#confirmModal[style*="display: flex"] {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+#confirmModal .modal-overlay {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#confirmModal .modal-content {
+    max-width: 420px;
+    min-width: 380px;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    animation: modalSlideIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: auto;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#confirmModal h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+}
+
+#confirmModal p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+#confirmModal .form-actions {
+    gap: 12px;
+    margin-top: 28px;
+}
+
+/* Dramatically enhanced focus styles for keyboard navigation */
+.btn-primary,
+.btn-secondary {
+    position: relative;
+    transition: all 0.15s ease;
+}
+
+.btn-primary:focus,
+.btn-secondary:focus {
+    outline: none;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.3), 0 8px 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.btn-primary:focus {
+    background: rgba(139, 92, 246, 1);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.4), 0 8px 20px rgba(139, 92, 246, 0.3);
+}
+
+.btn-secondary:focus {
+    background: var(--panel);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2), 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Add focus indicator icon */
+.btn-primary:focus::before,
+.btn-secondary:focus::before {
+    content: '→ ';
+    opacity: 1;
+    animation: focusPulse 1s ease infinite;
+}
+
+@keyframes focusPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Hover states remain subtle when not focused */
+.btn-primary:hover:not(:focus) {
+    transform: translateY(-1px);
+}
+
+.btn-secondary:hover:not(:focus) {
+    transform: translateY(-1px);
+}

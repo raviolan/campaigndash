@@ -44,58 +44,118 @@ function isSafeRel(rel, allowHtml = false) {
 }
 
 function updateSidebarNavigation(folder, filename, title) {
-  const sidebarPath = path.join(ROOT, 'assets', 'partials', 'sidebar.html');
-  let sidebar = fs.readFileSync(sidebarPath, 'utf8');
+  // No longer needed - sidebar is generated dynamically
+  console.log('[sidebar] Page added:', folder + '/' + filename);
+}
 
-  // Create the new nav item
-  const encodedFilename = filename.split('.html')[0].split('/').map(encodeURIComponent).join('/');
-  const navItem = `                <li><a class="nav-item" href="/${folder}/${encodedFilename}.html"><span
-                                            class="nav-icon">•</span><span class="nav-text">${title}</span></a></li>`;
+function removeSidebarNavigation(relPath) {
+  // No longer needed - sidebar is generated dynamically
+  console.log('[sidebar] Page removed:', relPath);
+}
 
-  // Find the appropriate section to insert into
-  const sectionMap = {
-    '03_PCs': 'Characters',
-    '04_NPCs': 'NPCs',
-    '02_World/Locations': 'Locations',
-    '01_Arcs': 'Arcs',
-    '05_Tools & Tables/Shops': 'Shops',
-    '00_Campaign/03_Sessions': '03_Sessions',
-    '05_Tools & Tables': 'Tools'
+function generateDynamicSidebar() {
+  const sections = [
+    { name: 'Characters', icon: 'wizard', folder: '03_PCs', class: 'f-pc' },
+    { name: 'NPCs', icon: 'users', folder: '04_NPCs', class: 'f-npc' },
+    { name: 'Locations', icon: 'dot', folder: '02_World/Locations', class: 'f-location' },
+    { name: 'Arcs', icon: 'compass', folder: '01_Arcs', class: 'f-arc' },
+    { name: '03_Sessions', icon: 'wizard', folder: '00_Campaign/03_Sessions', class: 'f-other' },
+    { name: 'Tools', icon: 'tools', folder: '05_Tools & Tables', class: 'f-other' }
+  ];
+
+  const svgIcons = {
+    wizard: 'M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z',
+    users: 'M16 11a4 4 0 10-8 0 4 4 0 008 0zm-11 9c0-3 4-5 7-5s7 2 7 5v2H5v-2z',
+    dot: 'M12 12a3 3 0 110-6 3 3 0 010 6z',
+    compass: 'M12 2a10 10 0 100 20 10 10 0 000-20zm5 5l-3 8-8 3 3-8 8-3zM10 10l-1 2 2-1 1-2-2 1z',
+    tools: 'M21 14l-5-5 2-2 3 3 2-2-3-3 1-1-2-2-3 3-2-2-2 2 2 2-9 9v4h4l9-9 2 2z'
   };
 
-  const sectionName = sectionMap[folder];
-  if (!sectionName) return; // Unknown section
+  let html = `<!-- Sidebar Navigation -->
+<div class="sidebar">
+    <nav class="nav" aria-label="Main navigation">
+        <div class="nav-header">
+            <div class="nav-search">
+                <input type="search" id="navSearch" placeholder="Filter..." />
+            </div>
+            <div id="navFav" class="nav-favorites">
+                <details class="nav-details">
+                    <summary class="nav-label"><span class="nav-icon">⭐</span><span>Favorites</span></summary>
+                    <ul id="favList" class="nav-list"></ul>
+                </details>
+            </div>
+            <ul class="nav-sections">`;
 
-  // Find the nav-list for this section and insert before the closing </ul>
-  // Look for the section by finding its summary text, then find its nav-list
-  const sectionRegex = new RegExp(`(<summary[^>]*><span[^>]*>[^<]*</span><span>${sectionName}</span></summary>[\\s\\S]*?<ul class="nav-list">)([\\s\\S]*?)(</ul>)`, 'm');
-  const match = sidebar.match(sectionRegex);
+  sections.forEach(section => {
+    const folderPath = path.join(ROOT, section.folder);
+    if (!fs.existsSync(folderPath)) return;
 
-  if (match) {
-    const existingItems = match[2];
-    const updatedItems = existingItems + '\n' + navItem;
-    sidebar = sidebar.replace(sectionRegex, `$1${updatedItems}\n$3`);
-    fs.writeFileSync(sidebarPath, sidebar, 'utf8');
-  }
+    // Define landing page filenames to exclude from navigation
+    const landingPages = ['Characters.html', 'NPCs.html', 'Locations.html', 'Arcs.html', '03_Sessions.html', 'Tools.html'];
+
+    const files = fs.readdirSync(folderPath)
+      .filter(f => f.endsWith('.html') && !landingPages.includes(f))
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+    if (files.length === 0) return;
+
+    const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${svgIcons[section.icon]}"/></svg>`;
+
+    html += `
+                    <li class="nav-group">
+                        <details class="nav-details ${section.class}" open>
+                            <summary class="nav-label"><span class="nav-icon">${icon}</span><span>${section.name}</span></summary>
+                            <ul class="nav-list">`;
+
+    files.forEach(file => {
+      const title = file.replace('.html', '');
+      const encodedFile = encodeURIComponent(file);
+      html += `
+                                <li><a class="nav-item" href="/${section.folder}/${encodedFile}"><span class="nav-icon">•</span><span class="nav-text">${title}</span></a></li>`;
+    });
+
+    html += `
+                            </ul>`;
+
+    html += `
+                        </details>
+                    </li>`;
+  });
+
+  html += `
+                </ul>
+        </div>
+    </nav>
+</div>`;
+
+  return html;
 }
 
 function wrapInMinimalHTML(title, mainContent) {
-  return `<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${title}</title>
-    <link rel="stylesheet" href="/assets/style.css" />
-</head>
-<body>
-    <div class="layout">
-        <main class="main">
-            ${mainContent}
-        </main>
-    </div>
-</body>
-</html>`;
+  // Load all partials to create a complete page
+  const layoutPartial = fs.readFileSync(path.join(ROOT, 'assets', 'partials', 'layout.html'), 'utf8');
+  const headerPartial = fs.readFileSync(path.join(ROOT, 'assets', 'partials', 'header.html'), 'utf8');
+  const sidebarPartialRaw = fs.readFileSync(path.join(ROOT, 'assets', 'partials', 'sidebar.html'), 'utf8');
+  const footerPartial = fs.readFileSync(path.join(ROOT, 'assets', 'partials', 'footer.html'), 'utf8');
+  const rightPanelPartialRaw = fs.readFileSync(path.join(ROOT, 'assets', 'partials', 'right-panel.html'), 'utf8');
+
+  // For now, use empty sidebar sections - the build script will populate these later
+  const sidebarPartial = sidebarPartialRaw.replace('{{SECTIONS}}', '');
+  // Right panel with empty RIGHT_TOP content
+  const rightPanelPartial = rightPanelPartialRaw.replace('{{RIGHT_TOP}}', '');
+
+  const VERSION = String(Date.now());
+
+  // Assemble the full page using the same method as build2_enhanced.js
+  return layoutPartial
+    .replace(/{{HEADER}}/g, headerPartial)
+    .replace(/{{SIDEBAR}}/g, sidebarPartial)
+    .replace(/{{FOOTER}}/g, footerPartial)
+    .replace(/{{CONTENT}}/g, mainContent)
+    .replace(/{{TITLE}}/g, title)
+    .replace(/{{RIGHT}}/g, rightPanelPartial)
+    .replace(/{{EXTRA_SCRIPTS}}/g, '')
+    .replace(/{{VERSION}}/g, VERSION);
 }
 
 function generatePageTemplate(title, type) {
@@ -295,6 +355,63 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+  if (pathname === '/api/create-page' && req.method === 'POST') {
+    const body = await parseBody(req);
+    const { type, title } = body || {};
+    if (!type || !title) return sendJson(res, 400, { error: 'Missing type or title' });
+
+    const folders = {
+      'npc': '04_NPCs',
+      'pc': '03_PCs',
+      'location': '02_World/Locations',
+      'arc': '01_Arcs',
+      'shop': '05_Tools & Tables/Shops',
+      'session': '00_Campaign/03_Sessions',
+      'tool': '05_Tools & Tables'
+    };
+
+    const folder = folders[type];
+    if (!folder) {
+      return sendJson(res, 400, { error: 'Invalid page type' });
+    }
+
+    // Create filename (sanitize title)
+    const sanitized = title.replace(/[^a-zA-Z0-9\s\-_]/g, '').replace(/\s+/g, ' ').trim();
+    if (!sanitized) {
+      return sendJson(res, 400, { error: 'Invalid title - must contain letters or numbers' });
+    }
+    const filename = sanitized + '.html';
+    const filepath = path.join(ROOT, folder, filename);
+
+    // Check if exists
+    if (fs.existsSync(filepath)) {
+      return sendJson(res, 409, { error: 'A page with this name already exists' });
+    }
+
+    // Generate page content based on type
+    const mainContent = generatePageTemplate(title, type);
+
+    // Wrap in minimal HTML structure that rebuild script can process
+    const fullHtml = wrapInMinimalHTML(title, mainContent);
+
+    try {
+      // Ensure directory exists
+      fs.mkdirSync(path.dirname(filepath), { recursive: true });
+
+      // Write the file
+      fs.writeFileSync(filepath, fullHtml, 'utf8');
+
+      // Update sidebar navigation to include the new page
+      updateSidebarNavigation(folder, filename, title);
+
+      const url = '/' + path.relative(ROOT, filepath);
+      sendJson(res, 200, { ok: true, url });
+    } catch (e) {
+      console.error('[create-page error]', e);
+      sendJson(res, 500, { error: 'Failed to create file: ' + e.message });
+    }
+    return;
+  }
   if (pathname === '/api/edit-page' && req.method === 'POST') {
     const body = await parseBody(req);
     let { url, html } = body || {};
@@ -319,6 +436,45 @@ const server = http.createServer(async (req, res) => {
     } catch (e) {
       console.error('[edit-page error]', e);
       sendJson(res, 500, { error: e.message || 'Write failed' });
+    }
+    return;
+  }
+  if (pathname === '/api/delete-page' && req.method === 'POST') {
+    const body = await parseBody(req);
+    let { url } = body || {};
+    if (typeof url !== 'string') return sendJson(res, 400, { error: 'Invalid payload' });
+    // Map URL to file path
+    let rel = decodeURIComponent(url).replace(/^\//, '');
+    if (!isSafeRel(rel, true)) return sendJson(res, 400, { error: 'Invalid HTML file' });
+    const abs = path.join(VAULT_ROOT, rel);
+    try {
+      // Check if file exists
+      if (!fs.existsSync(abs)) {
+        return sendJson(res, 404, { error: 'File not found' });
+      }
+      // Delete the file
+      fs.unlinkSync(abs);
+      console.log('[delete-page] Deleted:', abs);
+
+      // Remove from sidebar navigation
+      removeSidebarNavigation(rel);
+
+      sendJson(res, 200, { ok: true });
+    } catch (e) {
+      console.error('[delete-page error]', e);
+      sendJson(res, 500, { error: e.message || 'Delete failed' });
+    }
+    return;
+  }
+  if (pathname === '/api/sidebar' && req.method === 'GET') {
+    try {
+      // Dynamically generate sidebar by scanning filesystem
+      const sidebar = generateDynamicSidebar();
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(sidebar);
+    } catch (e) {
+      console.error('[sidebar error]', e);
+      sendJson(res, 500, { error: 'Failed to load sidebar' });
     }
     return;
   }

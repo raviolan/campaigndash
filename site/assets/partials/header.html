@@ -62,3 +62,38 @@
         <div id="editPageStatus" style="display: none;"></div>
     </div>
 </div>
+
+<!-- Delete Page Modal -->
+<div id="deletePageModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <h2>Delete Page</h2>
+        <p style="margin-bottom: 1em;">⚠️ This action cannot be undone. To confirm deletion, type the page title below:
+        </p>
+        <p style="margin-bottom: 1em;"><strong id="deletePageTitle"></strong></p>
+        <form id="deletePageForm">
+            <div class="form-group">
+                <label for="deletePageConfirm">Type page title to confirm:</label>
+                <input type="text" id="deletePageConfirm" style="width:100%" required autocomplete="off" />
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" style="background: #c33;">Delete Page</button>
+                <button type="button" id="btnCancelDelete" class="btn-secondary">Cancel</button>
+            </div>
+        </form>
+        <div id="deletePageStatus" style="display: none; margin-top: 1em;"></div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content" style="max-width: 450px;">
+        <h2 id="confirmModalTitle">Confirm</h2>
+        <p id="confirmModalMessage" style="margin: 1em 0;"></p>
+        <div class="form-actions">
+            <button type="button" id="confirmModalYes" class="btn-primary">Yes</button>
+            <button type="button" id="confirmModalNo" class="btn-secondary">No</button>
+        </div>
+    </div>
+</div>
