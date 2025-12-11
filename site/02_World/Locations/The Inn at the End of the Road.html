@@ -8,10 +8,10 @@
     <title>The Inn at the End of the Road</title>
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%238b5cf6'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="/assets/style.css?v=1765478733361" />
-    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765478733361" />
-    <link rel="stylesheet" href="/assets/modal.css?v=1765478733361" />
-    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765478733361" />
+    <link rel="stylesheet" href="/assets/style.css?v=1765484097563" />
+    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765484097563" />
+    <link rel="stylesheet" href="/assets/modal.css?v=1765484097563" />
+    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765484097563" />
     <script>window.SITE_BASE = "/"</script>
 </head>
 
@@ -307,37 +307,150 @@
         <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Close</button>
         <button id="drawerPin" class="chip" aria-pressed="true" title="Pin panel"></button>
         <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
+        <button id="colorsToggle" class="chip" title="Open Colors Tool">Colors</button>
     </div>
     <div id="drawerContent" class="drawer-content">
         <div id="drawerTop"></div>
         <div class="right-split">
             <div id="paneTop" class="pane">
-                <div class="pane-body" data-pane="top">
-                    <div class="card">
-                        <h3 style="margin:0">Notepad</h3>
-                        <textarea id="toolNotepad" placeholder="Quick notes..."
-                            style="width:100%;min-height:100px;flex:1;border:none;background:transparent;color:var(--text);resize:none;margin-top:8px;padding:0;outline:none"></textarea>
-                    </div>
+                <div class="pane-tabs" aria-hidden="false">
+                    <button class="pane-tab" data-pane="top" data-tool="note">Notepad</button>
+                    <button class="pane-tab" data-pane="top" data-tool="colors">Colors</button>
                 </div>
+                <div class="pane-body" data-pane="top"></div>
             </div>
             <div class="pane-resizer-h" aria-hidden="true"></div>
             <div id="paneBottom" class="pane">
-                <div class="pane-body" data-pane="bottom">
-                    <div id="todoBox" class="card" aria-label="Session To-Do">
-                        <h3 style="margin:0 0 12px 0">To-Do</h3>
-                        <form id="todoForm" class="todo-form" autocomplete="off">
-                            <label class="sr-only" for="todoInput">Add a task</label>
-                            <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter" />
-                            <button type="submit" class="todo-add">Add</button>
-                        </form>
-                        <div class="todo-actions">
-                            <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>
+                <div class="pane-tabs" aria-hidden="false">
+                    <button class="pane-tab" data-pane="bottom" data-tool="todo">To-Do</button>
+                </div>
+                <div class="pane-body" data-pane="bottom"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden tool views rendered into panes by JS -->
+<div id="toolViews" style="display:none">
+    <div id="toolNote">
+        <div class="card">
+            <h3 style="margin:0">Notepad</h3>
+            <textarea id="toolNotepad" placeholder="Quick notes..."
+                style="width:100%;min-height:100px;flex:1;border:none;background:transparent;color:var(--text);resize:none;margin-top:8px;padding:0;outline:none"></textarea>
+        </div>
+    </div>
+    <div id="toolColors">
+        <div class="card">
+            <h3 style="margin:0">Colors</h3>
+            <div id="colorToolContent">
+                <div class="theme-picker">
+                    <h4>Choose a color theme:</h4>
+                    <div class="theme-list">
+                            <div class="theme-card">
+                                <button type="button" class="theme-swatch" data-theme="auburn" title="Auburn">
+                                <div class="swatch-preview">
+                                    <span style="background:#642F37"></span>
+                                    <span style="background:#C0350F"></span>
+                                    <span style="background:#F3904B"></span>
+                                    <span style="background:#F7C767"></span>
+                                    <span style="background:#B89DBB"></span>
+                                </div>
+                                <span class="theme-label">Auburn</span>
+                            </button>
                         </div>
-                        <div class="todo-list-container">
-                            <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
+                            <div class="theme-card">
+                                <button type="button" class="theme-swatch" data-theme="light" title="Light">
+                                <div class="swatch-preview">
+                                    <span style="background:#ffffff"></span>
+                                    <span style="background:#f6f7f8"></span>
+                                    <span style="background:#0ea5ff"></span>
+                                    <span style="background:#111827"></span>
+                                    <span style="background:#6b7280"></span>
+                                    <span style="background:#d1d5db"></span>
+                                </div>
+                                <span class="theme-label">Light</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button type="button" class="theme-swatch" data-theme="dark" title="Dark">
+                                <div class="swatch-preview">
+                                    <span style="background:#0b1220"></span>
+                                    <span style="background:#0f1724"></span>
+                                    <span style="background:#8b5cf6"></span>
+                                    <span style="background:#e5e7eb"></span>
+                                    <span style="background:#9aa3b2"></span>
+                                    <span style="background:#0b0f16"></span>
+                                </div>
+                                <span class="theme-label">Dark</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="desert" title="Desert">
+                                <div class="swatch-preview">
+                                    <span style="background:#ae5433"></span>
+                                    <span style="background:#ecc481"></span>
+                                    <span style="background:#aa462d"></span>
+                                    <span style="background:#9e895f"></span>
+                                    <span style="background:#d5c79f"></span>
+                                    <span style="background:#4a4231"></span>
+                                </div>
+                                <span class="theme-label">Desert</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="mother" title="Mother of Dragons">
+                                <div class="swatch-preview">
+                                    <span style="background:#080d22"></span>
+                                    <span style="background:#531f4f"></span>
+                                    <span style="background:#6e234b"></span>
+                                    <span style="background:#932549"></span>
+                                    <span style="background:#fdf3eb"></span>
+                                </div>
+                                <span class="theme-label">Mother of Dragons</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="orchid" title="Orchid Whisper">
+                                <div class="swatch-preview">
+                                    <span style="background:#CB438B"></span>
+                                    <span style="background:#BF3556"></span>
+                                    <span style="background:#6C6A43"></span>
+                                    <span style="background:#4D3449"></span>
+                                    <span style="background:#FFF0D2"></span>
+                                </div>
+                                <span class="theme-label">Orchid Whisper</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="pearls" title="Chinese Pearls">
+                                <div class="swatch-preview">
+                                    <span style="background:#414B9e"></span>
+                                    <span style="background:#9792CB"></span>
+                                    <span style="background:#AA74A0"></span>
+                                    <span style="background:#E2C99E"></span>
+                                    <span style="background:#8527736"></span>
+                                </div>
+                                <span class="theme-label">Chinese Pearls</span>
+                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="toolTodo">
+        <div id="todoBox" class="card" aria-label="Session To-Do">
+            <h3 style="margin:0 0 12px 0">To-Do</h3>
+            <form id="todoForm" class="todo-form" autocomplete="off">
+                <label class="sr-only" for="todoInput">Add a task</label>
+                <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter" />
+                <button type="submit" class="todo-add">Add</button>
+            </form>
+            <div class="todo-actions">
+                <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>
+            </div>
+            <div class="todo-list-container">
+                <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
             </div>
         </div>
     </div>
@@ -347,14 +460,14 @@
     </div>
     <button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
     <script src="/assets/markdown.js"></script>
-    <script src="/assets/site.js?v=1765478733361"></script>
-    <script src="/assets/favorites.js?v=1765478733361"></script>
-    <script src="/assets/wysiwyg.js?v=1765478733361"></script>
-    <script src="/assets/right-panel.js?v=1765478733361"></script>
-    <script src="/assets/keyboard-nav.js?v=1765478733361"></script>
-    <script src="/assets/theme.js?v=1765478733361"></script>
-    <script src="/assets/shortcuts-guide.js?v=1765478733361"></script>
-    <script src="/assets/collapsible-sections.js?v=1765478733361"></script>
+    <script src="/assets/site.js?v=1765484097563"></script>
+    <script src="/assets/favorites.js?v=1765484097563"></script>
+    <script src="/assets/wysiwyg.js?v=1765484097563"></script>
+    <script src="/assets/right-panel.js?v=1765484097563"></script>
+    <script src="/assets/keyboard-nav.js?v=1765484097563"></script>
+    <script src="/assets/theme.js?v=1765484097563"></script>
+    <script src="/assets/shortcuts-guide.js?v=1765484097563"></script>
+    <script src="/assets/collapsible-sections.js?v=1765484097563"></script>
     
     <!-- Footer Partial: Add site-wide footer content here if needed -->
 <footer class="footer">

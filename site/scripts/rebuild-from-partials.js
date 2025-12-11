@@ -203,11 +203,23 @@ function extractExtraScripts(html) {
 function buildPage(title, content, sections, rightTop, extraScripts = '') {
     let html = partials.layout;
 
+    // Helper: unescape HTML entities if a partial was previously stored escaped
+    function unescapeHtmlIfNeeded(s) {
+        if (!s || typeof s !== 'string') return s;
+        if (!/&lt;/.test(s)) return s;
+        return s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    }
+
     // Replace layout placeholders
     html = html.replace('{{TITLE}}', title);
     html = html.replace(/\{\{VERSION\}\}/g, VERSION); // Replace all VERSION occurrences
     html = html.replace('{{HEADER}}', partials.header);
     html = html.replace('{{SIDEBAR}}', partials.sidebar);
+    // If content or rightTop were stored escaped in source HTML, unescape them so
+    // the injected HTML renders as elements instead of visible markup text.
+    content = unescapeHtmlIfNeeded(content);
+    rightTop = unescapeHtmlIfNeeded(rightTop);
+
     html = html.replace('{{CONTENT}}', content);
     html = html.replace('{{RIGHT}}', partials.right);
     html = html.replace('{{FOOTER}}', partials.footer);

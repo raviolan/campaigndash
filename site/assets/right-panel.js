@@ -1,10 +1,59 @@
 // Right panel tools: tabs, pinning, notepad autosave, default home
 (function () {
+    // Color theme definitions
+    const COLOR_THEMES = {
+        auburn: ['#642F37', '#C0350F', '#F3904B', '#F7C767', '#B89DBB'],
+        desert: ['#ae5433', '#ecc481', '#aa462d', '#9e895f', '#d5c79f', '#4a4231'],
+        mother: ['#080d22', '#531f4f', '#6e234b', '#932549', '#fdf3eb'],
+        orchid: ['#CB438B', '#BF3556', '#6C6A43', '#4D3449', '#FFF0D2'],
+        pearls: ['#414B9e', '#9792CB', '#AA74A0', '#E2C99E', '#8527736'],
+        light: ['#ffffff', '#f6f7f8', '#0ea5ff', '#111827', '#6b7280', '#d1d5db'],
+        dark: ['#0b1220', '#0f1724', '#8b5cf6', '#e5e7eb', '#9aa3b2', '#0b0f16']
+    };
+
+    function applyColorTheme(theme) {
+        const colors = COLOR_THEMES[theme];
+        if (!colors) return;
+        try { console.info('Applying theme:', theme); } catch (e) { }
+        // Ensure we always set up to 6 theme variables (fill missing values by repeating last)
+        const normalized = colors.slice();
+        while (normalized.length < 6) normalized.push(normalized[normalized.length - 1] || '#000000');
+        document.body.setAttribute('data-color-theme', theme);
+        // Set CSS variables for theme colors
+        for (let i = 0; i < 6; i++) {
+            document.documentElement.style.setProperty(`--theme-color${i + 1}`, normalized[i]);
+        }
+        // If the selected theme is the semantic 'light' or 'dark', also toggle the legacy `data-theme`
+        // attribute used by other parts of the CSS for light/dark overrides.
+        if (theme === 'light' || theme === 'dark') {
+            document.body.setAttribute('data-theme', theme);
+        } else {
+            // Remove any legacy data-theme so it doesn't interfere with custom palettes
+            document.body.removeAttribute('data-theme');
+        }
+        localStorage.setItem('colorTheme', theme);
+    }
+
+    // Restore theme on load
+    const savedTheme = localStorage.getItem('colorTheme');
+    if (savedTheme && COLOR_THEMES[savedTheme]) {
+        applyColorTheme(savedTheme);
+    }
+
+    // Listen for theme picker clicks
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.theme-swatch');
+        if (btn) {
+            const theme = btn.getAttribute('data-theme');
+            applyColorTheme(theme);
+        }
+    });
     const tabs = document.querySelectorAll('.tool-tab');
     const views = {
         home: document.getElementById('toolHome'),
         todo: document.getElementById('toolTodo'),
-        note: document.getElementById('toolNote')
+        note: document.getElementById('toolNote'),
+        colors: document.getElementById('toolColors')
     };
     const KEY_TOOL = 'rightActiveTool';
     const SPLIT = true; // split mode: two panes visible
@@ -17,16 +66,29 @@
     function isPinned(id) { return getPins().includes(id); }
     function togglePin(id) { const arr = getPins(); const i = arr.indexOf(id); if (i >= 0) arr.splice(i, 1); else arr.push(id); setPins(arr); renderPins(); renderHome(); renderPinButtons(); }
     function setActive(name) {
-        localStorage.setItem(KEY_TOOL, name); for (const b of tabs) { b.classList.toggle('active', b.getAttribute('data-tool') === name); if (window.svgIcon) { const t = b.getAttribute('data-tool'); b.innerHTML = t === 'home' ? svgIcon('home') : t === 'todo' ? svgIcon('checklist') : svgIcon('note'); } }
-        if (SPLIT) { // always show todo + note in split mode
-            views.home && views.home.classList.remove('active');
-            views.todo && views.todo.classList.add('active');
-            views.note && views.note.classList.add('active');
-            renderHome();
-        } else {
-            for (const k in views) { if (views[k]) views[k].classList.toggle('active', k === name); }
-            if (name === 'home') renderHome();
+        localStorage.setItem(KEY_TOOL, name);
+        for (const b of tabs) {
+            b.classList.toggle('active', b.getAttribute('data-tool') === name);
+            if (window.svgIcon) {
+                const t = b.getAttribute('data-tool');
+                b.innerHTML = t === 'home' ? svgIcon('home') : t === 'todo' ? svgIcon('checklist') : t === 'note' ? svgIcon('note') : t === 'colors' ? svgIcon('palette') : '';
+            }
         }
+        // Show/hide panels
+        if (views.colors) {
+            views.colors.style.display = (name === 'colors') ? '' : 'none';
+            // If the color tool panel contains only text, replace it with parsed HTML
+            if (name === 'colors' && views.colors.textContent.trim().startsWith('<div')) {
+                const temp = document.createElement('div');
+                temp.innerHTML = views.colors.textContent;
+                views.colors.innerHTML = '';
+                while (temp.firstChild) views.colors.appendChild(temp.firstChild);
+            }
+        }
+        if (views.note) views.note.style.display = (name === 'note') ? '' : 'none';
+        if (views.todo) views.todo.style.display = (name === 'todo') ? '' : 'none';
+        if (views.home) views.home.style.display = (name === 'home') ? '' : 'none';
+        if (name === 'home') renderHome();
     }
     function renderPins() { document.querySelectorAll('.tool-pin').forEach(btn => { const id = btn.getAttribute('data-tool'); btn.classList.toggle('active', isPinned(id)); if (window.svgIcon) btn.innerHTML = svgIcon('pin', 14); }); }
     function renderHome() {
@@ -36,9 +98,20 @@
     }
     // Initialize icons and clicks
     tabs.forEach(b => {
-        const t = b.getAttribute('data-tool'); if (window.svgIcon) { b.innerHTML = t === 'home' ? svgIcon('home') : t === 'todo' ? svgIcon('checklist') : svgIcon('note'); }
+        const t = b.getAttribute('data-tool');
+        if (window.svgIcon) {
+            b.innerHTML = t === 'home' ? svgIcon('home') : t === 'todo' ? svgIcon('checklist') : t === 'note' ? svgIcon('note') : t === 'colors' ? svgIcon('palette') : '';
+        }
         b.addEventListener('click', () => setActive(b.getAttribute('data-tool') || 'home'));
     });
+
+    // Colors button logic
+    const colorsBtn = document.getElementById('colorsToggle');
+    if (colorsBtn) {
+        colorsBtn.addEventListener('click', function () {
+            setActive('colors');
+        });
+    }
     // Pin buttons
     document.querySelectorAll('.tool-pin').forEach(btn => btn.addEventListener('click', () => togglePin(btn.getAttribute('data-tool') || '')));
     renderPins();
@@ -51,9 +124,29 @@
         const topBody = document.querySelector('.pane-body[data-pane="top"]');
         const bottomBody = document.querySelector('.pane-body[data-pane="bottom"]');
         function iconFor(tool) { return tool === 'home' ? (window.svgIcon ? svgIcon('home', 14) : 'H') : tool === 'todo' ? (window.svgIcon ? svgIcon('checklist', 14) : 'T') : (window.svgIcon ? svgIcon('note', 14) : 'N'); }
-        function activatePane(pane, tool) { const body = pane === 'top' ? topBody : bottomBody; if (!body) return; const el = views[tool]; if (!el) return; body.innerHTML = ''; body.appendChild(el); document.querySelectorAll('.pane-tab[data-pane="' + pane + '"]').forEach(b => { const t = b.getAttribute('data-tool'); b.classList.toggle('active', t === tool); if (window.svgIcon) { b.innerHTML = iconFor(t); } }); localStorage.setItem(pane === 'top' ? KEY_TOP : KEY_BOTTOM, tool); if (tool === 'home') renderHome(); }
+        function activatePane(pane, tool) {
+            const body = pane === 'top' ? topBody : bottomBody;
+            if (!body) return;
+            const el = views[tool];
+            if (!el) return;
+            body.innerHTML = '';
+            body.appendChild(el);
+            // Ensure the appended element is visible (in case setActive previously hid it)
+            try { el.style.display = ''; } catch (e) { }
+            document.querySelectorAll('.pane-tab[data-pane="' + pane + '"]').forEach(b => {
+                const t = b.getAttribute('data-tool');
+                b.classList.toggle('active', t === tool);
+                if (window.svgIcon) { b.innerHTML = iconFor(t); }
+            });
+            localStorage.setItem(pane === 'top' ? KEY_TOP : KEY_BOTTOM, tool);
+            if (tool === 'home') renderHome();
+        }
         // Init pane tab icons and clicks
         document.querySelectorAll('.pane-tab').forEach(b => { const t = b.getAttribute('data-tool'); if (window.svgIcon) b.innerHTML = iconFor(t); b.addEventListener('click', () => activatePane(b.getAttribute('data-pane') || 'top', t)); });
+        // Ensure header Colors button also activates the top pane tab when clicked
+        if (colorsBtn) {
+            colorsBtn.addEventListener('click', () => activatePane('top', 'colors'));
+        }
         const topSel = localStorage.getItem(KEY_TOP) || 'todo';
         const botSel = localStorage.getItem(KEY_BOTTOM) || 'note';
         activatePane('top', topSel);
@@ -64,10 +157,11 @@
             const res = document.querySelector('.pane-resizer-h'); if (!container || !res) return;
             const saved = localStorage.getItem(KEY_SPLIT);
             // Initialize and clamp
-            (function initSplit() {
+            function initSplit() {
                 const rect = container.getBoundingClientRect();
                 const minPx = 120; const maxPx = Math.max(minPx, rect.height - 120);
-                let val = '50%';
+                // Use a smaller default top pane height so the bottom To-Do has more room
+                let val = '30%';
                 if (saved && /^(\d+)(px|%)$/.test(saved)) {
                     if (saved.endsWith('%')) {
                         const pct = parseFloat(saved); let px = rect.height * ((isNaN(pct) ? 50 : pct) / 100);
@@ -80,7 +174,8 @@
                     }
                 }
                 container.style.setProperty('--pane-top-h', val);
-            })();
+            }
+            initSplit();
             function onDown(e) {
                 e.preventDefault(); const rect = container.getBoundingClientRect(); const startY = e.clientY; const cur = getComputedStyle(container).getPropertyValue('--pane-top-h').trim(); const startPx = cur.endsWith('%') ? rect.height * parseFloat(cur) / 100 : parseFloat(cur) || (rect.height / 2);
                 function onMove(ev) { const dy = ev.clientY - startY; let h = startPx + dy; const min = 120; const max = rect.height - 120; if (h < min) h = min; if (h > max) h = max; const val = h + 'px'; container.style.setProperty('--pane-top-h', val); try { localStorage.setItem(KEY_SPLIT, val); } catch { } }
