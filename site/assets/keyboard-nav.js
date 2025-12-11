@@ -1,3 +1,35 @@
+// Quick hotkeys for navigation and bookmarks
+(function keyboardNav() {
+    // g + key navigation
+    let gated = false; let to = null;
+    document.addEventListener('keydown', (e) => {
+        if (e.target && (/input|textarea/i.test(e.target.tagName))) return;
+        if (!gated && e.key.toLowerCase() === 'g') {
+            gated = true; clearTimeout(to); to = setTimeout(() => { gated = false }, 1500); return;
+        }
+        if (gated) {
+            const k = e.key.toLowerCase(); gated = false;
+            const map = { c: 'Characters', n: 'NPCs', l: 'World', a: 'Arcs', d: 'Dashboard', t: 'Tools', w: 'World' };
+            const target = map[k]; if (!target) return;
+            if (k === 'd') { location.href = '/index.html'; return; }
+            const label = [...document.querySelectorAll('.left .nav-group .nav-label span:last-child')].find(span => span.textContent === target);
+            const det = label?.closest('.nav-details');
+            if (det) {
+                det.open = true; det.scrollIntoView({ block: 'start' });
+                const first = det.parentElement.querySelector('.nav-list a.nav-item'); first?.focus();
+            }
+        }
+    });
+
+    // Option+D: Toggle bookmark for current page (reuse favorites module)
+    document.addEventListener('keydown', (e) => {
+        if (e.altKey && e.code === 'KeyD') {
+            e.preventDefault();
+            const bookmarkBtn = document.querySelector('.bookmark-btn');
+            if (bookmarkBtn) bookmarkBtn.click();
+        }
+    });
+})();
 /**
  * keyboard-nav.js - Enhanced keyboard navigation
  * Modular file - easy to update/extend

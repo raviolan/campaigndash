@@ -1,0 +1,52 @@
+{
+    "sections": [
+        {
+            "name": "Characters",
+            "class": "f-pc",
+            "folder": "03_PCs",
+            "exclude": [
+                "Characters.html"
+            ]
+        },
+        {
+            "name": "NPCs",
+            "class": "f-npc",
+            "folder": "04_NPCs",
+            "exclude": [
+                "NPCs.html"
+            ]
+        },
+        {
+            "name": "World",
+            "class": "f-location",
+            "folder": "02_World/Locations",
+            "exclude": [
+                "Locations.html"
+            ]
+        },
+        {
+            "name": "Arcs",
+            "class": "f-arc",
+            "folder": "01_Arcs",
+            "exclude": [
+                "Arcs.html"
+            ]
+        },
+        {
+            "name": "03_Sessions",
+            "class": "f-other",
+            "folder": "00_Campaign/03_Sessions",
+            "exclude": [
+                "03_Sessions.html"
+            ]
+        },
+        {
+            "name": "Tools",
+            "class": "f-other",
+            "folder": "05_Tools & Tables",
+            "exclude": [
+                "Tools.html"
+            ]
+        }
+    ]
+}

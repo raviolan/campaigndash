@@ -40,6 +40,98 @@ const partials = {
 console.log('Partials loaded successfully');
 
 /**
+ * Generate sidebar sections from data/nav.json (filesystem-driven)
+ */
+function generateSectionsHtml() {
+    const navPath = path.join(SITE_ROOT, 'data', 'nav.json');
+    let config = { sections: [] };
+    try {
+        config = JSON.parse(fs.readFileSync(navPath, 'utf8'));
+    } catch (e) {
+        console.warn('[rebuild] nav.json not found or invalid, using empty config');
+    }
+    const ICONS = {
+        pc: 'M4 18l8-14 8 14H4zm8-8l3 6H9l3-6z',
+        npc: 'M16 11a4 4 0 10-8 0 4 4 0 008 0zm-11 9c0-3 4-5 7-5s7 2 7 5v2H5v-2z',
+        location: 'M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c2.9 0 5.4 2.4 6.5 6H5.5C6.6 6.4 9.1 4 12 4zm0 16c-2.9 0-5.4-2.4-6.5-6h13c-1.1 3.6-3.6 6-6.5 6z',
+        arc: 'M12 2a10 10 0 100 20 10 10 0 000-20zm5 5l-3 8-8 3 3-8 8-3zM10 10l-1 2 2-1 1-2-2 1z',
+        other: 'M4 4h11l-1 3h6v11H4V4zm2 2v9h12V9h-5l1-3H6z',
+        tools: 'M21 14l-5-5 2-2 3 3 2-2-3-3 1-1-2-2-3 3-2-2-2 2 2 2-9 9v4h4l9-9 2 2z',
+        dot: 'M12 12a3 3 0 110-6 3 3 0 010 6z'
+    };
+
+    function listHtmlFiles(dirAbs, exclude = []) {
+        if (!fs.existsSync(dirAbs)) return [];
+        return fs.readdirSync(dirAbs)
+            .filter(f => f.endsWith('.html') && !exclude.includes(f))
+            .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    }
+
+    function iconSvg(pathD) {
+        return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${pathD}"/></svg>`;
+    }
+
+    let html = '';
+
+    for (const sec of (config.sections || [])) {
+        const folderAbs = path.join(SITE_ROOT, sec.folder);
+        if (!fs.existsSync(folderAbs)) continue;
+
+        let inner = '';
+        // Exclusions per section
+        const exclude = Array.isArray(sec.exclude) ? sec.exclude : [];
+
+        // If the folder has known subsections (e.g., World -> Locations), render them by scanning subfolders
+        // Otherwise render flat list of files in the section folder
+        const stat = fs.statSync(folderAbs);
+        if (stat.isDirectory()) {
+            // Render files directly under the folder
+            const files = listHtmlFiles(folderAbs, exclude);
+            for (const f of files) {
+                const title = f.replace(/\.html$/i, '');
+                inner += `
+                    <li><a class="nav-item" href="/${sec.folder}/${encodeURIComponent(f)}"><span class="nav-icon">•</span><span class="nav-text">${title}</span></a></li>`;
+            }
+
+            // Render immediate subfolders as subsections (best-effort generic)
+            const subs = fs.readdirSync(folderAbs).filter(n => fs.existsSync(path.join(folderAbs, n)) && fs.statSync(path.join(folderAbs, n)).isDirectory());
+            for (const sub of subs) {
+                const subAbs = path.join(folderAbs, sub);
+                const subFiles = listHtmlFiles(subAbs, exclude);
+                if (!subFiles.length) continue;
+                inner += `
+                    <li class="nav-section">
+                        <details class="nav-details ${sec.class}" open>
+                            <summary class="nav-label"><span class="nav-icon">${iconSvg(ICONS.dot)}</span><span>${sub}</span></summary>
+                            <ul class="nav-list">`;
+                for (const f of subFiles) {
+                    const title = f.replace(/\.html$/i, '');
+                    inner += `
+                                <li><a class="nav-item" href="/${sec.folder}/${encodeURIComponent(sub)}/${encodeURIComponent(f)}"><span class="nav-icon">•</span><span class="nav-text">${title}</span></a></li>`;
+                }
+                inner += `
+                            </ul>
+                        </details>
+                    </li>`;
+            }
+        }
+
+        if (!inner) continue;
+
+        html += `
+            <li class="nav-group">
+                <details class="nav-details ${sec.class || sec.className || ''}" open>
+                    <summary class="nav-label"><span class="nav-icon">${iconSvg(ICONS[sec.icon] || ICONS.dot)}</span><span>${sec.name}</span></summary>
+                    <ul class="nav-list">${inner}
+                    </ul>
+                </details>
+            </li>`;
+    }
+
+    return html.trim();
+}
+
+/**
  * Extract sections navigation from existing HTML
  */
 function extractSections(html) {
@@ -138,7 +230,7 @@ function processFile(filePath) {
         // Extract components
         const title = extractTitle(originalHtml);
         const content = extractContent(originalHtml);
-        const sections = ''; // Sections are now in sidebar.html partial, not page-specific
+        const sections = generateSectionsHtml();
         const rightTop = extractRightTop(originalHtml);
         const extraScripts = extractExtraScripts(originalHtml);        // Build new HTML
         const newHtml = buildPage(title, content, sections, rightTop, extraScripts);
