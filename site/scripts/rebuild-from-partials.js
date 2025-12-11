@@ -69,10 +69,20 @@ function extractContent(html) {
 
     let content = mainMatch[1];
 
-    // Remove breadcrumb div
-    content = content.replace(/<div id="breadcrumbText"[^>]*><\/div>/, '').trim();
+    // Remove everything from the start up to and including the breadcrumb container
+    // This handles nested buttons and divs within the breadcrumb
+    const breadcrumbEndMatch = content.match(/<div class="breadcrumb-container">[\s\S]*?<\/button>\s*<\/div>/);
+    if (breadcrumbEndMatch) {
+        content = content.substring(breadcrumbEndMatch.index + breadcrumbEndMatch[0].length);
+    }
 
-    return content;
+    // Fallback: remove old-style breadcrumb divs if any remain
+    content = content.replace(/^[\s\S]*?<div id="breadcrumbText"[^>]*><\/div>\s*/, '');
+
+    // Clean up any orphaned tags at the start (buttons, closing divs, etc.)
+    content = content.replace(/^(\s*(<\/div>|<button[\s\S]*?<\/button>)\s*)+/, '');
+
+    return content.trim();
 }
 
 /**
