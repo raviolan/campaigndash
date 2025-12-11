@@ -163,35 +163,50 @@ function generatePageTemplate(title, type) {
     npc: `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>#npc</p>
 
+<section id="overview">
 <h2>Overview</h2>
 <p>Brief description of this NPC...</p>
+</section>
 
+<section id="personality">
 <h2>Personality & Traits</h2>
 <ul>
 <li>Personality trait 1</li>
 <li>Personality trait 2</li>
 </ul>
+</section>
 
+<section id="appearance">
 <h2>Appearance</h2>
 <p>Physical description...</p>
+</section>
 
+<section id="relationships">
 <h2>Relationships</h2>
 <p>Connections to other characters...</p>
+</section>
 
+<section id="dm-notes">
 <h2>DM Notes</h2>
-<p>Private notes and plot hooks...</p>`,
+<p>Private notes and plot hooks...</p>
+</section>`,
 
     pc: `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>#pc</p>
 
+<section id="character-info">
 <h2>Character Info</h2>
 <p><strong>Class:</strong> </p>
 <p><strong>Race:</strong> </p>
 <p><strong>Background:</strong> </p>
+</section>
 
+<section id="backstory">
 <h2>Backstory</h2>
 <p>Character's background and history...</p>
+</section>
 
+<section id="personality">
 <h2>Personality</h2>
 <ul>
 <li>Trait</li>
@@ -199,42 +214,60 @@ function generatePageTemplate(title, type) {
 <li>Bond</li>
 <li>Flaw</li>
 </ul>
+</section>
 
+<section id="session-notes">
 <h2>Session Notes</h2>
 <p>Track character development...</p>
+</section>
 `,
 
     location: `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>#location</p>
 
+<section id="description">
 <h2>Description</h2>
 <p>General description of this location...</p>
+</section>
 
+<section id="features">
 <h2>Notable Features</h2>
 <p>Physical characteristics, atmosphere...</p>
+</section>
 
+<section id="npcs">
 <h2>NPCs</h2>
 <p>Who can be found here...</p>
+</section>
 
+<section id="points-of-interest">
 <h2>Points of Interest</h2>
 <p>Important locations within this area...</p>
+</section>
 
+<section id="dm-notes">
 <h2>DM Notes</h2>
 <p>Secrets, hooks, and encounter ideas...</p>
+</section>
   `,
 
     arc: `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>#arc #planning</p>
 
+<section id="overview">
 <h2>Overview</h2>
 <p>Brief summary of this story arc...</p>
+</section>
 
+<section id="key-npcs">
 <h2>Key NPCs</h2>
 <ul>
 <li>NPC 1 - Role</li>
 <li>NPC 2 - Role</li>
 </ul>
+</section>
 
+<section id="major-beats">
 <h2>Major Beats</h2>
 <ol>
 <li>Opening hook</li>
@@ -242,87 +275,128 @@ function generatePageTemplate(title, type) {
 <li>Climax</li>
 <li>Resolution</li>
 </ol>
+</section>
 
+<section id="locations">
 <h2>Locations</h2>
 <p>Where this arc takes place...</p>
+</section>
 
+<section id="session-notes">
 <h2>Session Notes</h2>
 <p>Track progress and player choices...</p>
+</section>
   `,
 
     shop: `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>#shops</p>
 
+<section id="description">
 <h2>Description</h2>
 <p>What this shop looks like and what it specializes in...</p>
+</section>
 
+<section id="proprietor">
 <h2>Proprietor</h2>
 <p><strong>Name:</strong> </p>
 <p><strong>Description:</strong> </p>
+</section>
 
+<section id="inventory">
 <h2>Inventory</h2>
 <table>
 <thead>
 <tr><th>Item</th><th>Price</th><th>Notes</th></tr>
 </thead>
 <tbody>
-<tr><td>Item 1</td><td>10 gp</td><td></td></tr>
-<tr><td>Item 2</td><td>50 gp</td><td></td></tr>
 </tbody>
 </table>
+</section>
 
+<section id="special-services">
 <h2>Special Services</h2>
 <p>Custom orders, special requests...</p>
+</section>
   `,
 
     session: `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>#session</p>
 
+<section id="summary">
 <h2>Session Summary</h2>
 <p><strong>Date:</strong> </p>
 <p><strong>Players:</strong> </p>
+</section>
 
+<section id="what-happened">
 <h2>What Happened</h2>
 <ul>
 <li>Event 1</li>
 <li>Event 2</li>
 <li>Event 3</li>
 </ul>
+</section>
 
+<section id="decisions">
 <h2>Important Decisions</h2>
 <p>Key player choices and consequences...</p>
+</section>
 
+<section id="npcs-met">
 <h2>NPCs Met</h2>
 <ul>
 <li>NPC name - interaction</li>
 </ul>
+</section>
 
+<section id="loot">
 <h2>Loot & Rewards</h2>
 <p>Items found, XP awarded...</p>
+</section>
 
+<section id="next-session">
 <h2>Next Session</h2>
 <p>Cliffhangers, prep needed...</p>
+</section>
   `,
 
     tool: `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>#tools #planning</p>
 
+<section id="purpose">
 <h2>Purpose</h2>
 <p>What this tool/reference is for...</p>
+</section>
 
+<section id="how-to-use">
 <h2>How to Use</h2>
 <p>Instructions or guidelines...</p>
+</section>
 
+<section id="details">
 <h2>Details</h2>
 <p>Main content goes here...</p>
+</section>
   `
   };
 
   return templates[type] || `<div id="breadcrumbText" class="main-breadcrumb meta"></div><h1>${title}</h1>
 <p>Content goes here...</p>
 
+<section id="section-1">
 <h2>Section 1</h2>
 <p>Add your content...</p>
+</section>
+
+<section id="section-2">
+<h2>Section 2</h2>
+<p>Add your content...</p>
+</section>
+
+<section id="section-3">
+<h2>Section 3</h2>
+<p>Add your content...</p>
+</section>
   `;
 }
 

@@ -55,14 +55,15 @@
   // Make top-level sections (with IDs like #overview, #connections) collapsible
   const sections = entityBody.querySelectorAll('section[id]');
   sections.forEach(section => {
-    const h2 = section.querySelector('h2');
-    if (!h2) return;
+    // Support both h1 and h2 headings
+    const heading = section.querySelector('h1, h2');
+    if (!heading) return;
 
-    // Wrap all content after h2 in a container
+    // Wrap all content after heading in a container
     const contentWrapper = document.createElement('div');
     contentWrapper.className = 'section-content';
 
-    let el = h2.nextSibling;
+    let el = heading.nextSibling;
     const toMove = [];
     while (el) {
       const next = el.nextSibling;
@@ -73,16 +74,16 @@
     toMove.forEach(node => contentWrapper.appendChild(node));
     section.appendChild(contentWrapper);
 
-    // Add click handler to h2
-    h2.style.cursor = 'pointer';
-    h2.setAttribute('tabindex', '0');
-    h2.setAttribute('role', 'button');
-    h2.setAttribute('aria-expanded', 'true');
+    // Add click handler to heading
+    heading.style.cursor = 'pointer';
+    heading.setAttribute('tabindex', '0');
+    heading.setAttribute('role', 'button');
+    heading.setAttribute('aria-expanded', 'true');
 
     function toggleSection() {
       const isCollapsed = section.classList.contains('collapsed');
       section.classList.toggle('collapsed');
-      h2.setAttribute('aria-expanded', String(isCollapsed));
+      heading.setAttribute('aria-expanded', String(isCollapsed));
 
       // Save state to localStorage
       const sectionId = section.id;
@@ -100,8 +101,8 @@
       localStorage.setItem('collapsedSections', JSON.stringify(collapsedSections));
     }
 
-    h2.addEventListener('click', toggleSection);
-    h2.addEventListener('keydown', (e) => {
+    heading.addEventListener('click', toggleSection);
+    heading.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         toggleSection();
@@ -113,7 +114,7 @@
     const pageKey = location.pathname;
     if (collapsedSections[pageKey]?.includes(section.id)) {
       section.classList.add('collapsed');
-      h2.setAttribute('aria-expanded', 'false');
+      heading.setAttribute('aria-expanded', 'false');
     }
   });
 

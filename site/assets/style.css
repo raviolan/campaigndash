@@ -1118,7 +1118,8 @@ body[data-theme='light'] .entity-tabs a:hover {
 }
 
 .entity-body section,
-article section[id] {
+article section[id],
+main.main > section[id] {
     margin-bottom: 24px;
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -1128,14 +1129,17 @@ article section[id] {
 }
 
 .entity-body section.collapsed,
-article section[id].collapsed {
+article section[id].collapsed,
+main.main > section[id].collapsed {
     padding: 0
 }
 
 .entity-body section h1,
 .entity-body section h2,
 article section[id] h1,
-article section[id] h2 {
+article section[id] h2,
+main.main > section[id] h1,
+main.main > section[id] h2 {
     margin-top: 0;
     padding: 16px 20px;
     margin: -20px -20px 16px -20px;
@@ -1150,7 +1154,9 @@ article section[id] h2 {
 .entity-body section.collapsed h1,
 .entity-body section.collapsed h2,
 article section[id].collapsed h1,
-article section[id].collapsed h2 {
+article section[id].collapsed h2,
+main.main > section[id].collapsed h1,
+main.main > section[id].collapsed h2 {
     margin: 0;
     border-radius: 10px
 }
@@ -1158,14 +1164,18 @@ article section[id].collapsed h2 {
 .entity-body section h1:hover,
 .entity-body section h2:hover,
 article section[id] h1:hover,
-article section[id] h2:hover {
+article section[id] h2:hover,
+main.main > section[id] h1:hover,
+main.main > section[id] h2:hover {
     background: rgba(139, 92, 246, 0.14)
 }
 
 .entity-body section h1::before,
 .entity-body section h2::before,
 article section[id] h1::before,
-article section[id] h2::before {
+article section[id] h2::before,
+main.main > section[id] h1::before,
+main.main > section[id] h2::before {
     content: '▼';
     display: inline-block;
     margin-right: 10px;
@@ -1177,18 +1187,22 @@ article section[id] h2::before {
 .entity-body section.collapsed h1::before,
 .entity-body section.collapsed h2::before,
 article section[id].collapsed h1::before,
-article section[id].collapsed h2::before {
+article section[id].collapsed h2::before,
+main.main > section[id].collapsed h1::before,
+main.main > section[id].collapsed h2::before {
     transform: rotate(-90deg)
 }
 
 .entity-body section .section-content,
-article section[id] .section-content {
+article section[id] .section-content,
+main.main > section[id] .section-content {
     display: block;
     animation: slideDown 0.2s ease
 }
 
 .entity-body section.collapsed .section-content,
-article section[id].collapsed .section-content {
+article section[id].collapsed .section-content,
+main.main > section[id].collapsed .section-content {
     display: none
 }
 

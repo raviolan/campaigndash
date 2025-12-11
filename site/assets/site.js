@@ -158,14 +158,121 @@ function showConfirmModal(title, message) {
       };
       return b;
     }
+
+    // Custom button function for headings that creates sections
+    function headingBtn(label, tag) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.innerHTML = label;
+      b.className = 'wysiwyg-btn';
+      b.onclick = (e) => {
+        e.preventDefault();
+        ed.focus();
+
+        // Get the current selection
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+
+        const range = selection.getRangeAt(0);
+        const selectedText = range.toString() || 'New Section';
+
+        // Generate section ID from selected text
+        const sectionId = selectedText.trim().toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .substring(0, 50) || 'section-' + Date.now();
+
+        // Create section with heading
+        const section = document.createElement('section');
+        section.id = sectionId;
+
+        const heading = document.createElement(tag.toLowerCase());
+        heading.textContent = selectedText;
+
+        section.appendChild(heading);
+
+        // Add a paragraph for content after the heading
+        const content = document.createElement('p');
+        content.innerHTML = '<br>'; // Empty paragraph for user to type in
+        section.appendChild(content);
+
+        // Insert the section at cursor/selection
+        range.deleteContents();
+        
+        // Find if we're inside another section and if so, insert after it instead of nesting
+        let insertPoint = range.startContainer;
+        if (insertPoint.nodeType === Node.TEXT_NODE) {
+          insertPoint = insertPoint.parentNode;
+        }
+        
+        // Find the closest parent section
+        const parentSection = insertPoint.closest('section[id]');
+        
+        if (parentSection) {
+          // Insert after the parent section instead of inside it
+          parentSection.parentNode.insertBefore(section, parentSection.nextSibling);
+        } else {
+          // No parent section, insert at cursor position
+          range.insertNode(section);
+        }
+
+        // Place cursor in the content paragraph
+        const newRange = document.createRange();
+        newRange.setStart(content, 0);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      };
+      return b;
+    }
+
     bar.appendChild(btn('<b>B</b>', 'bold'));
     bar.appendChild(btn('<i>I</i>', 'italic'));
-    bar.appendChild(btn('H1', 'formatBlock', 'H1'));
-    bar.appendChild(btn('H2', 'formatBlock', 'H2'));
+    bar.appendChild(headingBtn('H1', 'H1'));
+    bar.appendChild(headingBtn('H2', 'H2'));
     bar.appendChild(btn('• List', 'insertUnorderedList'));
     bar.appendChild(btn('1. List', 'insertOrderedList'));
     bar.appendChild(btn('⎘', 'insertHTML', '<hr>'));
     return bar;
+  }
+
+  // Helper function to wrap H1/H2 headings in section tags
+  function wrapHeadingsInSections(htmlString) {
+    const temp = document.createElement('div');
+    temp.innerHTML = htmlString;
+
+    // Find all H1 and H2 elements that aren't already in sections
+    const headings = Array.from(temp.querySelectorAll('h1, h2')).filter(h => {
+      return !h.closest('section[id]');
+    });
+
+    headings.forEach((heading, index) => {
+      // Create a section
+      const section = document.createElement('section');
+
+      // Generate ID from heading text or use generic ID
+      const headingText = heading.textContent.trim().toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .substring(0, 50);
+      section.id = headingText || `section-${index + 1}`;
+
+      // Insert section before heading
+      heading.parentNode.insertBefore(section, heading);
+
+      // Move heading into section
+      section.appendChild(heading);
+
+      // Move all following siblings until next H1/H2 into section
+      let nextSibling = section.nextSibling;
+      while (nextSibling && nextSibling.tagName !== 'H1' && nextSibling.tagName !== 'H2') {
+        const current = nextSibling;
+        nextSibling = nextSibling.nextSibling;
+        section.appendChild(current);
+      }
+    });
+
+    return temp.innerHTML;
   }
 
   function startEdit() {
@@ -210,12 +317,15 @@ function showConfirmModal(title, message) {
       saveBtn.disabled = true;
       status.textContent = 'Saving...';
       status.style.display = 'block';
-      const html = editor.innerHTML;
+
+      // Wrap H1/H2 headings in sections before saving
+      const processedHtml = wrapHeadingsInSections(editor.innerHTML);
+
       try {
         const resp = await fetch('/api/edit-page', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: window.location.pathname, html })
+          body: JSON.stringify({ url: window.location.pathname, html: processedHtml })
         });
         if (!resp.ok) {
           status.textContent = 'Save failed: ' + resp.status + ' ' + resp.statusText;
@@ -1259,14 +1369,18 @@ window.saveSessionSnapshot = async function () {
 // --- Make Entity Body Sections Collapsible ---
 (function makeEntitySectionsCollapsible() {
   const entityBody = document.querySelector('.entity-body');
-  const article = document.querySelector('article:not(.entity-page)');
-  const target = entityBody || article;
+  const article = document.querySelector('article');
+  const main = document.querySelector('main.main');
+  const target = entityBody || article || main;
   if (!target) return;
 
-  // For regular articles (non-entity pages), wrap H1 and H2 headings in sections first
-  if (!entityBody && article) {
-    const topLevelHeadings = Array.from(article.querySelectorAll('h1, h2'));
+  // For regular articles or main without entity-body, wrap H1 and H2 headings in sections first
+  if (!entityBody && (article || main)) {
+    const topLevelHeadings = Array.from((article || main).querySelectorAll('h1, h2'));
     topLevelHeadings.forEach((heading, index) => {
+      // Skip if already in a section
+      if (heading.closest('section[id]')) return;
+      
       const section = document.createElement('section');
       section.id = 'section-' + (index + 1);
 
