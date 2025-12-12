@@ -217,9 +217,12 @@
         headerPosSection.appendChild(headerPosY);
         headerPosSection.appendChild(headerPosReset);
 
-        // Get current position from inline style if it exists
+        // Get current position from inline style or CSS variable if it exists
         const currentStyle = entityHeader.getAttribute('style') || '';
-        const bgPosMatch = currentStyle.match(/background-position:\s*(\d+)%\s+(\d+)%/);
+        let bgPosMatch = currentStyle.match(/--header-position:\s*([0-9]+)%\s+([0-9]+)%/);
+        if (!bgPosMatch) {
+            bgPosMatch = currentStyle.match(/background-position:\s*([0-9]+)%\s+([0-9]+)%/);
+        }
         if (bgPosMatch) {
             headerPosX.value = bgPosMatch[1];
             headerPosY.value = bgPosMatch[2];
@@ -228,18 +231,53 @@
         const updateHeaderPosition = () => {
             const x = headerPosX.value;
             const y = headerPosY.value;
-            const currentStyle = entityHeader.getAttribute('style') || '';
-
-            // Update or add background-position to inline style
-            let newStyle = currentStyle;
-            if (newStyle.includes('background-position:')) {
-                newStyle = newStyle.replace(/background-position:[^;]+;?/, `background-position: ${x}% ${y}%;`);
-            } else {
-                newStyle += `background-position: ${x}% ${y};`;
+            // Store position in CSS variable so the ::before pseudo-element can use it
+            entityHeader.style.setProperty('--header-position', `${x}% ${y}%`);
+            // Debug: log position updates when developer console is open
+            if (window && window.console && window.console.debug) {
+                console.debug('header-position set', entityHeader, x + '%', y + '%');
             }
-
-            entityHeader.setAttribute('style', newStyle.trim());
         };
+        // Also apply a direct inline fallback to ensure visible elements update
+        // in environments where pseudo-element variable usage might not repaint.
+        const applyPositionFallback = () => {
+            const x = headerPosX.value;
+            const y = headerPosY.value;
+            try {
+                // set on host as a fallback
+                entityHeader.style.backgroundPosition = `${x}% ${y}%`;
+                // set on landing-hero child if present
+                const hero = entityHeader.querySelector('.landing-hero');
+                if (hero) {
+                    // Always set background-image and background-position directly
+                    let headerUrl = '';
+                    // Try to get the --header variable from the entityHeader style
+                    const styleVal = entityHeader.style.getPropertyValue('--header');
+                    if (styleVal) {
+                        headerUrl = styleVal.trim();
+                    } else {
+                        // fallback: try computed style
+                        headerUrl = getComputedStyle(entityHeader).getPropertyValue('--header').trim();
+                    }
+                    if (headerUrl) {
+                        hero.style.backgroundImage = headerUrl.startsWith('url') ? headerUrl : `url('${headerUrl}')`;
+                    }
+                    hero.style.backgroundPosition = `${x}% ${y}%`;
+                    // Hide the ::before pseudo-element by adding a class
+                    entityHeader.classList.add('no-header-bg');
+                } else {
+                    entityHeader.classList.remove('no-header-bg');
+                }
+            } catch (e) {
+                // swallow errors silently
+            }
+        };
+
+        // call fallback whenever sliders change as well
+        headerPosX.addEventListener('input', applyPositionFallback);
+        headerPosY.addEventListener('input', applyPositionFallback);
+        // also call once on init
+        applyPositionFallback();
 
         headerPosX.addEventListener('input', updateHeaderPosition);
         headerPosY.addEventListener('input', updateHeaderPosition);
@@ -248,6 +286,13 @@
             headerPosY.value = '50';
             updateHeaderPosition();
         });
+
+        // Apply the current position immediately so the editor preview reflects it
+        try {
+            updateHeaderPosition();
+        } catch (err) {
+            console.error('updateHeaderPosition error', err);
+        }
 
         uploadUI.appendChild(headerSection);
         uploadUI.appendChild(headerPosSection);
