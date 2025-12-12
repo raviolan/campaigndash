@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Feywild Duelist",
+        "level": 7,
+        "class": "fighter",
+        "type": "humanoid",
+        "hit_points": 85,
+        "armor_class": 17,
+        "alignment": "chaotic neutral",
+        "strength": 16,
+        "dexterity": 18,
+        "constitution": 14,
+        "intelligence": 12,
+        "wisdom": 11,
+        "charisma": 14,
+        "actions": [
+            {
+                "name": "Multiattack",
+                "desc": "The duelist makes two attacks with its rapier."
+            },
+            {
+                "name": "Riposte",
+                "desc": "When missed by a melee attack, the duelist can make one melee attack as a reaction."
+            }
+        ]
+    },
+    {
+        "name": "Arcane Marauder",
+        "level": 10,
+        "class": "sorcerer",
+        "type": "humanoid",
+        "hit_points": 65,
+        "armor_class": 15,
+        "alignment": "neutral evil",
+        "strength": 10,
+        "dexterity": 14,
+        "constitution": 12,
+        "intelligence": 16,
+        "wisdom": 13,
+        "charisma": 18,
+        "actions": [
+            {
+                "name": "Spellcasting",
+                "desc": "Casts spells as a 10th-level sorcerer."
+            },
+            {
+                "name": "Arcane Burst",
+                "desc": "Deals 4d8 force damage to a target within 60 feet."
+            }
+        ]
+    }
+]

@@ -8,476 +8,289 @@
     <title>Tags</title>
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%238b5cf6'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="/assets/style.css?v=1765528899607" />
-    <link rel="stylesheet" href="/assets/components.css?v=1765528899607" />
-    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765528899607" />
-    <link rel="stylesheet" href="/assets/modal.css?v=1765528899607" />
-    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765528899607" />
+    <link rel="stylesheet" href="/assets/style.css?v=1765544958022" />
+    <link rel="stylesheet" href="/assets/components.css?v=1765544958022" />
+    <link rel="stylesheet" href="/assets/enhanced-todo.css?v=1765544958022" />
+    <link rel="stylesheet" href="/assets/modal.css?v=1765544958022" />
+    <link rel="stylesheet" href="/assets/landing-pages.css?v=1765544958022" />
     <script>window.SITE_BASE = "/"</script>
 </head>
 
 <body>
     <div class="layout">
         <!-- Header Partial: Top toolbar and navigation -->
-        <div class="top">
-            <div class="toolbar">
-                <a class="chip" href="/index.html">Hembränt</a>
-                <a class="chip" href="/graph.html">Graph</a>
-                <a class="chip" href="/tags/index.html">Tags</a>
-                <a class="chip" href="/session.html">Session</a>
-                <button id="btnCreatePage" class="chip" title="Create New Page">+ New</button>
-                <button id="btnEditPage" class="chip" title="Edit This Page">Edit</button>
-            </div>
-            <div class="search"><input id="searchBox" type="search"
-                    placeholder="Search titles, headings, #tags (Cmd/Ctrl-K)" />
-            </div>
-            <div id="searchResults" class="hovercard"></div>
-        </div>
+<div class="top">
+    <div class="toolbar">
+        <a class="chip" href="/index.html">Hembränt</a>
+        <a class="chip" href="/graph.html">Graph</a>
+        <a class="chip" href="/tags/index.html">Tags</a>
+        <a class="chip" href="/session.html">Session</a>
+        <button id="btnCreatePage" class="chip" title="Create New Page">+ New</button>
+        <button id="btnEditPage" class="chip" title="Edit This Page">Edit</button>
+    </div>
+    <div class="search"><input id="searchBox" type="search" placeholder="Search titles, headings, #tags (Cmd/Ctrl-K)" />
+    </div>
+    <div id="searchResults" class="hovercard"></div>
+</div>
 
-        <!-- Create Page Modal -->
-        <div id="createPageModal" class="modal" style="display: none;">
-            <div class="modal-overlay"></div>
-            <div class="modal-content">
-                <h2>Create New Page</h2>
-                <form id="createPageForm">
-                    <div class="form-group">
-                        <label for="pageType">Page Type</label>
-                        <select id="pageType" required>
-                            <option value="pc">Character (PC)</option>
-                            <option value="npc">NPC</option>
-                            <option value="location">Location</option>
-                            <option value="arc">Story Arc</option>
-                            <option value="shop">Shop</option>
-                            <option value="session">Session Note</option>
-                            <option value="tool">Tool/Reference</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pageTitle">Page Title</label>
-                        <input type="text" id="pageTitle" placeholder="Enter page title..." required />
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Create Page</button>
-                        <button type="button" id="btnCancelCreate" class="btn-secondary">Cancel</button>
-                    </div>
-                </form>
-                <div id="createPageStatus" style="display: none;"></div>
+<!-- Create Page Modal -->
+<div id="createPageModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <h2>Create New Page</h2>
+        <form id="createPageForm">
+            <div class="form-group">
+                <label for="pageType">Page Type</label>
+                <select id="pageType" required>
+                    <option value="pc">Character (PC)</option>
+                    <option value="npc">NPC</option>
+                    <option value="location">Location</option>
+                    <option value="arc">Story Arc</option>
+                    <option value="shop">Shop</option>
+                    <option value="session">Session Note</option>
+                    <option value="tool">Tool/Reference</option>
+                </select>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="pageTitle">Page Title</label>
+                <input type="text" id="pageTitle" placeholder="Enter page title..." required />
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Create Page</button>
+                <button type="button" id="btnCancelCreate" class="btn-secondary">Cancel</button>
+            </div>
+        </form>
+        <div id="createPageStatus" style="display: none;"></div>
+    </div>
+</div>
 
-        <!-- Edit Page Modal -->
-        <div id="editPageModal" class="modal" style="display: none;">
-            <div class="modal-overlay"></div>
-            <div class="modal-content">
-                <h2>Edit Page</h2>
-                <form id="editPageForm">
-                    <div class="form-group">
-                        <label for="editPageContent">Page Content (HTML)</label>
-                        <textarea id="editPageContent" rows="18" style="width:100%" required></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Save Changes</button>
-                        <button type="button" id="btnCancelEdit" class="btn-secondary">Cancel</button>
-                    </div>
-                </form>
-                <div id="editPageStatus" style="display: none;"></div>
+<!-- Edit Page Modal -->
+<div id="editPageModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <h2>Edit Page</h2>
+        <form id="editPageForm">
+            <div class="form-group">
+                <label for="editPageContent">Page Content (HTML)</label>
+                <textarea id="editPageContent" rows="18" style="width:100%" required></textarea>
             </div>
-        </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Save Changes</button>
+                <button type="button" id="btnCancelEdit" class="btn-secondary">Cancel</button>
+            </div>
+        </form>
+        <div id="editPageStatus" style="display: none;"></div>
+    </div>
+</div>
 
-        <!-- Delete Page Modal -->
-        <div id="deletePageModal" class="modal" style="display: none;">
-            <div class="modal-overlay"></div>
-            <div class="modal-content">
-                <h2>Delete Page</h2>
-                <p style="margin-bottom: 1em;">⚠️ This action cannot be undone. To confirm deletion, type the page title
-                    below:
-                </p>
-                <p style="margin-bottom: 1em;"><strong id="deletePageTitle"></strong></p>
-                <form id="deletePageForm">
-                    <div class="form-group">
-                        <label for="deletePageConfirm">Type page title to confirm:</label>
-                        <input type="text" id="deletePageConfirm" style="width:100%" required autocomplete="off" />
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary" style="background: #c33;">Delete Page</button>
-                        <button type="button" id="btnCancelDelete" class="btn-secondary">Cancel</button>
-                    </div>
-                </form>
-                <div id="deletePageStatus" style="display: none; margin-top: 1em;"></div>
+<!-- Delete Page Modal -->
+<div id="deletePageModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <h2>Delete Page</h2>
+        <p style="margin-bottom: 1em;">⚠️ This action cannot be undone. To confirm deletion, type the page title below:
+        </p>
+        <p style="margin-bottom: 1em;"><strong id="deletePageTitle"></strong></p>
+        <form id="deletePageForm">
+            <div class="form-group">
+                <label for="deletePageConfirm">Type page title to confirm:</label>
+                <input type="text" id="deletePageConfirm" style="width:100%" required autocomplete="off" />
             </div>
-        </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" style="background: #c33;">Delete Page</button>
+                <button type="button" id="btnCancelDelete" class="btn-secondary">Cancel</button>
+            </div>
+        </form>
+        <div id="deletePageStatus" style="display: none; margin-top: 1em;"></div>
+    </div>
+</div>
 
-        <!-- Confirmation Modal -->
-        <div id="confirmModal" class="modal" style="display: none;">
-            <div class="modal-overlay"></div>
-            <div class="modal-content" style="max-width: 450px;">
-                <h2 id="confirmModalTitle">Confirm</h2>
-                <p id="confirmModalMessage" style="margin: 1em 0;"></p>
-                <div class="form-actions">
-                    <button type="button" id="confirmModalYes" class="btn-primary">Yes</button>
-                    <button type="button" id="confirmModalNo" class="btn-secondary">No</button>
-                </div>
-            </div>
+<!-- Confirmation Modal -->
+<div id="confirmModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content" style="max-width: 450px;">
+        <h2 id="confirmModalTitle">Confirm</h2>
+        <p id="confirmModalMessage" style="margin: 1em 0;"></p>
+        <div class="form-actions">
+            <button type="button" id="confirmModalYes" class="btn-primary">Yes</button>
+            <button type="button" id="confirmModalNo" class="btn-secondary">No</button>
         </div>
+    </div>
+</div>
         <!-- Compact weather strip: mirrors left-panel weather card -->
         <div id="weatherStrip" class="weather-strip" aria-hidden="false"></div>
         <aside class="left"><!-- Sidebar Partial: Navigation drawer and sections -->
-            <div class="drawer" aria-label="Navigation">
-                <div class="drawer-handle">
-                    <button id="leftDrawerToggle" class="chip" aria-expanded="true"
-                        aria-controls="leftDrawer">Nav</button>
-                    <button id="leftDrawerPin" class="chip" aria-pressed="true">Pin</button>
-                    <button id="leftCollapseExpand" class="chip" title="Collapse/Expand All">Collapse all</button>
+<div class="drawer" aria-label="Navigation">
+    <div class="drawer-handle">
+        <button id="leftDrawerToggle" class="chip" aria-expanded="true" aria-controls="leftDrawer">Nav</button>
+        <button id="leftDrawerPin" class="chip" aria-pressed="true">Pin</button>
+        <button id="leftCollapseExpand" class="chip" title="Collapse/Expand All">Collapse all</button>
+    </div>
+    <div id="leftDrawer" class="drawer-content">
+        <aside class="sidebar" role="navigation">
+            <div class="campaign-header">
+                <div class="campaign-title">Feywild Adventures</div>
+            </div>
+            <nav class="nav">
+                <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon">🏠</span><span
+                        class="nav-text">Dashboard</span></a>
+                <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..." /></div>
+                <details class="nav-details" open>
+                    <summary class="nav-label"><span class="nav-icon">⭐</span><span>Favorites</span></summary>
+                    <ul id="navFav" class="nav-list"></ul>
+                </details>
+                <ul class="nav-sections"><li class="nav-group">
+                <details class="nav-details f-pc" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Characters</span></summary>
+                    <ul class="nav-list">
+                    <li><a class="nav-item" href="/03_PCs/Extras%20and%20quirks.html"><span class="nav-icon">•</span><span class="nav-text">Extras and quirks</span></a></li>
+                    <li><a class="nav-item" href="/03_PCs/Nyx.html"><span class="nav-icon">•</span><span class="nav-text">Nyx</span></a></li>
+                    <li><a class="nav-item" href="/03_PCs/Oceanus.html"><span class="nav-icon">•</span><span class="nav-text">Oceanus</span></a></li>
+                    <li><a class="nav-item" href="/03_PCs/Odo%20Kneecapper.html"><span class="nav-icon">•</span><span class="nav-text">Odo Kneecapper</span></a></li>
+                    <li><a class="nav-item" href="/03_PCs/Tenebris.html"><span class="nav-icon">•</span><span class="nav-text">Tenebris</span></a></li>
+                    <li><a class="nav-item" href="/03_PCs/Tihildur.html"><span class="nav-icon">•</span><span class="nav-text">Tihildur</span></a></li>
+                    <li><a class="nav-item" href="/03_PCs/Val'krath.html"><span class="nav-icon">•</span><span class="nav-text">Val'krath</span></a></li>
+                    </ul>
+                </details>
+            </li>
+            <li class="nav-group">
+                <details class="nav-details f-npc" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>NPCs</span></summary>
+                    <ul class="nav-list">
+                    <li><a class="nav-item" href="/04_NPCs/Agile%20Hand.html"><span class="nav-icon">•</span><span class="nav-text">Agile Hand</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Captain%20Xendros.html"><span class="nav-icon">•</span><span class="nav-text">Captain Xendros</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Cyrieth%20Nerolien.html"><span class="nav-icon">•</span><span class="nav-text">Cyrieth Nerolien</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Daddy%20Salabaster.html"><span class="nav-icon">•</span><span class="nav-text">Daddy Salabaster</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Dusk.html"><span class="nav-icon">•</span><span class="nav-text">Dusk</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Gellan%20Primewater.html"><span class="nav-icon">•</span><span class="nav-text">Gellan Primewater</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Kedjou.html"><span class="nav-icon">•</span><span class="nav-text">Kedjou</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Lysa%20_Ledger_%20Feld.html"><span class="nav-icon">•</span><span class="nav-text">Lysa _Ledger_ Feld</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Raven%20Queen.html"><span class="nav-icon">•</span><span class="nav-text">Raven Queen</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Salabaster%20Shipping.html"><span class="nav-icon">•</span><span class="nav-text">Salabaster Shipping</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Saltmarsh%20Council.html"><span class="nav-icon">•</span><span class="nav-text">Saltmarsh Council</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Sanbalet.html"><span class="nav-icon">•</span><span class="nav-text">Sanbalet</span></a></li>
+                    <li><a class="nav-item" href="/04_NPCs/Scarlet%20Brotherhood.html"><span class="nav-icon">•</span><span class="nav-text">Scarlet Brotherhood</span></a></li>
+                    </ul>
+                </details>
+            </li>
+            <li class="nav-group">
+                <details class="nav-details f-location" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>World</span></summary>
+                    <ul class="nav-list">
+                    <li><a class="nav-item" href="/02_World/Locations/Bent%20Willow%20Tavern.html"><span class="nav-icon">•</span><span class="nav-text">Bent Willow Tavern</span></a></li>
+                    <li><a class="nav-item" href="/02_World/Locations/Old%20King's%20Road.html"><span class="nav-icon">•</span><span class="nav-text">Old King's Road</span></a></li>
+                    <li><a class="nav-item" href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html"><span class="nav-icon">•</span><span class="nav-text">Road Through the Feywild Leak</span></a></li>
+                    <li><a class="nav-item" href="/02_World/Locations/Salabaster%20Shipping%20HQ.html"><span class="nav-icon">•</span><span class="nav-text">Salabaster Shipping HQ</span></a></li>
+                    <li><a class="nav-item" href="/02_World/Locations/Saltmarsh.html"><span class="nav-icon">•</span><span class="nav-text">Saltmarsh</span></a></li>
+                    <li><a class="nav-item" href="/02_World/Locations/Stormwreck%20Island.html"><span class="nav-icon">•</span><span class="nav-text">Stormwreck Island</span></a></li>
+                    <li><a class="nav-item" href="/02_World/Locations/The%20Inn%20at%20the%20End%20of%20the%20Road.html"><span class="nav-icon">•</span><span class="nav-text">The Inn at the End of the Road</span></a></li>
+                    </ul>
+                </details>
+            </li>
+            <li class="nav-group">
+                <details class="nav-details f-arc" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Arcs</span></summary>
+                    <ul class="nav-list">
+                    <li><a class="nav-item" href="/01_Arcs/01_Arcs%20Overview.html"><span class="nav-icon">•</span><span class="nav-text">01_Arcs Overview</span></a></li>
+                    <li><a class="nav-item" href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html"><span class="nav-icon">•</span><span class="nav-text">Arc - Cyrieth's Web</span></a></li>
+                    <li class="nav-section">
+                        <details class="nav-details f-arc" open>
+                            <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>GoSM</span></summary>
+                            <ul class="nav-list">
+                                <li><a class="nav-item" href="/01_Arcs/GoSM/Factions%20and%20Politics.html"><span class="nav-icon">•</span><span class="nav-text">Factions and Politics</span></a></li>
+                                <li><a class="nav-item" href="/01_Arcs/GoSM/Generally%2C%20GoSM.html"><span class="nav-icon">•</span><span class="nav-text">Generally, GoSM</span></a></li>
+                                <li><a class="nav-item" href="/01_Arcs/GoSM/Masterpiece%20Imbroglio.html"><span class="nav-icon">•</span><span class="nav-text">Masterpiece Imbroglio</span></a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li class="nav-section">
+                        <details class="nav-details f-arc" open>
+                            <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>The Feywild</span></summary>
+                            <ul class="nav-list">
+                                <li><a class="nav-item" href="/01_Arcs/The%20Feywild/Feywild%20Summary.html"><span class="nav-icon">•</span><span class="nav-text">Feywild Summary</span></a></li>
+                                <li><a class="nav-item" href="/01_Arcs/The%20Feywild/the%20trek.html"><span class="nav-icon">•</span><span class="nav-text">the trek</span></a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    </ul>
+                </details>
+            </li>
+            <li class="nav-group">
+                <details class="nav-details f-other" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>03_Sessions</span></summary>
+                    <ul class="nav-list">
+                    <li><a class="nav-item" href="/00_Campaign/03_Sessions/01%20Finishing%20up%20in%20Saltmarsh.html"><span class="nav-icon">•</span><span class="nav-text">01 Finishing up in Saltmarsh</span></a></li>
+                    </ul>
+                </details>
+            </li>
+            <li class="nav-group">
+                <details class="nav-details f-other" open>
+                    <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Tools</span></summary>
+                    <ul class="nav-list">
+                    <li><a class="nav-item" href="/05_Tools & Tables/Enemy%20Generator.html"><span class="nav-icon">•</span><span class="nav-text">Enemy Generator</span></a></li>
+                    <li><a class="nav-item" href="/05_Tools & Tables/Random%20Encounter%20Generator.html"><span class="nav-icon">•</span><span class="nav-text">Random Encounter Generator</span></a></li>
+                    <li class="nav-section">
+                        <details class="nav-details f-other" open>
+                            <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>DM References</span></summary>
+                            <ul class="nav-list">
+                                <li><a class="nav-item" href="/05_Tools & Tables/DM%20References/02_Campaign%20Overview%20and%20Key%20points.html"><span class="nav-icon">•</span><span class="nav-text">02_Campaign Overview and Key points</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/DM%20References/House%20Rules.html"><span class="nav-icon">•</span><span class="nav-text">House Rules</span></a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li class="nav-section">
+                        <details class="nav-details f-other" open>
+                            <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Items & More</span></summary>
+                            <ul class="nav-list">
+                                <li><a class="nav-item" href="/05_Tools & Tables/Items%20%26%20More/Aurumvorax.html"><span class="nav-icon">•</span><span class="nav-text">Aurumvorax</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Items%20%26%20More/Bloodwell%20Vial.html"><span class="nav-icon">•</span><span class="nav-text">Bloodwell Vial</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Items%20%26%20More/Call%20Lightning.html"><span class="nav-icon">•</span><span class="nav-text">Call Lightning</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Items%20%26%20More/Dao.html"><span class="nav-icon">•</span><span class="nav-text">Dao</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Items%20%26%20More/Dawn%20Incarnate.html"><span class="nav-icon">•</span><span class="nav-text">Dawn Incarnate</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Items%20%26%20More/Lost-Items.html"><span class="nav-icon">•</span><span class="nav-text">Lost-Items</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Items%20%26%20More/Sahuagin.html"><span class="nav-icon">•</span><span class="nav-text">Sahuagin</span></a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li class="nav-section">
+                        <details class="nav-details f-other" open>
+                            <summary class="nav-label"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a3 3 0 110-6 3 3 0 010 6z"/></svg></span><span>Shops</span></summary>
+                            <ul class="nav-list">
+                                <li><a class="nav-item" href="/05_Tools & Tables/Shops/Clothes%20and%20Accessories.html"><span class="nav-icon">•</span><span class="nav-text">Clothes and Accessories</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Shops/Fireworks%20and%20Explosives.html"><span class="nav-icon">•</span><span class="nav-text">Fireworks and Explosives</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Shops/Potions.html"><span class="nav-icon">•</span><span class="nav-text">Potions</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Shops/Shops%20Index.html"><span class="nav-icon">•</span><span class="nav-text">Shops Index</span></a></li>
+                                <li><a class="nav-item" href="/05_Tools & Tables/Shops/Weapons%20and%20Shields.html"><span class="nav-icon">•</span><span class="nav-text">Weapons and Shields</span></a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    </ul>
+                </details>
+            </li></ul>
+            </nav>
+            <!-- Weather card: DnD dice-driven weather generator -->
+            <div id="weatherCard" class="card weather-card" aria-label="Weather">
+                <div class="weather-header">
+                    <div class="weather-title">Weather</div>
+                    <button id="rollWeather" class="chip" title="Roll weather">Roll</button>
                 </div>
-                <div id="leftDrawer" class="drawer-content">
-                    <aside class="sidebar" role="navigation">
-                        <div class="campaign-header">
-                            <div class="campaign-title">Feywild Adventures</div>
-                        </div>
-                        <nav class="nav">
-                            <a class="nav-item nav-dashboard" href="/index.html"><span class="nav-icon">🏠</span><span
-                                    class="nav-text">Dashboard</span></a>
-                            <div class="nav-quick"><input id="navQuick" placeholder="Quick nav..." /></div>
-                            <details class="nav-details" open>
-                                <summary class="nav-label"><span class="nav-icon">⭐</span><span>Favorites</span>
-                                </summary>
-                                <ul id="navFav" class="nav-list"></ul>
-                            </details>
-                            <ul class="nav-sections">
-                                <li class="nav-group">
-                                    <details class="nav-details f-pc" open>
-                                        <summary class="nav-label"><span class="nav-icon"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                </svg></span><span>Characters</span></summary>
-                                        <ul class="nav-list">
-                                            <li><a class="nav-item" href="/03_PCs/Extras%20and%20quirks.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Extras and
-                                                        quirks</span></a></li>
-                                            <li><a class="nav-item" href="/03_PCs/Nyx.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Nyx</span></a>
-                                            </li>
-                                            <li><a class="nav-item" href="/03_PCs/Oceanus.html"><span
-                                                        class="nav-icon">•</span><span
-                                                        class="nav-text">Oceanus</span></a></li>
-                                            <li><a class="nav-item" href="/03_PCs/Odo%20Kneecapper.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Odo
-                                                        Kneecapper</span></a></li>
-                                            <li><a class="nav-item" href="/03_PCs/Tenebris.html"><span
-                                                        class="nav-icon">•</span><span
-                                                        class="nav-text">Tenebris</span></a></li>
-                                            <li><a class="nav-item" href="/03_PCs/Tihildur.html"><span
-                                                        class="nav-icon">•</span><span
-                                                        class="nav-text">Tihildur</span></a></li>
-                                            <li><a class="nav-item" href="/03_PCs/Val'krath.html"><span
-                                                        class="nav-icon">•</span><span
-                                                        class="nav-text">Val'krath</span></a></li>
-                                        </ul>
-                                    </details>
-                                </li>
-                                <li class="nav-group">
-                                    <details class="nav-details f-npc" open>
-                                        <summary class="nav-label"><span class="nav-icon"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                </svg></span><span>NPCs</span></summary>
-                                        <ul class="nav-list">
-                                            <li><a class="nav-item" href="/04_NPCs/Agile%20Hand.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Agile
-                                                        Hand</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Captain%20Xendros.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Captain
-                                                        Xendros</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Cyrieth%20Nerolien.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Cyrieth
-                                                        Nerolien</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Daddy%20Salabaster.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Daddy
-                                                        Salabaster</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Dusk.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Dusk</span></a>
-                                            </li>
-                                            <li><a class="nav-item" href="/04_NPCs/Gellan%20Primewater.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Gellan
-                                                        Primewater</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Kedjou.html"><span
-                                                        class="nav-icon">•</span><span
-                                                        class="nav-text">Kedjou</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Lysa%20_Ledger_%20Feld.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Lysa _Ledger_
-                                                        Feld</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Raven%20Queen.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Raven
-                                                        Queen</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Salabaster%20Shipping.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Salabaster
-                                                        Shipping</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Saltmarsh%20Council.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Saltmarsh
-                                                        Council</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Sanbalet.html"><span
-                                                        class="nav-icon">•</span><span
-                                                        class="nav-text">Sanbalet</span></a></li>
-                                            <li><a class="nav-item" href="/04_NPCs/Scarlet%20Brotherhood.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Scarlet
-                                                        Brotherhood</span></a></li>
-                                        </ul>
-                                    </details>
-                                </li>
-                                <li class="nav-group">
-                                    <details class="nav-details f-location" open>
-                                        <summary class="nav-label"><span class="nav-icon"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                </svg></span><span>World</span></summary>
-                                        <ul class="nav-list">
-                                            <li><a class="nav-item"
-                                                    href="/02_World/Locations/Bent%20Willow%20Tavern.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Bent Willow
-                                                        Tavern</span></a></li>
-                                            <li><a class="nav-item"
-                                                    href="/02_World/Locations/Old%20King's%20Road.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Old King's
-                                                        Road</span></a></li>
-                                            <li><a class="nav-item"
-                                                    href="/02_World/Locations/Road%20Through%20the%20Feywild%20Leak.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Road Through the
-                                                        Feywild Leak</span></a></li>
-                                            <li><a class="nav-item"
-                                                    href="/02_World/Locations/Salabaster%20Shipping%20HQ.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Salabaster
-                                                        Shipping HQ</span></a></li>
-                                            <li><a class="nav-item" href="/02_World/Locations/Saltmarsh.html"><span
-                                                        class="nav-icon">•</span><span
-                                                        class="nav-text">Saltmarsh</span></a></li>
-                                            <li><a class="nav-item"
-                                                    href="/02_World/Locations/Stormwreck%20Island.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Stormwreck
-                                                        Island</span></a></li>
-                                            <li><a class="nav-item"
-                                                    href="/02_World/Locations/The%20Inn%20at%20the%20End%20of%20the%20Road.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">The Inn at the
-                                                        End of the Road</span></a></li>
-                                        </ul>
-                                    </details>
-                                </li>
-                                <li class="nav-group">
-                                    <details class="nav-details f-arc" open>
-                                        <summary class="nav-label"><span class="nav-icon"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                </svg></span><span>Arcs</span></summary>
-                                        <ul class="nav-list">
-                                            <li><a class="nav-item" href="/01_Arcs/01_Arcs%20Overview.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">01_Arcs
-                                                        Overview</span></a></li>
-                                            <li><a class="nav-item" href="/01_Arcs/Arc%20-%20Cyrieth's%20Web.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Arc - Cyrieth's
-                                                        Web</span></a></li>
-                                            <li class="nav-section">
-                                                <details class="nav-details f-arc" open>
-                                                    <summary class="nav-label"><span class="nav-icon"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" viewBox="0 0 24 24" fill="currentColor"
-                                                                aria-hidden="true">
-                                                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                            </svg></span><span>GoSM</span></summary>
-                                                    <ul class="nav-list">
-                                                        <li><a class="nav-item"
-                                                                href="/01_Arcs/GoSM/Factions%20and%20Politics.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Factions and Politics</span></a>
-                                                        </li>
-                                                        <li><a class="nav-item"
-                                                                href="/01_Arcs/GoSM/Generally%2C%20GoSM.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Generally, GoSM</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/01_Arcs/GoSM/Masterpiece%20Imbroglio.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Masterpiece Imbroglio</span></a>
-                                                        </li>
-                                                    </ul>
-                                                </details>
-                                            </li>
-                                            <li class="nav-section">
-                                                <details class="nav-details f-arc" open>
-                                                    <summary class="nav-label"><span class="nav-icon"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" viewBox="0 0 24 24" fill="currentColor"
-                                                                aria-hidden="true">
-                                                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                            </svg></span><span>The Feywild</span></summary>
-                                                    <ul class="nav-list">
-                                                        <li><a class="nav-item"
-                                                                href="/01_Arcs/The%20Feywild/Feywild%20Summary.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Feywild Summary</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/01_Arcs/The%20Feywild/the%20trek.html"><span
-                                                                    class="nav-icon">•</span><span class="nav-text">the
-                                                                    trek</span></a></li>
-                                                    </ul>
-                                                </details>
-                                            </li>
-                                        </ul>
-                                    </details>
-                                </li>
-                                <li class="nav-group">
-                                    <details class="nav-details f-other" open>
-                                        <summary class="nav-label"><span class="nav-icon"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                </svg></span><span>03_Sessions</span></summary>
-                                        <ul class="nav-list">
-                                            <li><a class="nav-item"
-                                                    href="/00_Campaign/03_Sessions/01%20Finishing%20up%20in%20Saltmarsh.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">01 Finishing up
-                                                        in Saltmarsh</span></a></li>
-                                        </ul>
-                                    </details>
-                                </li>
-                                <li class="nav-group">
-                                    <details class="nav-details f-other" open>
-                                        <summary class="nav-label"><span class="nav-icon"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                </svg></span><span>Tools</span></summary>
-                                        <ul class="nav-list">
-                                            <li><a class="nav-item"
-                                                    href="/05_Tools & Tables/Random%20Encounter%20Generator.html"><span
-                                                        class="nav-icon">•</span><span class="nav-text">Random Encounter
-                                                        Generator</span></a></li>
-                                            <li class="nav-section">
-                                                <details class="nav-details f-other" open>
-                                                    <summary class="nav-label"><span class="nav-icon"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" viewBox="0 0 24 24" fill="currentColor"
-                                                                aria-hidden="true">
-                                                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                            </svg></span><span>DM References</span></summary>
-                                                    <ul class="nav-list">
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/DM%20References/02_Campaign%20Overview%20and%20Key%20points.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">02_Campaign Overview and Key
-                                                                    points</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/DM%20References/House%20Rules.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">House Rules</span></a></li>
-                                                    </ul>
-                                                </details>
-                                            </li>
-                                            <li class="nav-section">
-                                                <details class="nav-details f-other" open>
-                                                    <summary class="nav-label"><span class="nav-icon"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" viewBox="0 0 24 24" fill="currentColor"
-                                                                aria-hidden="true">
-                                                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                            </svg></span><span>Items & More</span></summary>
-                                                    <ul class="nav-list">
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Items%20%26%20More/Aurumvorax.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Aurumvorax</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Items%20%26%20More/Bloodwell%20Vial.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Bloodwell Vial</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Items%20%26%20More/Call%20Lightning.html"><span
-                                                                    class="nav-icon">•</span><span class="nav-text">Call
-                                                                    Lightning</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Items%20%26%20More/Dao.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Dao</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Items%20%26%20More/Dawn%20Incarnate.html"><span
-                                                                    class="nav-icon">•</span><span class="nav-text">Dawn
-                                                                    Incarnate</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Items%20%26%20More/Lost-Items.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Lost-Items</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Items%20%26%20More/Sahuagin.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Sahuagin</span></a></li>
-                                                    </ul>
-                                                </details>
-                                            </li>
-                                            <li class="nav-section">
-                                                <details class="nav-details f-other" open>
-                                                    <summary class="nav-label"><span class="nav-icon"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" viewBox="0 0 24 24" fill="currentColor"
-                                                                aria-hidden="true">
-                                                                <path d="M12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                                            </svg></span><span>Shops</span></summary>
-                                                    <ul class="nav-list">
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Shops/Clothes%20and%20Accessories.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Clothes and Accessories</span></a>
-                                                        </li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Shops/Fireworks%20and%20Explosives.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Fireworks and Explosives</span></a>
-                                                        </li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Shops/Potions.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Potions</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Shops/Shops%20Index.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Shops Index</span></a></li>
-                                                        <li><a class="nav-item"
-                                                                href="/05_Tools & Tables/Shops/Weapons%20and%20Shields.html"><span
-                                                                    class="nav-icon">•</span><span
-                                                                    class="nav-text">Weapons and Shields</span></a></li>
-                                                    </ul>
-                                                </details>
-                                            </li>
-                                        </ul>
-                                    </details>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- Weather card: DnD dice-driven weather generator -->
-                        <div id="weatherCard" class="card weather-card" aria-label="Weather">
-                            <div class="weather-header">
-                                <div class="weather-title">Weather</div>
-                                <button id="rollWeather" class="chip" title="Roll weather">Roll</button>
-                            </div>
-                            <div class="weather-now" aria-live="polite">
-                                <div class="weather-icon">⛅</div>
-                                <div class="weather-desc">
-                                    <div class="weather-condition">Unknown</div>
-                                    <div class="weather-meta">--</div>
-                                </div>
-                            </div>
-                            <ul class="weather-forecast" role="list">
-                                <!-- forecast rows populated by JS -->
-                            </ul>
-                            <div class="weather-effects" aria-hidden="false">
-                                <!-- effects populated by JS -->
-                            </div>
-                        </div>
-                    </aside>
+                <div class="weather-now" aria-live="polite">
+                    <div class="weather-icon">⛅</div>
+                    <div class="weather-desc">
+                        <div class="weather-condition">Unknown</div>
+                        <div class="weather-meta">--</div>
+                    </div>
+                </div>
+                <ul class="weather-forecast" role="list">
+                    <!-- forecast rows populated by JS -->
+                </ul>
+                <div class="weather-effects" aria-hidden="false">
+                    <!-- effects populated by JS -->
                 </div>
             </div>
         </aside>
+    </div>
+</div></aside>
         <main class="main">
             <div class="breadcrumb-container">
                 <div id="breadcrumbText" class="main-breadcrumb meta"></div>
@@ -489,8 +302,7 @@
                             d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" />
                     </svg>
                 </button>
-            </div>
-            <article class="landing-page">
+            </div><article class="landing-page">
                 <div class="landing-header">
                     <div class="entity-header" style="--header: url('/assets/headers/tags-header.svg')">
                         <div class="landing-hero"></div>
@@ -507,180 +319,178 @@
             </article>
         </main>
         <aside class="right"><!-- Right Panel Partial: Drawer with notepad, to-do, and tools -->
-            <div class="drawer" aria-label="Tools">
-                <div class="drawer-handle">
-                    <button id="drawerToggle" class="chip" aria-expanded="true"
-                        aria-controls="drawerContent">Close</button>
-                    <button id="drawerPin" class="chip" aria-pressed="true" title="Pin panel"></button>
-                    <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
-                    <button id="colorsToggle" class="chip" title="Open Colors Tool">Colors</button>
+<div class="drawer" aria-label="Tools">
+    <div class="drawer-handle">
+        <button id="drawerToggle" class="chip" aria-expanded="true" aria-controls="drawerContent">Close</button>
+        <button id="drawerPin" class="chip" aria-pressed="true" title="Pin panel"></button>
+        <button id="themeToggle" class="chip" title="Toggle Light/Dark">Theme</button>
+        <button id="colorsToggle" class="chip" title="Open Colors Tool">Colors</button>
+    </div>
+    <div id="drawerContent" class="drawer-content">
+        <div id="drawerTop"></div>
+        <div class="right-split">
+            <div id="paneTop" class="pane">
+                <div class="pane-tabs" aria-hidden="false">
+                    <button class="pane-tab" data-pane="top" data-tool="note">Notepad</button>
+                    <button class="pane-tab" data-pane="top" data-tool="colors">Colors</button>
                 </div>
-                <div id="drawerContent" class="drawer-content">
-                    <div id="drawerTop"></div>
-                    <div class="right-split">
-                        <div id="paneTop" class="pane">
-                            <div class="pane-tabs" aria-hidden="false">
-                                <button class="pane-tab" data-pane="top" data-tool="note">Notepad</button>
-                                <button class="pane-tab" data-pane="top" data-tool="colors">Colors</button>
-                            </div>
-                            <div class="pane-body" data-pane="top"></div>
-                        </div>
-                        <div class="pane-resizer-h" aria-hidden="true"></div>
-                        <div id="paneBottom" class="pane">
-                            <div class="pane-tabs" aria-hidden="false">
-                                <button class="pane-tab" data-pane="bottom" data-tool="todo">To-Do</button>
-                            </div>
-                            <div class="pane-body" data-pane="bottom"></div>
-                        </div>
-                    </div>
-                </div>
+                <div class="pane-body" data-pane="top"></div>
             </div>
+            <div class="pane-resizer-h" aria-hidden="true"></div>
+            <div id="paneBottom" class="pane">
+                <div class="pane-tabs" aria-hidden="false">
+                    <button class="pane-tab" data-pane="bottom" data-tool="todo">To-Do</button>
+                </div>
+                <div class="pane-body" data-pane="bottom"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <!-- Hidden tool views rendered into panes by JS -->
-            <div id="toolViews" style="display:none">
-                <div id="toolNote">
-                    <div class="card">
-                        <h3 style="margin:0">Notepad</h3>
-                        <textarea id="toolNotepad" placeholder="Quick notes..."
-                            style="width:100%;min-height:100px;flex:1;border:none;background:transparent;color:var(--text);resize:none;margin-top:8px;padding:0;outline:none"></textarea>
-                    </div>
-                </div>
-                <div id="toolColors">
-                    <div class="card">
-                        <h3 style="margin:0">Colors</h3>
-                        <div id="colorToolContent">
-                            <div class="theme-picker">
-                                <h4>Choose a color theme:</h4>
-                                <div class="theme-list">
-                                    <div class="theme-card">
-                                        <button type="button" class="theme-swatch" data-theme="auburn" title="Auburn">
-                                            <div class="swatch-preview">
-                                                <span style="background:#642F37"></span>
-                                                <span style="background:#C0350F"></span>
-                                                <span style="background:#F3904B"></span>
-                                                <span style="background:#F7C767"></span>
-                                                <span style="background:#B89DBB"></span>
-                                            </div>
-                                            <span class="theme-label">Auburn</span>
-                                        </button>
-                                    </div>
-                                    <div class="theme-card">
-                                        <button type="button" class="theme-swatch" data-theme="light" title="Light">
-                                            <div class="swatch-preview">
-                                                <span style="background:#ffffff"></span>
-                                                <span style="background:#f6f7f8"></span>
-                                                <span style="background:#0ea5ff"></span>
-                                                <span style="background:#111827"></span>
-                                                <span style="background:#6b7280"></span>
-                                                <span style="background:#d1d5db"></span>
-                                            </div>
-                                            <span class="theme-label">Light</span>
-                                        </button>
-                                    </div>
-                                    <div class="theme-card">
-                                        <button type="button" class="theme-swatch" data-theme="dark" title="Dark">
-                                            <div class="swatch-preview">
-                                                <span style="background:#0b1220"></span>
-                                                <span style="background:#0f1724"></span>
-                                                <span style="background:#8b5cf6"></span>
-                                                <span style="background:#e5e7eb"></span>
-                                                <span style="background:#9aa3b2"></span>
-                                                <span style="background:#0b0f16"></span>
-                                            </div>
-                                            <span class="theme-label">Dark</span>
-                                        </button>
-                                    </div>
-                                    <div class="theme-card">
-                                        <button class="theme-swatch" data-theme="desert" title="Desert">
-                                            <div class="swatch-preview">
-                                                <span style="background:#ae5433"></span>
-                                                <span style="background:#ecc481"></span>
-                                                <span style="background:#aa462d"></span>
-                                                <span style="background:#9e895f"></span>
-                                                <span style="background:#d5c79f"></span>
-                                                <span style="background:#4a4231"></span>
-                                            </div>
-                                            <span class="theme-label">Desert</span>
-                                        </button>
-                                    </div>
-                                    <div class="theme-card">
-                                        <button class="theme-swatch" data-theme="mother" title="Mother of Dragons">
-                                            <div class="swatch-preview">
-                                                <span style="background:#080d22"></span>
-                                                <span style="background:#531f4f"></span>
-                                                <span style="background:#6e234b"></span>
-                                                <span style="background:#932549"></span>
-                                                <span style="background:#fdf3eb"></span>
-                                            </div>
-                                            <span class="theme-label">Mother of Dragons</span>
-                                        </button>
-                                    </div>
-                                    <div class="theme-card">
-                                        <button class="theme-swatch" data-theme="orchid" title="Orchid Whisper">
-                                            <div class="swatch-preview">
-                                                <span style="background:#CB438B"></span>
-                                                <span style="background:#BF3556"></span>
-                                                <span style="background:#6C6A43"></span>
-                                                <span style="background:#4D3449"></span>
-                                                <span style="background:#FFF0D2"></span>
-                                            </div>
-                                            <span class="theme-label">Orchid Whisper</span>
-                                        </button>
-                                    </div>
-                                    <div class="theme-card">
-                                        <button class="theme-swatch" data-theme="pearls" title="Chinese Pearls">
-                                            <div class="swatch-preview">
-                                                <span style="background:#414B9e"></span>
-                                                <span style="background:#9792CB"></span>
-                                                <span style="background:#AA74A0"></span>
-                                                <span style="background:#E2C99E"></span>
-                                                <span style="background:#8527736"></span>
-                                            </div>
-                                            <span class="theme-label">Chinese Pearls</span>
-                                        </button>
-                                    </div>
+<!-- Hidden tool views rendered into panes by JS -->
+<div id="toolViews" style="display:none">
+    <div id="toolNote">
+        <div class="card">
+            <h3 style="margin:0">Notepad</h3>
+            <textarea id="toolNotepad" placeholder="Quick notes..."
+                style="width:100%;min-height:100px;flex:1;border:none;background:transparent;color:var(--text);resize:none;margin-top:8px;padding:0;outline:none"></textarea>
+        </div>
+    </div>
+    <div id="toolColors">
+        <div class="card">
+            <h3 style="margin:0">Colors</h3>
+            <div id="colorToolContent">
+                <div class="theme-picker">
+                    <h4>Choose a color theme:</h4>
+                    <div class="theme-list">
+                        <div class="theme-card">
+                            <button type="button" class="theme-swatch" data-theme="auburn" title="Auburn">
+                                <div class="swatch-preview">
+                                    <span style="background:#642F37"></span>
+                                    <span style="background:#C0350F"></span>
+                                    <span style="background:#F3904B"></span>
+                                    <span style="background:#F7C767"></span>
+                                    <span style="background:#B89DBB"></span>
                                 </div>
-                            </div>
+                                <span class="theme-label">Auburn</span>
+                            </button>
                         </div>
-                    </div>
-                </div>
-                <div id="toolTodo">
-                    <div id="todoBox" class="card" aria-label="Session To-Do">
-                        <h3 style="margin:0 0 12px 0">To-Do</h3>
-                        <form id="todoForm" class="todo-form" autocomplete="off">
-                            <label class="sr-only" for="todoInput">Add a task</label>
-                            <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter" />
-                            <button type="submit" class="todo-add">Add</button>
-                        </form>
-                        <div class="todo-actions">
-                            <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>
+                        <div class="theme-card">
+                            <button type="button" class="theme-swatch" data-theme="light" title="Light">
+                                <div class="swatch-preview">
+                                    <span style="background:#ffffff"></span>
+                                    <span style="background:#f6f7f8"></span>
+                                    <span style="background:#0ea5ff"></span>
+                                    <span style="background:#111827"></span>
+                                    <span style="background:#6b7280"></span>
+                                    <span style="background:#d1d5db"></span>
+                                </div>
+                                <span class="theme-label">Light</span>
+                            </button>
                         </div>
-                        <div class="todo-list-container">
-                            <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
+                        <div class="theme-card">
+                            <button type="button" class="theme-swatch" data-theme="dark" title="Dark">
+                                <div class="swatch-preview">
+                                    <span style="background:#0b1220"></span>
+                                    <span style="background:#0f1724"></span>
+                                    <span style="background:#8b5cf6"></span>
+                                    <span style="background:#e5e7eb"></span>
+                                    <span style="background:#9aa3b2"></span>
+                                    <span style="background:#0b0f16"></span>
+                                </div>
+                                <span class="theme-label">Dark</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="desert" title="Desert">
+                                <div class="swatch-preview">
+                                    <span style="background:#ae5433"></span>
+                                    <span style="background:#ecc481"></span>
+                                    <span style="background:#aa462d"></span>
+                                    <span style="background:#9e895f"></span>
+                                    <span style="background:#d5c79f"></span>
+                                    <span style="background:#4a4231"></span>
+                                </div>
+                                <span class="theme-label">Desert</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="mother" title="Mother of Dragons">
+                                <div class="swatch-preview">
+                                    <span style="background:#080d22"></span>
+                                    <span style="background:#531f4f"></span>
+                                    <span style="background:#6e234b"></span>
+                                    <span style="background:#932549"></span>
+                                    <span style="background:#fdf3eb"></span>
+                                </div>
+                                <span class="theme-label">Mother of Dragons</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="orchid" title="Orchid Whisper">
+                                <div class="swatch-preview">
+                                    <span style="background:#CB438B"></span>
+                                    <span style="background:#BF3556"></span>
+                                    <span style="background:#6C6A43"></span>
+                                    <span style="background:#4D3449"></span>
+                                    <span style="background:#FFF0D2"></span>
+                                </div>
+                                <span class="theme-label">Orchid Whisper</span>
+                            </button>
+                        </div>
+                        <div class="theme-card">
+                            <button class="theme-swatch" data-theme="pearls" title="Chinese Pearls">
+                                <div class="swatch-preview">
+                                    <span style="background:#414B9e"></span>
+                                    <span style="background:#9792CB"></span>
+                                    <span style="background:#AA74A0"></span>
+                                    <span style="background:#E2C99E"></span>
+                                    <span style="background:#8527736"></span>
+                                </div>
+                                <span class="theme-label">Chinese Pearls</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </aside>
+        </div>
+    </div>
+    <div id="toolTodo">
+        <div id="todoBox" class="card" aria-label="Session To-Do">
+            <h3 style="margin:0 0 12px 0">To-Do</h3>
+            <form id="todoForm" class="todo-form" autocomplete="off">
+                <label class="sr-only" for="todoInput">Add a task</label>
+                <input id="todoInput" class="todo-input" placeholder="Add a task and press Enter" />
+                <button type="submit" class="todo-add">Add</button>
+            </form>
+            <div class="todo-actions">
+                <button id="todoClearDone" class="chip" title="Hide/Show completed">Hide Completed</button>
+            </div>
+            <div class="todo-list-container">
+                <ul id="todoList" class="todo-list" role="list" aria-live="polite"></ul>
+            </div>
+        </div>
+    </div>
+</div></aside>
         <div class="resizer resizer-left" aria-hidden="true"></div>
         <div class="resizer resizer-right" aria-hidden="true"></div>
     </div>
     <button id="drawerReveal" class="drawer-tab" aria-label="Show tools">Tools</button>
     <script src="/assets/markdown.js"></script>
-    <script src="/assets/site.js?v=1765528899607"></script>
-    <script src="/assets/favorites.js?v=1765528899607"></script>
-    <script src="/assets/wysiwyg.js?v=1765528899607"></script>
-    <script src="/assets/right-panel.js?v=1765528899607"></script>
-    <script src="/assets/keyboard-nav.js?v=1765528899607"></script>
-    <script src="/assets/theme.js?v=1765528899607"></script>
-    <script src="/assets/shortcuts-guide.js?v=1765528899607"></script>
-    <script src="/assets/collapsible-sections.js?v=1765528899607"></script>
-    <script src="/assets/weather.js?v=1765528899607"></script>
-
+    <script src="/assets/site.js?v=1765544958022"></script>
+    <script src="/assets/favorites.js?v=1765544958022"></script>
+    <script src="/assets/wysiwyg.js?v=1765544958022"></script>
+    <script src="/assets/right-panel.js?v=1765544958022"></script>
+    <script src="/assets/keyboard-nav.js?v=1765544958022"></script>
+    <script src="/assets/theme.js?v=1765544958022"></script>
+    <script src="/assets/shortcuts-guide.js?v=1765544958022"></script>
+    <script src="/assets/collapsible-sections.js?v=1765544958022"></script>
+    <script src="/assets/weather.js?v=1765544958022"></script>
+    
     <!-- Footer Partial: Add site-wide footer content here if needed -->
-    <footer class="footer">
-        <div class="meta">&copy; 2025 Feywild Adventures</div>
-    </footer>
+<footer class="footer">
+    <div class="meta">&copy; 2025 Feywild Adventures</div>
+</footer>
 
 </body>
 

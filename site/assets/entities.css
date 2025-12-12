@@ -1,7 +1,3 @@
-.entity-header.no-header-bg::before {
-    background-image: none !important;
-    opacity: 0 !important;
-}
 /* Entity Pages & Character Sheets */
 
 /* Entity pages */
@@ -26,35 +22,7 @@
     background-image: var(--header);
     background-size: cover;
     background-position: var(--header-position, center);
-    opacity: 0.9;
-    z-index: 0;
-}
-
-/* Hide the ::before pseudo-element if a .landing-hero is present, to prevent double images */
-.entity-header > .landing-hero ~ ::before,
-.entity-header > .landing-hero + ::before,
-.entity-header > .landing-hero {
-    /* nothing here, just for specificity */
-}
-.entity-header > .landing-hero {
-    /* When .landing-hero exists, hide the ::before image */
-}
-.entity-header:has(> .landing-hero)::before {
-    background-image: none !important;
-    opacity: 0 !important;
-}
-}
-
-/* If a landing-hero element exists inside an entity header, render the header
-   image on that element so position changes are visible and scoped. */
-.entity-header > .landing-hero {
-    width: 100%;
-    height: 100%;
-    background-image: var(--header);
-    background-size: cover;
-    background-position: var(--header-position, center);
-    position: relative;
-    z-index: 1;
+    opacity: 0.9
 }
 
 .entity-header .entity-name {
