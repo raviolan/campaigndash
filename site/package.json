@@ -12,5 +12,6 @@
     "rebuild-search": "node scripts/tools/rebuild-search-index.js",
     "enhance-todo": "node scripts/tools/add-enhanced-todo-css.js",
     "sync-images": "node scripts/sync-landing-images.js"
-  }
+  },
+  "backend": "node server/index.js"
 }

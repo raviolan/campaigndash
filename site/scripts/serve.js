@@ -432,7 +432,7 @@ const server = http.createServer(async (req, res) => {
   }
   if (pathname === '/api/create-page' && req.method === 'POST') {
     const body = await parseBody(req);
-    const { type, title } = body || {};
+    const { type, title, content } = body || {};
     if (!type || !title) return sendJson(res, 400, { error: 'Missing type or title' });
 
     const folders = {
@@ -463,8 +463,8 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 409, { error: 'A page with this name already exists' });
     }
 
-    // Generate page content based on type
-    const mainContent = generatePageTemplate(title, type);
+    // Generate page content based on type, but allow an explicit `content` override
+    const mainContent = typeof content === 'string' && content.trim() ? content : generatePageTemplate(title, type);
 
     // Wrap in minimal HTML structure that rebuild script can process
     const fullHtml = wrapInMinimalHTML(title, mainContent);
@@ -632,6 +632,32 @@ const server = http.createServer(async (req, res) => {
     } catch (e) {
       console.error('[delete-page error]', e);
       sendJson(res, 500, { error: e.message || 'Delete failed' });
+    }
+    return;
+  }
+  // Provide a simple JSON list of created enemy / npc pages for clients
+  if (pathname === '/api/enemies' && req.method === 'GET') {
+    try {
+      const folders = ['04_NPCs', '05_Tools & Tables'];
+      const landingExcludes = ['NPCs.html', 'Tools.html', 'Characters.html', '03_Sessions.html'];
+      const list = [];
+
+      for (const folder of folders) {
+        const folderPath = path.join(ROOT, folder);
+        if (!fs.existsSync(folderPath)) continue;
+        const files = fs.readdirSync(folderPath).filter(f => f.endsWith('.html') && !landingExcludes.includes(f));
+        files.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+        files.forEach(f => {
+          // Build a web-safe href
+          const href = '/' + folder + '/' + encodeURIComponent(f);
+          list.push({ name: f.replace('.html', ''), href });
+        });
+      }
+
+      sendJson(res, 200, list);
+    } catch (e) {
+      console.error('[api/enemies] error', e);
+      sendJson(res, 500, { error: 'Failed to list enemies' });
     }
     return;
   }
